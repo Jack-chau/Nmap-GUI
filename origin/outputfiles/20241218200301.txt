@@ -1,0 +1,32 @@
+The Nmap Version is: 	7.94
+
+The comman used for nmap is:
+nmap -oX - -sS -Pn 192.168.254.30
+
+Total number of Hosts: 1
+The hosts ip are:
+
+1.  192.168.254.30
+
+command used: 
+nmap -oX - -v -sS -Pn 192.168.254.30
+
+Open Port		Service		Scan Type
+     80		http		  syn-ack
+     5357		wsdapi		  syn-ack
+
+
+command used: 
+nmap -oX - -O 192.168.254.30
+
+Ip Address : 192.168.254.30
+OS name : Microsoft Windows Server 2019
+OS type : general purpose
+OS vendor : Microsoft
+OS family : Windows
+
+
+command used: 
+nmap -oX - -O 192.168.254.30
+This is not a server!
+

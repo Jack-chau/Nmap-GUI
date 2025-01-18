@@ -1,0 +1,23 @@
+
+The comman used for nmap is:
+nmap -oX - -sS 192.168.254.10
+
+Total number of Hosts: 1
+command used: 
+nmap -oX - -v -sS 192.168.254.10
+
+Open Port		Service		Scan Type
+     53		domain		  syn-ack
+     88		kerberos-sec		  syn-ack
+     135		msrpc		  syn-ack
+     139		netbios-ssn		  syn-ack
+     389		ldap		  syn-ack
+     445		microsoft-ds		  syn-ack
+     464		kpasswd5		  syn-ack
+     593		http-rpc-epmap		  syn-ack
+     636		ldapssl		  syn-ack
+     3268		globalcatLDAP		  syn-ack
+     3269		globalcatLDAPssl		  syn-ack
+     5357		wsdapi		  syn-ack
+
+
