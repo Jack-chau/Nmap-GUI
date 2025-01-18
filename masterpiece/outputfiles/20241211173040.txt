@@ -1,0 +1,7 @@
+
+The comman used for nmap is:
+nmap -oX - -sS 192.168.254.10
+The hosts ip are:
+
+1.  192.168.254.10
+

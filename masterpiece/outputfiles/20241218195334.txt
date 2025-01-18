@@ -1,0 +1,35 @@
+
+The comman used for nmap is:
+nmap -oX - -sS -Pn 192.168.254.10
+The hosts ip are:
+
+1.  192.168.254.10
+
+command used: 
+nmap -oX - -v -sS -Pn 192.168.254.10
+
+Open Port		Service		Scan Type
+     53		domain		  syn-ack
+     88		kerberos-sec		  syn-ack
+     135		msrpc		  syn-ack
+     139		netbios-ssn		  syn-ack
+     389		ldap		  syn-ack
+     445		microsoft-ds		  syn-ack
+     464		kpasswd5		  syn-ack
+     593		http-rpc-epmap		  syn-ack
+     636		ldapssl		  syn-ack
+     3268		globalcatLDAP		  syn-ack
+     3269		globalcatLDAPssl		  syn-ack
+     5357		wsdapi		  syn-ack
+
+
+command used: 
+nmap -oX - -O 192.168.254.10
+
+Ip Address : 192.168.254.10
+OS name : Microsoft Windows Server 2019
+OS type : general purpose
+OS vendor : Microsoft
+OS family : Windows
+
+
