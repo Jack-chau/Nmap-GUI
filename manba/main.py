@@ -1,5 +1,4 @@
 from notorious import Notorious
-from PIL import Image, ImageTk
 
 def main( ):
     app = Notorious()
