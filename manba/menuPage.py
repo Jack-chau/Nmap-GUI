@@ -9,6 +9,7 @@ class SwitchMenu( ctk.CTkFrame ) :
       self.selected_color = '#606060'
       self.icon_width = 50
       self.icon_height = 50
+      self.indicator_width = 3
 
       # Icon Location
       self.menu_icon = ctk.CTkImage( 
@@ -50,9 +51,9 @@ class SwitchMenu( ctk.CTkFrame ) :
       # Menu frame
       self.menu_frame = ctk.CTkFrame( master, width = 150, fg_color = self.menu_gray, corner_radius = 0 )
       self.menu_frame.grid( row = 0, column = 1, rowspan = 4, sticky = 'nsew' )
-      self.menu_frame.grid_columnconfigure( 0, weight = 0)
-      self.menu_frame.grid_columnconfigure( 1, weight = 5)
-      self.menu_frame.rowconfigure( 0, weight = 3)
+      self.menu_frame.grid_columnconfigure( 0, weight = 0 )
+      self.menu_frame.grid_columnconfigure( 1, weight = 10 )
+      self.menu_frame.rowconfigure( 0, weight = 3 )
 
       # Button Frame
       self.button_frame = ctk.CTkFrame( 
@@ -67,8 +68,11 @@ class SwitchMenu( ctk.CTkFrame ) :
             image = self.menu_icon, 
             text='' , 
             width=10,
+            height = 50,
             fg_color='transparent', 
-            hover_color = self.menu_gray,
+            hover_color = self.selected_color,
+            corner_radius=0,
+            command = self.extend_menu_bar
       )
       self.menu_btn.pack( side = 'top', expand = True, fill = 'both' )
 
@@ -76,7 +80,7 @@ class SwitchMenu( ctk.CTkFrame ) :
             self.button_frame,
             text = '',
             fg_color='transparent', 
-            hover_color = self.menu_gray,
+            hover_color = 'red',
             width = 65 ,
             height = 150,
             state = "disabled",
@@ -89,8 +93,9 @@ class SwitchMenu( ctk.CTkFrame ) :
             width = 30, 
             height = 50,
             text='' , 
-            fg_color='transparent', 
-            hover_color = self.menu_gray, 
+            fg_color=self.selected_color, 
+            hover_color = self.selected_color,
+            corner_radius = 0,
             command = lambda : self.switch_page( indicator = self.nmap_btn ) 
       )
       self.nmap_btn.pack( side = 'top', expand = True, fill = 'both' )
@@ -102,7 +107,8 @@ class SwitchMenu( ctk.CTkFrame ) :
             height = 50,
             text='' ,
             fg_color='transparent',
-            hover_color = self.menu_gray,
+            hover_color = self.selected_color,
+            corner_radius=0,
             command = lambda : self.switch_page( indicator = self.ansible_btn ) 
       )
       self.ansible_btn.pack( side = 'top', expand = True, fill = 'both' )
@@ -114,7 +120,8 @@ class SwitchMenu( ctk.CTkFrame ) :
             width = 30,
             text='' ,
             fg_color='transparent',
-            hover_color = self.menu_gray,
+            hover_color = self.selected_color,
+            corner_radius=0,
             command = lambda : self.switch_page( indicator = self.docker_btn ) 
       )
       self.docker_btn.pack( side = 'top', expand = True, fill = 'both' )
@@ -127,7 +134,8 @@ class SwitchMenu( ctk.CTkFrame ) :
             text='' , 
             fg_color='transparent', 
             border_width = 0, 
-            hover_color = self.menu_gray, 
+            hover_color = self.selected_color, 
+            corner_radius=0,
             command = lambda : self.switch_page( indicator = self.schedule_btn ) 
       )
       self.schedule_btn.pack( side = 'top', expand = True, fill = 'both' )
@@ -140,7 +148,8 @@ class SwitchMenu( ctk.CTkFrame ) :
             text='' , 
             fg_color='transparent', 
             border_width = 0, 
-            hover_color = self.menu_gray, 
+            hover_color = self.selected_color, 
+            corner_radius=0,
             command = lambda : self.switch_page( indicator = self.github_btn ) 
       )
       self.github_btn.pack( side = 'top', expand = True, fill = 'both' )
@@ -151,7 +160,6 @@ class SwitchMenu( ctk.CTkFrame ) :
             width = 30, 
             height = 180,
             fg_color='transparent', 
-            hover_color = self.menu_gray ,
             state = 'disabled'
       )
       self.blank_btn_2.pack( side = 'top', expand = True, fill = 'both' )
@@ -159,10 +167,106 @@ class SwitchMenu( ctk.CTkFrame ) :
       # Label Frame
       self.label_frame = ctk.CTkFrame( 
             self.menu_frame ,
-            fg_color = 'purple',
-            width= 300
+            fg_color = self.menu_gray,
       )
-      self.label_frame.grid( row = 0, column = 1, sticky = 'nsew' )
+
+      # Label 
+      self.blk_label_1 = ctk.CTkButton( 
+            self.label_frame, text="", 
+            height=20, 
+            width=250,
+            fg_color='transparent', 
+            state = 'disabled'
+      )
+      self.blk_label_1.pack( side = 'top', expand = True, fill = 'both' )
+      self.blk_label_2 = ctk.CTkButton( 
+            self.label_frame, 
+            text="", 
+            height=130, 
+            width=250,
+            fg_color='transparent', 
+            state = 'disabled'
+      )
+      self.blk_label_2.pack( side = 'top', expand = True, fill = 'both' )
+      
+      self.nmap_label = ctk.CTkButton( 
+            self.label_frame, 
+            text="Nmap Page", 
+            height = 10, 
+            width = 250, 
+            fg_color=self.menu_gray, 
+            font=( "Helventica bold", 20 ),
+            corner_radius = 0,
+            text_color='black',
+            hover_color=self.selected_color,
+            command= lambda : self.switch_page( indicator = self.nmap_btn )
+      )
+      self.nmap_label.pack( side = 'top', expand = True, fill = 'both' )
+
+      self.ansible_label = ctk.CTkButton( 
+            self.label_frame, 
+            text = "Ansible Page", 
+            height = 10, 
+            width = 250,
+            fg_color = self.menu_gray, 
+            font = ( "Helventica bold", 20 ),
+            text_color='black',
+            corner_radius = 0,
+            hover_color=self.selected_color,
+            command= lambda : self.switch_page( indicator = self.ansible_btn )
+      )
+      self.ansible_label.pack( side = 'top', expand = True, fill = 'both' )
+
+      self.docker_label = ctk.CTkButton( 
+            self.label_frame, 
+            text = "Docker Page", 
+            height = 10, 
+            width = 250, 
+            fg_color = self.menu_gray, 
+            font = ( "Helventica bold", 20 ),
+            text_color='black',
+            corner_radius = 0,
+            hover_color=self.selected_color,
+            command= lambda : self.switch_page( indicator = self.docker_btn )
+      )
+      self.docker_label.pack( side = 'top', expand = True, fill = 'both' )
+
+      self.schedule_label = ctk.CTkButton( 
+            self.label_frame, 
+            text = "Schedule Page", 
+            height = 10, 
+            width = 250,
+            fg_color = self.menu_gray, 
+            font = ( "Helventica bold", 20 ),
+            text_color='black',
+            corner_radius = 0, 
+            hover_color=self.selected_color,
+            command= lambda : self.switch_page( indicator = self.schedule_btn )
+      )
+      self.schedule_label.pack( side = 'top', expand = True, fill = 'both' )
+
+      self.github_label = ctk.CTkButton( 
+            self.label_frame, 
+            text = "Github Page", 
+            height = 10, 
+            width = 250,
+            fg_color = self.menu_gray, 
+            font = ( "Helventica bold", 20 ),
+            text_color='black',
+            corner_radius = 0, 
+            hover_color=self.selected_color,
+            command= lambda : self.switch_page( indicator = self.github_btn )
+      )
+      self.github_label.pack( side = 'top', expand = True,fill = 'both' )
+
+      self.blk_label_3 = ctk.CTkButton( 
+            self.label_frame, 
+            text="", 
+            height=151,
+            state='disabled',
+            fg_color=self.menu_gray,
+      )
+      self.blk_label_3.pack( side = 'top', expand = True, fill = 'both' )
 
    def switch_page( self, indicator ) :
       self.nmap_btn.configure( fg_color = 'transparent' )
@@ -171,5 +275,20 @@ class SwitchMenu( ctk.CTkFrame ) :
       self.schedule_btn.configure( fg_color = 'transparent' )
       self.github_btn.configure( fg_color = 'transparent' )
       indicator.configure( fg_color = self.selected_color, hover_color = self.selected_color )
-      self.label_frame.grid_forget()
 
+   def extending_animation( self ) :
+      self.label_frame.grid( row = 0, column = 1, sticky = 'nsew' )
+   
+   def extend_menu_bar( self ) :
+      self.extending_animation()
+      self.menu_btn.configure( image = self.close_icon )
+      self.menu_btn.configure( command = self.fold_menu_bar )
+
+   def folding_animation( self ) :
+      self.label_frame.grid_forget()
+   
+   def fold_menu_bar( self ) :
+      self.folding_animation()
+      self.menu_btn.configure( image = self.menu_icon )
+      self.menu_btn.configure( command = self.extend_menu_bar )
+   

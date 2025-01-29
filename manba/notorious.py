@@ -14,6 +14,7 @@ class Notorious( ctk.CTk ) :
         # root window size
         self.title( "Dream Big" )
         self.geometry( f'{1300}x{800}+{300}+{200}' )
+        self.resizable( False, False )
 
         # define grid
         self.grid_columnconfigure( 0, weight = 0 )
@@ -26,9 +27,7 @@ class Notorious( ctk.CTk ) :
 
         # Menu Frame
         menu_frame = SwitchMenu( self )
-
-
-
+        
 if __name__ == "__main__":   
     main()
 
