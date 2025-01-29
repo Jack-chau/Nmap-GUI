@@ -2,9 +2,12 @@ import customtkinter as ctk
 from PIL import Image, ImageTk
 
 class menu_config( ) :
+    #Config
     menu_gray = '#808080'
     icon_width = 50
     icon_height = 50
+    selected_color = '#606060'
+
     # Icon Location
     menu_icon = ctk.CTkImage( 
                                 light_image = Image.open( "images/resized_images/menu.png" ), 
