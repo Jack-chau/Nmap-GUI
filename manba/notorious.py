@@ -13,7 +13,7 @@ class Notorious( ctk.CTk ) :
         ctk.set_default_color_theme( 'green' )
         # root window size
         self.title( "Dream Big" )
-        self.geometry( f'{2300}x{1600}+{900}+{300}' )
+        self.geometry( f'{1300}x{800}+{300}+{200}' )
 
         # define grid
         self.grid_columnconfigure( 0, weight = 0 )
