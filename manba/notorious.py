@@ -1,10 +1,10 @@
 import customtkinter as ctk
 from menuPage import SwitchMenu
+from nmapPage import NmapPage
 
 def main() :
     app = Notorious()
     app.mainloop()
-
 
 class Notorious( ctk.CTk ) :
     def __init__( self ) :
@@ -19,14 +19,16 @@ class Notorious( ctk.CTk ) :
         # define grid
         self.grid_columnconfigure( 0, weight = 0 )
         self.grid_columnconfigure( 1, weight = 0 )
-        self.grid_columnconfigure( 2, weight = 5 )
-        self.grid_columnconfigure( 3,  weight = 3 )
-        self.grid_columnconfigure( 4,  weight = 3 )
+        self.grid_columnconfigure( 2, weight = 1 )
+        self.grid_columnconfigure( 3,  weight = 2 )
+        self.grid_columnconfigure( 4,  weight = 8 )
+        self.grid_columnconfigure( 5,  weight = 2 )
         self.grid_rowconfigure( ( 0, 1, 2 ), weight = 1 )
         self.grid_rowconfigure( 3, weight = 1)
 
         # Menu Frame
-        menu_frame = SwitchMenu( self )
+        self.menu_frame = SwitchMenu( self )
+        self.nmap_frame = NmapPage( self )
         
 if __name__ == "__main__":   
     main()
