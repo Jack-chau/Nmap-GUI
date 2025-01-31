@@ -10,19 +10,19 @@ class Notorious( ctk.CTk ) :
     def __init__( self ) :
         super( ).__init__( )
         ctk.set_appearance_mode( 'dark' )
-        ctk.set_default_color_theme( 'green' )
+        ctk.set_default_color_theme( 'blue' )
+        ctk.set_widget_scaling( 1.0 )
         # root window size
         self.title( "Dream Big" )
-        self.geometry( f'{1300}x{800}+{300}+{200}' )
-        self.resizable( False, False )
+        self.geometry( f'{1500}x{900}+{180}+{80}' )
+        #self.resizable( False, False )
 
         # define grid
         self.grid_columnconfigure( 0, weight = 0 )
         self.grid_columnconfigure( 1, weight = 0 )
         self.grid_columnconfigure( 2, weight = 1 )
-        self.grid_columnconfigure( 3,  weight = 2 )
-        self.grid_columnconfigure( 4,  weight = 8 )
-        self.grid_columnconfigure( 5,  weight = 2 )
+        self.grid_columnconfigure( 3,  weight = 5 )
+        self.grid_columnconfigure( 4,  weight = 3 )
         self.grid_rowconfigure( ( 0, 1, 2 ), weight = 1 )
         self.grid_rowconfigure( 3, weight = 1)
 

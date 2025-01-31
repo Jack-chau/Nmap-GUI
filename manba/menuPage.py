@@ -200,7 +200,6 @@ class SwitchMenu( ctk.CTkFrame ) :
             fg_color='transparent', 
             font = self.font_style,
             corner_radius = 0,
-            text_color='orange',
             hover_color=self.selected_color,
             command= lambda : self.switch_page( indicator = self.nmap_btn )
       )
@@ -213,7 +212,6 @@ class SwitchMenu( ctk.CTkFrame ) :
             width = self.label_width,
             fg_color = 'transparent', 
             font = self.font_style,
-            text_color='orange',
             corner_radius = 0,
             hover_color=self.selected_color,
             command= lambda : self.switch_page( indicator = self.ansible_btn )
@@ -227,7 +225,6 @@ class SwitchMenu( ctk.CTkFrame ) :
             width = self.label_width, 
             fg_color = 'transparent', 
             font = self.font_style,
-            text_color='orange',
             corner_radius = 0,
             hover_color=self.selected_color,
             command= lambda : self.switch_page( indicator = self.docker_btn )
@@ -241,7 +238,6 @@ class SwitchMenu( ctk.CTkFrame ) :
             width = self.label_width,
             fg_color = 'transparent', 
             font = self.font_style,
-            text_color = 'orange',
             corner_radius = 0, 
             hover_color=self.selected_color,
             command= lambda : self.switch_page( indicator = self.schedule_btn )
@@ -255,7 +251,6 @@ class SwitchMenu( ctk.CTkFrame ) :
             width = self.label_width,
             fg_color = 'transparent', 
             font = self.font_style ,
-            text_color='orange',
             corner_radius = 0, 
             hover_color=self.selected_color,
             command= lambda : self.switch_page( indicator = self.github_btn )
