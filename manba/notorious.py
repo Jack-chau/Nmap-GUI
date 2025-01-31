@@ -20,9 +20,12 @@ class Notorious( ctk.CTk ) :
         # define grid
         self.grid_columnconfigure( 0, weight = 0 )
         self.grid_columnconfigure( 1, weight = 0 )
-        self.grid_columnconfigure( 2, weight = 1 )
-        self.grid_columnconfigure( 3,  weight = 5 )
-        self.grid_columnconfigure( 4,  weight = 3 )
+        self.grid_columnconfigure( 2, weight = 2 )
+        self.grid_columnconfigure( 3, weight = 1 )
+        self.grid_columnconfigure( 4,  weight = 15 )
+        self.grid_columnconfigure( 5,  weight = 1 )
+        self.grid_columnconfigure( 6,  weight = 2 )
+        self.grid_columnconfigure( 7,  weight = 1 )
         self.grid_rowconfigure( ( 0, 1, 2 ), weight = 1 )
         self.grid_rowconfigure( 3, weight = 1)
 
