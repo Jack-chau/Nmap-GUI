@@ -28,157 +28,334 @@ class LoveAndPeace( customtkinter.CTk ) :
         self.grid_rowconfigure( ( 0, 1, 2 ), weight = 1 )
 
         # left sidebar text
-        self.sidebar_frame = customtkinter.CTkFrame( self, width=140, corner_radius=0 )
-        self.sidebar_frame.grid( row=0, column=0, rowspan=4, sticky='nsew' )
+        self.sidebar_frame = customtkinter.CTkFrame( 
+                self, 
+                width=140, 
+                corner_radius=0 
+        )
+        self.sidebar_frame.grid( 
+                row=0, 
+                column=0, 
+                rowspan=4, 
+                sticky='nsew' 
+        )
         self.sidebar_frame.grid_rowconfigure( 4, weight=1 )
-        self.logo_label = customtkinter.CTkLabel( self.sidebar_frame, text = "LOVE & PEACE", font=customtkinter.CTkFont("Comic Sans MS", 20, ) )
-        self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+        self.logo_label = customtkinter.CTkLabel( 
+                self.sidebar_frame, 
+                text = "LOVE & PEACE", 
+                font=customtkinter.CTkFont("Comic Sans MS", 20, ) 
+        )
+        self.logo_label.grid(
+                row=0, 
+                column=0, 
+                padx=20, 
+                pady=(20, 10)
+        )
 
         # left sidebar window 1
-        self.scan_network = customtkinter.CTkButton( self.sidebar_frame, 
-                                                     text="Scan Network",
-                                                     command = self.scan_network
-                                                    )
-        self.scan_network.grid(row=1, column=0, padx=20, pady=10)
+        self.scan_network = customtkinter.CTkButton( 
+                self.sidebar_frame, 
+                text="Scan Network",
+                command = self.scan_network
+        )
+        self.scan_network.grid(
+                row=1, 
+                column=0, 
+                padx=20, 
+                pady=10
+        )
 
         # left sidebar window 1
-        self.save_btn = customtkinter.CTkButton(self.sidebar_frame, text = "Save", command = self.save_results )
+        self.save_btn = customtkinter.CTkButton(
+                self.sidebar_frame, 
+                text = "Save", 
+                command = self.save_results 
+        )
         self.save_btn.grid(row=2, column=0, padx=20, pady=10)
 
         # Save Btn
         # self.save_button = customtkinter.CTkButton(self.sidebar_frame, text = "Save", command = self.save_results )
         # self.save_button.grid(row=4, column=0, padx=20, pady=10)
 
-        self.appearance_mode_label = customtkinter.CTkLabel(self.sidebar_frame, text="Appearance Mode:", anchor="w")
+        self.appearance_mode_label = customtkinter.CTkLabel(
+                self.sidebar_frame, 
+                text="Appearance Mode:", 
+                anchor="w"
+        )
         self.appearance_mode_label.grid(row=5, column=0, padx=20, pady=(10, 0))
-        self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=["System", "Light", "Dark"],
-                                                                       command=self.change_appearance_mode_event,
-                                                                       state = "disabled")
+        self.appearance_mode_optionemenu = customtkinter.CTkOptionMenu(
+                self.sidebar_frame, 
+                values=["System", "Light", "Dark"],
+                command=self.change_appearance_mode_event,
+                state = "disabled"
+        )
         self.appearance_mode_optionemenu.grid(row=6, column=0, padx=20, pady=(10, 10))
 
         self.scaling_label = customtkinter.CTkLabel(self.sidebar_frame, text="UI Scaling:", anchor="w")
         self.scaling_label.grid(row=7, column=0, padx=20, pady=(10, 0))
-        self.scaling_optionemenu = customtkinter.CTkOptionMenu(self.sidebar_frame, values=["50%", "80%", "100%", "120%", "140%"],
-                                                               command=self.change_scaling_event,
-                                                               state = "disabled")
+
+        self.scaling_optionemenu = customtkinter.CTkOptionMenu(
+                self.sidebar_frame, 
+                values=["50%", "80%", "100%", "120%", "140%"],
+                command=self.change_scaling_event,
+                state = "disabled"
+        )
         self.scaling_optionemenu.grid(row=8, column=0, padx=20, pady=(10, 20))
 
         # create entry and button
         self.vip_entry = customtkinter.CTkEntry(self, placeholder_text = "Love Secret?" )
-        self.vip_entry.grid(row=3, column=1, columnspan=2, padx=(20, 0), pady=(20, 20), sticky="nsew")
+        self.vip_entry.grid(
+                row=3, 
+                column=1, 
+                columnspan=2, 
+                padx=(20, 0), 
+                pady=(20, 20), 
+                sticky="nsew"
+        )
 
-        self.vip_button = customtkinter.CTkButton(self, text = "PEACE" ,fg_color="transparent", 
-                                                        border_width=2, text_color=("gray10", "#DCE4EE"),
-                                                        command = self.vip_function )
-        self.vip_button.grid(row=3, column=3, padx=(20, 20), pady=(20, 20), sticky="nsew")
+        self.vip_button = customtkinter.CTkButton(
+                self, 
+                text = "PEACE" ,
+                fg_color="transparent", 
+                border_width=2, text_color=("gray10", "#DCE4EE"),
+                command = self.vip_function 
+        )
+        self.vip_button.grid(
+                row=3, 
+                column=3, 
+                padx=(20, 20), 
+                pady=(20, 20), 
+                sticky="nsew"
+        )
 
         # create text box
-        self.textbox = customtkinter.CTkTextbox(self, width=650, height=200, corner_radius = 1, border_width=10, border_color='grey20', font=customtkinter.CTkFont( size=15, weight='bold' ) )
-        self.textbox.grid(row=0, column=1, padx=(20, 0), pady=(20, 0), rowspan = 3, sticky="nsew")
+        self.textbox = customtkinter.CTkTextbox(self, 
+                width=650, 
+                height=200, 
+                corner_radius = 1, 
+                border_width=10, 
+                border_color='grey20', 
+                font=customtkinter.CTkFont( size=15, weight='bold' ) 
+        )
+        self.textbox.grid(
+                row=0, 
+                column=1, 
+                padx=(20, 0), 
+                pady=(20, 0), 
+                rowspan = 3, 
+                sticky="nsew"
+        )
 
         # Configure box
         self.tabview = customtkinter.CTkTabview(self, width=250)
-        self.tabview.grid(row=0, column=2, columnspan = 2 , padx=(20, 20), pady=(20, 0), sticky="nsew")
+        self.tabview.grid(
+                row=0, 
+                column=2, 
+                columnspan = 2, 
+                padx=(20, 20), 
+                pady=(20, 0), 
+                sticky="nsew"
+        )
         self.tabview.add( 'Scan Config' )
         self.tabview.add( 'Scanning History' )
-        self.target_label = customtkinter.CTkLabel(self.tabview.tab( 'Scan Config' ), text = "Target IP : ")
-        self.target_label.grid(row=0, column=0, padx=(20, 0), pady=(20, 5), sticky="ew")
+        self.target_label = customtkinter.CTkLabel(
+                self.tabview.tab( 'Scan Config' ), 
+                text = "Target IP : "
+        )
+        self.target_label.grid(
+                row=0, 
+                column=0, 
+                padx=(20, 0), 
+                pady=(20, 5), 
+                sticky="ew"
+        )
 
-        self.target_ipbox = customtkinter.CTkEntry(self.tabview.tab( 'Scan Config' ), placeholder_text = "IP address" )
-        self.target_ipbox.grid(row=0, column=1, padx=(2,5), pady=(20, 10), sticky="ew")
+        self.target_ipbox = customtkinter.CTkEntry(
+                self.tabview.tab( 'Scan Config' ), 
+                placeholder_text = "IP address" 
+        )
+        self.target_ipbox.grid(
+                row=0, 
+                column=1, 
+                padx=(2,5), 
+                pady=(20, 10), 
+                sticky="ew"
+        )
         
         # Scan Options
         nmap_version_radio_var = customtkinter.StringVar( value = "off" )
         self.nmap_version_radio = customtkinter.CTkCheckBox(
-                                                            self.tabview.tab( 'Scan Config' ), 
-                                                            text="Nmap Version",
-                                                            variable = nmap_version_radio_var,
-                                                            onvalue = "on",
-                                                            offvalue = "off"
-                                                            )
-        self.nmap_version_radio.grid(row=1, column=0, padx=(5,5), pady=(20, 10), sticky="n")
+                self.tabview.tab( 'Scan Config' ), 
+                text="Nmap Version",
+                variable = nmap_version_radio_var,
+                onvalue = "on",
+                offvalue = "off"
+        )
+        self.nmap_version_radio.grid(
+                row=1, 
+                column=0, 
+                padx=(5,5), 
+                pady=(20, 10), 
+                sticky="n"
+        )
 
         number_of_host_radio_var = customtkinter.StringVar( value = "off" )
         self.number_of_host_radio = customtkinter.CTkCheckBox(
-                                                        self.tabview.tab( 'Scan Config' ), 
-                                                        text="Number of Hosts",
-                                                        variable = number_of_host_radio_var,
-                                                        onvalue = "on",
-                                                        offvalue = "off"
-                                                    )
-        self.number_of_host_radio.grid(row=1, column=1, padx=(5,5), pady=(20, 10), sticky="n")
-
+                self.tabview.tab( 'Scan Config' ), 
+                text="Number of Hosts",
+                variable = number_of_host_radio_var,
+                onvalue = "on",
+                offvalue = "off"
+        )
+        self.number_of_host_radio.grid(
+                row=1, 
+                column=1, 
+                padx=(5,5), 
+                pady=(20, 10), 
+                sticky="n"
+        )
 
         ip_radio_var = customtkinter.StringVar( value = "off" )
         self.ip_radio = customtkinter.CTkCheckBox(
-                                                    self.tabview.tab( 'Scan Config' ), 
-                                                    text="IP addresses",
-                                                    variable = ip_radio_var,
-                                                    onvalue = "on",
-                                                    offvalue = "off"
-                                                )
-        self.ip_radio.grid(row=2, column=0, padx=(5,5), pady=(20, 10), sticky="n")
+                self.tabview.tab( 'Scan Config' ), 
+                text="IP addresses",
+                variable = ip_radio_var,
+                onvalue = "on",
+                offvalue = "off"
+        )
+        self.ip_radio.grid(
+                row=2, 
+                column=0, 
+                padx=(5,5), 
+                pady=(20, 10), 
+                sticky="n"
+        )
 
         service_radio_var = customtkinter.StringVar( value = "off" )
         self.service_radio = customtkinter.CTkCheckBox(
-                                                        self.tabview.tab( 'Scan Config' ), 
-                                                        text="Running Service",
-                                                        variable = service_radio_var,
-                                                        onvalue = "on",
-                                                        offvalue = "off"
-                                                        )
-        self.service_radio.grid(row=2, column=1, padx=(5,5), pady=(20, 10), sticky="n")
+                self.tabview.tab( 'Scan Config' ), 
+                text="Running Service",
+                variable = service_radio_var,
+                onvalue = "on",
+                offvalue = "off"
+        )
+        self.service_radio.grid(
+                row=2, 
+                column=1, 
+                padx=(5,5), 
+                pady=(20, 10), 
+                sticky="n"
+        )
 
         os_radio_var = customtkinter.StringVar( value = "off" )
         self.os_radio = customtkinter.CTkCheckBox(
-                                                    self.tabview.tab( 'Scan Config' ), 
-                                                    text="OS Version",
-                                                    variable = os_radio_var,
-                                                    onvalue = "on",
-                                                    offvalue = "off"
-                                                    )
-        self.os_radio.grid(row=3, column=0, padx=(5,5), pady=(20, 10), sticky="n")
+                self.tabview.tab( 'Scan Config' ), 
+                text="OS Version",
+                variable = os_radio_var,
+                onvalue = "on",
+                offvalue = "off"
+        )
+        self.os_radio.grid(
+                row=3,
+                column=0,
+                padx=(5,5),
+                pady=(20, 10),
+                sticky="n"
+        )
 
         server_name_radio_var = customtkinter.StringVar( value = "off" )
         self.server_name_radio = customtkinter.CTkCheckBox(
-                                                            self.tabview.tab( 'Scan Config' ), 
-                                                            text="Server Name" ,
-                                                            variable = server_name_radio_var,
-                                                            onvalue = "on",
-                                                            offvalue = "off")
-        self.server_name_radio.grid(row=3, column=1, padx=(0,5), pady=(20, 10), sticky="n")
+                self.tabview.tab( 'Scan Config' ), 
+                text="Server Name" ,
+                variable = server_name_radio_var,
+                onvalue = "on",
+                offvalue = "off"
+        )
+        self.server_name_radio.grid(
+                row=3,
+                column=1,
+                padx=(0,5),
+                pady=(20, 10),
+                sticky="n"
+        )
 
         # History Box
         self.display_button = customtkinter.CTkButton(
-                                                        self.tabview.tab( 'Scanning History' ), 
-                                                        text="Display History", 
-                                                        command = self.display_to_text
-                                                        #command = lambda: self.display_to_text( self.data ),
-                                                    )
-        self.display_button.grid(row=2, column=0, columnspan=1, padx=(50,10), pady=(20, 10), sticky="n")
+            self.tabview.tab( 'Scanning History' ), 
+            text="Display History", 
+            command = self.display_to_text
+            #command = lambda: self.display_to_text( self.data ),
+        )
+        self.display_button.grid(
+                row=2, 
+                column=0, 
+                columnspan=1, 
+                padx=(50,10), 
+                pady=(20, 10), 
+                sticky="n"
+        )
 
-        self.del_id_label = customtkinter.CTkLabel(self.tabview.tab( 'Scanning History' ), text = "Delete ID : ")
-        self.del_id_label.grid( row=5, column=0, padx=(20, 0), pady=( 20,0 ), sticky="ew" )
+        self.del_id_label = customtkinter.CTkLabel(
+                self.tabview.tab( 'Scanning History' ), 
+                text = "Delete ID : "
+        )
+        self.del_id_label.grid( 
+                row=5, 
+                column=0, 
+                padx=(20, 0), 
+                pady=( 20,0 ), 
+                sticky="ew" 
+        )
 
-        self.del_id_box = customtkinter.CTkEntry(self.tabview.tab( 'Scanning History' ), placeholder_text = "data id", width=120 )
-        self.del_id_box.grid(row=6, column=0, columnspan=1, padx=(50,10), sticky="n")
+        self.del_id_box = customtkinter.CTkEntry(
+                self.tabview.tab( 'Scanning History' ), 
+                placeholder_text = "data id", 
+                width=120 
+        )
+        self.del_id_box.grid(
+                row=6, 
+                column=0, 
+                columnspan=1, 
+                padx=(50,10), 
+                sticky="n"
+        )
 
         #clear Box
-        self.del_database_button = customtkinter.CTkButton(self.tabview.tab( 'Scanning History' ), text="Delete Data", command= self.clean_database )
-        self.del_database_button.grid(row=7, column=0, columnspan=1, padx=(50,10), pady=(10), sticky="n")
+        self.del_database_button = customtkinter.CTkButton(
+                self.tabview.tab( 'Scanning History' ),
+                text="Delete Data", 
+                command= self.clean_database 
+        )
+        self.del_database_button.grid(
+                row=7, 
+                column=0, 
+                columnspan=1, 
+                padx=(50,10), 
+                pady=(10), 
+                sticky="n"
+        )
 
         # create remark frame
         self.remark_box = customtkinter.CTkTextbox(self)
-        self.remark_box.grid(row=1, column=2, columnspan=2, rowspan=2, padx=(20, 20), pady=(20, 0), sticky="nsew")
-        self.remark_box.insert( "0.0",
-                                    "Remarks:\n"
-                                    "Number of hosts:\nScan all the hosts in the target network.\n"
-                                    "IP addresses:\nShows the IP addresses of the hosts.\n"
-                                    "Running Service:\nShows hosts running service.\n"
-                                    "OS Version:\nShows hosts OS Version\n"
-                                    "Server name:\nServer name (If server was found)\n"
-                                    "Nmap Version:\nShows Nmap version\n"
-                              )
+        self.remark_box.grid(
+                row=1, 
+                column=2, 
+                columnspan=2, 
+                rowspan=2, 
+                padx=(20, 20), 
+                pady=(20, 0), 
+                sticky="nsew"
+        )
+        self.remark_box.insert( 
+                "0.0",
+                "Remarks:\n"
+                "Number of hosts:\nScan all the hosts in the target network.\n"
+                "IP addresses:\nShows the IP addresses of the hosts.\n"
+                "Running Service:\nShows hosts running service.\n"
+                "OS Version:\nShows hosts OS Version\n"
+                "Server name:\nServer name (If server was found)\n"
+                "Nmap Version:\nShows Nmap version\n"
+        )
 
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
@@ -378,30 +555,6 @@ class LoveAndPeace( customtkinter.CTk ) :
         for row in rows :
             data.append([ row[0], row[1], row[2], row[3], row[4], row[5] ] )
         return data
-
-
-# def callback(event):
-#     filepath = "./outputfiles/"
-#     # get the index of the mouse click
-#     index = event.widget.index("@%s,%s" % (event.x, event.y))
-
-#     # get the indices of all "adj" tags
-#     tag_indices = list(event.widget.tag_ranges('tag'))
-
-#     # iterate them pairwise (start and end index)
-#     for start, end in zip(tag_indices[0::2], tag_indices[1::2]):
-#         # check if the tag matches the mouse click index
-#         if event.widget.compare(start, '<=', index) and event.widget.compare(index, '<', end):
-#             # return string between tag start and end
-#             filename = filepath + event.widget.get(start, end)
-#             print(filename)
-#             file1 = open(filename,'r')
-#             lines = file1.readlines()
-#             d = ""
-#             for line in lines:
-#                 d += line.strip() + "\n"
-
-#             open_popup(d)
 
     def display_to_text(self):
         data = self.select_all_records()

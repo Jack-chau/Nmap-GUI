@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import threading
 from menuPage import SwitchMenu
 from nmapPage import NmapPage
 
@@ -17,7 +18,7 @@ class Notorious( ctk.CTk ) :
         self.geometry( f'{1500}x{900}+{180}+{80}' )
         #self.resizable( False, False )
 
-        # define grid
+        # define grid ( 8 column * 4 row )
         self.grid_columnconfigure( 0, weight = 0 )
         self.grid_columnconfigure( 1, weight = 0 )
         self.grid_columnconfigure( 2, weight = 2 )
@@ -30,9 +31,11 @@ class Notorious( ctk.CTk ) :
         self.grid_rowconfigure( 3, weight = 1)
 
         # Menu Frame
-        self.menu_frame = SwitchMenu( self )
-        self.nmap_frame = NmapPage( self )
-        
+        self.switch_menu = SwitchMenu( self )
+
+        # Nmap Page
+        self.nmap_page = NmapPage( self )
+
 if __name__ == "__main__":   
     main()
 
