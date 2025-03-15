@@ -14,6 +14,7 @@ class NmapPage( ctk.CTkFrame ) :
         # self.database = r'sasqdemo.db'
         # self.conn = self.create_connection( self.database )
         # self.data = self.select_all_records( )
+        self.scanner = nmap.PortScanner()
         self.font_style = ( "Helventica bold", 15 )
 
         # Nmap Sidebar Frame
@@ -61,7 +62,7 @@ class NmapPage( ctk.CTkFrame ) :
             width = 180,
             height = 50,
             font = ctk.CTkFont( "Segoe Script", 15 ),
-            command = self.scan_network()
+            command = self.scan_network_thread
         )
         self.scan_network.pack( 
             side = 'top',
@@ -434,104 +435,126 @@ class NmapPage( ctk.CTkFrame ) :
             "6. Nmap Version:\n    Shows Nmap version"
         )
     
-    def clear_textbox( self ) :
+    def clear_textbox(self):
         self.nmap_textbox.delete( '0.0', 'end' )
+
     def clear_textbox_thread( self ) :
         clear_textbox_thread = threading.Thread( target= self.clear_textbox )
         clear_textbox_thread.start()
+
+    def empty_line(self):
+        self.nmap_textbox.insert('end', '\n')
+
+    def empty_line_thread(self):
+        empty_line_thread = threading.Thread( target = self.empty_line )
+        empty_line_thread.start()
+
+
+    def get_nmap_version( self ):
+        self.nmap_textbox.insert('end', f"The Nmap Version is: \t {self.scanner.nmap_version()[0]}.{self.scanner.nmap_version()[1]}\n")
+
+    def show_command_executed( self ):
+        self.nmap_textbox.insert('end', f"The command executed is:\n{self.scanner.command_line()}")
+    
+    def nmap_getIp( self, host_list ):
+        self.nmap_textbox.insert( 'end', '\nThe hosts ip are:\n' )
+        ip_list = ''
+        for num, host in enumerate( host_list, start = 1 ) :
+            ip_list += f"{num} . {host}\n"
+            self.empty_line_thread()
+            self.nmap_textbox.insert( 'end', f'{ip_list}' )
+
+    def nmap_getIp_thread(self):
+        nmap_getIP_thread = threading.Thread( target=self.nmap_getIp )
+        nmap_getIP_thread.start()
+
+    def scan_services( self, host_list ):
+        display_service = ''
+        for host in host_list :
+            self.scanner.scan( host, arguments='-v -sS -Pn' ) # sudo = True
+            display_service += f"\ncommand executed: \n{self.scanner.command_line()}"
+            open_ports = self.scanner[host]['tcp'].keys()
+            scanned_results = self.scanner[host]['tcp']
+            display_service += f"\nOpen Port\t\tService\t\tScan Type\n"
+            display_service += f"      {open_ports}\t\t{scanned_results[open_ports]['name']}\t\t{scanned_results[open_ports]['reason']}\n"
+        self.nmap_textbox.insert('end', display_service)
+##$$$$$    
+    def get_server_version(self, host_list):
+        display_os_info = ''
+        for host in host_list: 
+            self.scanner.scan(host, arguments='-O') #sudo = True
+            self.show_command_executed()
+            if 'osmatch' in self.scanner[ host ]:
+                for osmatch in self.scanner[host]['osmatch']:
+                    if 'osclass' in osmatch:
+                        for osclass in osmatch['osclass']:
+                            display_os_info += f"\nIp Address : {host}\n"
+                            display_os_info += f"OS name : {osmatch['name']}\n"
+                            display_os_info += f"OS type : {osclass['type']}\n"
+                            display_os_info += f"OS vendor : {osclass['vendor']}\n"
+                            display_os_info += f"OS family : {osclass['osfamily']}\n"
+        self.nmap_textbox.insert( 'end', display_os_info )
+
+    def get_server_version_thread( self ) :
+
+
+    def get_server_name(self, host_list):
+        display_server_name = ''
+        for host in host_list:
+            self.show_command_executed()
+            self.scanner.scan(host, arguments='-A') #sudo=True
+            if 'hostscript' in self.scanner[host]:
+                for result_dict in self.scanner['hostscript']:
+                    for key, value in result_dict.items():
+                        if "NetBIOS name" in value:
+                            script_output = value
+                            name = script_output.split(':')
+                            name = name[1].split(',')
+                            server_name=f"The Server Name is {name[0]}"
+                            display_server_name += server_name
+            else:
+                display_server_name += "This is not a server"
+            self.nmap_textbox.insert( 'end', display_server_name )
+            self.empty_line_thread()
+                    
         
     def scan_network( self ) :
         try :
-            scanner = nmap.PortScanner( )
             target_ip = self.ip_entry.get( )
-            self.clear_textbox( )
+            self.clear_textbox_thread( )
 
             # Show Nmap Version
             if self.nmap_version_radio.get( ) == 'on' :
-                    display_nmap_version = f"The Namp Version is : \t { scanner.nmap_version()[0] }.{ scanner.nmap_version()[1] }\n"
-                    self.nmap_textbox.insert( 'end', display_nmap_version )
-
+                self.get_nmap_version()
+                self.empty_line_thread()
+   
             # Scan All Hosts
             if target_ip != '' :
-                    scanner.scan( target_ip, arguments = '-sS -Pn' ) #, sudo = True )
-                    host_list = scanner.all_hosts()
-                        
-            # Show the command executed
-            command_executed = f"The command executed is:\n{ scanner.command_line() }"
-            self.nmap_textbox.insert( 'end', '\n' )
-            self.nmap_textbox.insert( 'end', command_executed )
-
-            # Show target IP                       
-            if self.ip_radio.get( ) == 'on' :
-                self.nmap_textbox.insert( 'end', '\nThe hosts ip are:\n' )
-                show_ip = ''
-                for num, host in enumerate( host_list, start = 1 ) :
-                    show_ip += f"{num} . {host}\n"
-                    self.nmap_textbox.insert( 'end', '\n' )
-                    self.nmap_textbox.insert( 'end', show_ip )
-
-            # Scan Service
-            if self.service_radio.get() == 'on' :
-                display_service = ''
-                for host in host_list :
-                    scanner.scan( host, arguments='-v -sS -Pn')#, sudo = True )
-                    display_service += f"\ncommand executed: \n{ scanner.command_line() }\n"
-                    open_ports = scanner[ host ][ 'tcp' ].keys()
-                    scanned_results = scanner[ host ][ 'tcp' ]
-                    display_service += f"\n{"Open Port"}\t\t{"Service"}\t\t{"Scan Type"}\n"
-                    for open_port in open_ports :
-                        display_service += f"      {open_port}\t\t{scanned_results[open_port]['name']}\t\t {scanned_results[open_port]['reason']}\n"
-                self.nmap_textbox.insert( 'end', display_service )
-                self.nmap_textbox.insert( 'end', '\n' )
-            
-            # Scan OS
-            if self.os_radio.get( ) == 'on' :
-                display_os_info = ''
-                for host in host_list :
-                    scanner.scan( host, arguments='-O' ) # sudo = True
-                    display_os_info += f"\ncommand executed: \n{ scanner.command_line()}\n"
-                    if 'osmatch' in scanner[ host ] :
-                        for osmatch in scanner[host]['osmatch']:
-                            if 'osclass' in osmatch:
-                                for osclass in osmatch['osclass']:
-                                    display_os_info += f"\nIp Address : {host}\n"
-                                    display_os_info += f"OS name : {osmatch['name']}\n"
-                                    display_os_info += f"OS type : {osclass['type']}\n"
-                                    display_os_info += f"OS vendor : {osclass['vendor']}\n"
-                                    display_os_info += f"OS family : {osclass['osfamily']}\n"
-                self.nmap_textbox.insert( 'end', display_os_info )
-                self.nmap_textbox.insert( 'end', "\n" )
-            # Scan Server Name
-            if self.server_name_radio.get() == 'on' :
-                display_server_name = ''
-                for host in host_list :
-                    display_server_name += f"\ncommand executed: \n{ scanner.command_line()}\n"
-                    scanner.scan( host, arguments = '-A', sudo = True )
-                    if 'hostscript' in scanner[host]:
-                        for d in scanner[host]['hostscript'] :
-                                for key, value in d.items():
-                                        if "NetBIOS name" in value:
-                                                script_output = value
-                                                name = script_output.split( ':' )
-                                                name = name[1].split(',')
-                                                server_name = f"The Server Name is: {name[0]}"
-                                                display_server_name += server_name
-                                        else :
-                                                display_server_name += "This is not a server!"
-                                                self.nmap_textbox.insert( 'end', display_server_name )
-                                                self.nmap_textbox.insert( 'end', "\n" )
+                self.scanner.scan( target_ip, arguments = '-sS -Pn' ) #, sudo = True )
+                host_list = self.scanner.all_hosts()
+                # Show the command executed
+                self.show_command_executed()
+                self.empty_line_thread()
+                if self.ip_radio.get( ) == 'on' :
+                    self.nmap_getIp(host_list=host_list)
+                    self.empty_line_thread()
+                if self.service_radio.get() == 'on' :
+                    self.scan_services(host_list=host_list)
+                    self.empty_line_thread()
+                if self.os_radio.get( ) == 'on' :
+                    self.get_server_version(host_list=host_list)
+                if self.server_name_radio.get() == 'on' :
+                    self.get_server_name(host_list=host_list)
             else :
                 self.nmap_textbox.insert('end', "Please enter target IP." )
-            # scan_network_thread = threading.Thread( target = self.scan_network )
-            # scan_network_thread.start()
         except nmap.PortScannerError as e :
                 print( "Nmap PortScannerError: ", e )
         except Exception as e :
                 print( "An error occured: ", e )
 
-    # def scan_network_thread( self ) :
-    #     scan_network_thread = threading.Thread( target = self.scan_network )
-    #     scan_network_thread.start()
+    def scan_network_thread( self ) :
+        scan_network_thread = threading.Thread( target = self.scan_network )
+        scan_network_thread.start()
 
     def insert_record( self, new_data ) :
         self.new_data = new_data
