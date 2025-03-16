@@ -1,5 +1,6 @@
 import customtkinter as ctk
 import threading
+import queue
 from features import Clock, Appearance, Textbox, Progressbar
 import nmap
 # import sqlite3
@@ -10,6 +11,8 @@ import psycopg2
 class NmapPage( ctk.CTkFrame ) :
     def __init__( self, master ) :
         super( ).__init__( master )
+        self.result_queue = queue.Queue( ) # Add queue for thread-safe communication ( for the fucking textbox )
+        self.after( 100, self.process_queue ) # Keep update the fucking queue periodically
         # Configuration
         # self.database = r'sasqdemo.db'
         # self.conn = self.create_connection( self.database )
@@ -435,46 +438,68 @@ class NmapPage( ctk.CTkFrame ) :
             "6. Nmap Version:\n    Shows Nmap version"
         )
 
-    def run_in_thread( self, target, args=()):
-        thread = threading.Thread( target=target, args = tuple( args ) )
-        thread.start()
+    def process_queue( self ) :
+        try :
+            while True :
+                result = self.result_queue.get_nowait( ) # get result from the queur
+                self.nmap_textbox.insert( 'end', str( result ) )
+        except queue.Empty :
+            pass
+        self.after( 100, self.process_queue ) # keep update queue
+
+    def run_in_thread( self, target, args=( ) ):
+        def wrapper( ) :
+            try :
+                result = target( *args ) # host_list
+                self.result_queue.put( str( result ) ) # put host from host_list in queue
+            except Exception as e :
+                self.result_queue.put( f"Error: { str( e ) }\n" )
+
+        thread = threading.Thread( target = wrapper )
+        thread.start( )
 
     def clear_textbox(self):
         self.nmap_textbox.delete( '0.0', 'end' )
 
-    def empty_line(self):
-        self.nmap_textbox.insert('end', '\n')
+    def show_command_executed( self ):
+        return f"Command executed:\n{ self.scanner.command_line( ) }\n"
 
     def get_nmap_version( self ):
-        self.nmap_textbox.insert('end', f"\nNmap Version: \t {self.scanner.nmap_version()[0]}.{self.scanner.nmap_version()[1]}\n")
+        return f"\nNmap Version:\t{ self.scanner.nmap_version( )[0] }.{ self.scanner.nmap_version()[1] }\n"
 
-    def show_command_executed( self ):
-        self.nmap_textbox.insert('end', f"Command executed:\n{self.scanner.command_line()}\n")
+    def get_number_of_host( self, host_list ) :
+        return f"\nTotal number of Hosts: { str( len( host_list ) ) }"
     
-    def nmap_getIp( self, host_list):
-        self.nmap_textbox.insert( 'end', '\nThe hosts ip are:\n' )
-        ip_list = ''
+    def nmap_getIp( self, host_list ) :
+        ip_list = '\nThe hosts ip are:\n'
         for num, host in enumerate( host_list, start = 1 ) :
-            ip_list += f"{num} . {host}"
-        self.nmap_textbox.insert( 'end', f'{ip_list}' )
+            ip_list += f"{num} . {host}\n"
+        return ip_list
 
     def scan_services( self, host_list ):
         display_service = ''
         for host in host_list :
             self.scanner.scan( host, arguments='-v -sS -Pn' ) # sudo = True
-            display_service += f"command executed: \n{self.scanner.command_line()}"
-            open_ports = self.scanner[host]['tcp'].keys()
-            scanned_results = self.scanner[host]['tcp']
-            display_service += f"\nOpen Port\t\tService\t\tScan Type\n"
-            display_service += f"      {open_ports}\t\t{scanned_results[open_ports]['name']}\t\t{scanned_results[open_ports]['reason']}\n"
-        self.nmap_textbox.insert('end', display_service)
+            display_service += f"command executed: \n{ self.scanner.command_line( ) }\n"
+            if 'tcp' in self.scanner[host] :
+                open_ports = self.scanner[host]['tcp'].keys( )
+                scanned_results = self.scanner[host]['tcp']
+                display_service += f"\nOpen Port\t\tService\t\tScan Type"
+            
+                for port in open_ports :
+                    service_name = scanned_results[port]['name']
+                    scan_type = scanned_results[port]['reason']
+                    display_service += f"\n{port}\t\t{service_name}\t\t{scan_type}"
+            else :
+                display_service += f"No open TCP ports found for host {host}.\n"
+        return display_service
 
-    def get_server_version(self, host_list):
+    def get_server_version( self, host_list ) :
         display_os_info = ''
         for host in host_list: 
-            self.scanner.scan(host, arguments='-O') #sudo = True
-            self.run_in_thread(self.show_command_executed)
-            if 'osmatch' in self.scanner[ host ]:
+            self.scanner.scan( host, arguments='-O' ) #sudo = True
+            self.run_in_thread( self.show_command_executed )
+            if 'osmatch' in self.scanner[host]:
                 for osmatch in self.scanner[host]['osmatch']:
                     if 'osclass' in osmatch:
                         for osclass in osmatch['osclass']:
@@ -483,94 +508,100 @@ class NmapPage( ctk.CTkFrame ) :
                             display_os_info += f"OS type : {osclass['type']}\n"
                             display_os_info += f"OS vendor : {osclass['vendor']}\n"
                             display_os_info += f"OS family : {osclass['osfamily']}\n"
-        self.nmap_textbox.insert( 'end', display_os_info )
+        return display_os_info
 
     def get_server_name(self, host_list):
         display_server_name = ''
         for host in host_list:
-            self.run_in_thread(self.show_command_executed)
-            self.scanner.scan(host, arguments='-A') #sudo=True
+            self.scanner.scan(host, arguments='-A')  # Perform an aggressive scan
+            self.run_in_thread( self.show_command_executed )
+            print( self.scanner.scan(host, arguments='-A') )
             if 'hostscript' in self.scanner[host]:
-                for result_dict in self.scanner['hostscript']:
-                    for key, value in result_dict.items():
+                for d in self.scanner[host]['hostscript'] :
+                    for key, value in d.items():
                         if "NetBIOS name" in value:
                             script_output = value
-                            name = script_output.split(':')
+                            name = script_output.split( ':' )
                             name = name[1].split(',')
-                            server_name=f"The Server Name is {name[0]}"
+                            server_name = f"The Server Name is: {name[0]}"
                             display_server_name += server_name
-            else:
-                display_server_name += "This is not a server"
-            self.nmap_textbox.insert( 'end', display_server_name )
-            self.run_in_thread(self.empty_line)
+            else :
+                display_server_name += "This is not a server!"
+        return display_server_name
 
     def scan_network( self ) :
         try :
             target_ip = self.ip_entry.get( )
             if not target_ip:
-                self.nmap_textbox.insert( 'end', "Please enter target IP.\n" )
+                self.result_queue.put( "Please enter target IP.\n" )
                 return
             
-            self.run_in_thread(self.clear_textbox)
+            self.run_in_thread( self.clear_textbox )
             # Show command executed
-            self.nmap_textbox.insert( 'end', "Start scan...\n")
+            self.result_queue.put( "Starting scan...\n")
 
             #Perform Scan
             self.scanner.scan( target_ip, arguments = '-sS -Pn' ) #, sudo = True )
-            self.run_in_thread( self.show_command_executed )
+            self.run_in_thread( self.show_command_executed ) 
             host_list = self.scanner.all_hosts( )
-            
-            # 1. Show Nmap Version
-            if self.nmap_version_radio.get( ) == 'on' :
-                self.run_in_thread( self.get_nmap_version )
-                self.run_in_thread( self.empty_line )
-            
             # Update progressbar :
             self.progressbar.set( 0.2 )
 
+            # 1. Show Nmap Version
+            if self.nmap_version_radio.get( ) == 'on' :
+                self.run_in_thread( self.get_nmap_version )
+                self.result_queue.put( "\n" )
+            
+                # Update progressbar :
+                self.progressbar.set( 0.3 )
+
+            # 2. Show Numner of Hosts    
+            if self.number_of_host_radio.get( ) == "on" :
+                self.run_in_thread( self.get_number_of_host, args=( host_list, ) )
+                self.result_queue.put( "\n" )
+
             # 3.Show Target Ip
             if self.ip_radio.get( ) == 'on' :
-                print( 'test' )
-                self.nmap_textbox.insert( 'end', '\nThe hosts ip are:\n' )
-                print( 'test2' )
+                self.result_queue.put( '\nThe hosts ip are:\n' )
                 for num, host in enumerate( host_list, start=1 ) :
-                    self.nmap_textbox.insert( 'end', f"{ num } . { host }" )    
-                    self.run_in_thread( self.empty_line )
+                    self.result_queue.put( f"{ num } . { host }" )    
+                    self.result_queue.put( "\n")
             
-            # Update progressbar :
-            self.progressbar.set( 0.4 )
+                # Update progressbar :
+                self.progressbar.set( 0.4 )
 
             # 4. Show running services
             if self.service_radio.get() == 'on' :
-                self.run_in_thread( self.scan_services, args( host_list, ) )
-                self.run_in_thread(self.empty_line)
+                self.run_in_thread( self.scan_services, args = ( host_list, ) )
+                self.result_queue.put( "\n")
             
-            # Update progressbar :
-            self.progressbar.set( 0.6 )
+                # Update progressbar :
+                self.progressbar.set( 0.6 )
 
             # 5. Show operation system
             if self.os_radio.get( ) == 'on' :
-                self.run_in_thread( self.get_server_version, args = (host_list,) )
-
-                self.run_in_thread(self.empty_line)
+                self.run_in_thread( self.get_server_version, args = ( host_list, ) )
+                self.result_queue.put( "\n")
             
-            # Update progressbar :
-            self.progressbar.set( 0.8 )    
+                # Update progressbar :
+                self.progressbar.set( 0.8 )
+
             # 6. Show Server name
             if self.server_name_radio.get() == 'on' :
-                self.run_in_thread( self.get_server_name, args=(host_list) )
-            
-            # Update progressbar :
-            self.progressbar.set( 1 )
+                self.run_in_thread( self.get_server_name, args = ( host_list, ) )
+                # Update progressbar :
+                self.progressbar.set( 1 )
 
-            self.nmap_textbox.insert('end', "\nScan completed.\n" )
+            self.result_queue.put( "\nScan completed.\n" )
 
         except nmap.PortScannerError as e :
-                self.nmap_textbox.insert( 'end', f"Nmap PortScannerError: { str( e )}\n" )
-        except Exception as e :
-                self.nmap_textbox.insert( 'end', f"An error occurred: { str( e )}\n" )
+            self.result_queue.put( f"Nmap PortScannerError: { str( e )}\n" )
+            self.progressbar.set( 0 )
 
-    def insert_record( self, new_data ) :
-        self.new_data = new_data
-        cur = self.conn.cursor( )
-        sql = "INSERT INTO scanning_history ( scanning_target, )"
+        except Exception as e :
+            self.result_queue.put( f"An error occurred: { str( e )}\n" )
+            self.progressbar.set( 0 )
+    # def insert_record( self, new_data ) :
+    #     self.new_data = new_data
+    #     cur = self.conn.cursor( )
+    #     sql = "INSERT INTO scanning_history ( scanning_target, )"
