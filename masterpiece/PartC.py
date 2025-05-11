@@ -393,7 +393,7 @@ class LoveAndPeace( customtkinter.CTk ) :
                 self.textbox.insert('end', display_nmap_version )
 
             if target_ip != '' :
-                scanner.scan( target_ip, arguments = '-sS -Pn', sudo = True)
+                scanner.scan( target_ip, arguments = '-sS -Pn') # sudo = True
                 host_list = scanner.all_hosts()
 
                 # Show the command executed
@@ -420,7 +420,7 @@ class LoveAndPeace( customtkinter.CTk ) :
                 if self.service_radio.get( ) == 'on' :
                     display_service = ''
                     for host in host_list :
-                        scanner.scan( host, arguments = '-v -sS -Pn', sudo = True )
+                        scanner.scan( host, arguments = '-v -sS -Pn'  ) # sudo = True
                         display_service += f"\ncommand used: \n{ scanner.command_line()}\n"
                         open_ports = scanner[ host ][ 'tcp'].keys()
                         scanned_results = scanner[ host ][ 'tcp' ]
@@ -434,7 +434,7 @@ class LoveAndPeace( customtkinter.CTk ) :
                 if self.os_radio.get( ) == 'on' :
                     display_os_info = ''
                     for host in host_list :
-                        scanner.scan( host, arguments = '-O', sudo = True )
+                        scanner.scan( host, arguments = '-O'  ) #sudo = True
                         display_os_info += f"\ncommand used: \n{ scanner.command_line()}\n"
                         if 'osmatch' in scanner[host]:
                             for osmatch in scanner[host]['osmatch']:
@@ -453,7 +453,7 @@ class LoveAndPeace( customtkinter.CTk ) :
                     display_server_name = ''
                     for host in host_list :
                         display_server_name += f"\ncommand used: \n{ scanner.command_line()}\n"
-                        scanner.scan( host, arguments = '-A', sudo = True )
+                        scanner.scan( host, arguments = '-A' ) #sudo = True
                         if 'hostscript' in scanner[host]:
                             for d in scanner[host]['hostscript'] :
                                 for key, value in d.items():

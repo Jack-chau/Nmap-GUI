@@ -12,6 +12,7 @@ class NmapPage( ctk.CTkFrame ) :
     def __init__( self, master ) :
         super( ).__init__( master )
         self.result_queue = queue.Queue( ) # Add queue for thread-safe communication ( for the fucking textbox )
+        self.scan_complete_event = threading.Event( )
         self.after( 100, self.process_queue ) # Keep update the fucking queue periodically
         # Configuration
         # self.database = r'sasqdemo.db'
@@ -32,6 +33,7 @@ class NmapPage( ctk.CTkFrame ) :
             column = 2, 
             sticky = 'nsew' 
         )
+        # Clock
         self.date_label = Clock( self.nmap_sidebar ).date_label
         self.date_label.pack(
             side = 'top',
@@ -454,9 +456,12 @@ class NmapPage( ctk.CTkFrame ) :
                 self.result_queue.put( str( result ) ) # put host from host_list in queue
             except Exception as e :
                 self.result_queue.put( f"Error: { str( e ) }\n" )
+            finally :
+                self.scan_complete_event.set()
 
         thread = threading.Thread( target = wrapper )
         thread.start( )
+        return thread
 
     def clear_textbox(self):
         self.nmap_textbox.delete( '0.0', 'end' )
@@ -535,7 +540,7 @@ class NmapPage( ctk.CTkFrame ) :
             if not target_ip:
                 self.result_queue.put( "Please enter target IP.\n" )
                 return
-            
+            self.scan_complete_event.clear()
             self.run_in_thread( self.clear_textbox )
             # Show command executed
             self.result_queue.put( "Starting scan...\n")
@@ -547,9 +552,12 @@ class NmapPage( ctk.CTkFrame ) :
             # Update progressbar :
             self.progressbar.set( 0.2 )
 
+            threads= list( )
+
             # 1. Show Nmap Version
             if self.nmap_version_radio.get( ) == 'on' :
-                self.run_in_thread( self.get_nmap_version )
+                thread = self.run_in_thread( self.get_nmap_version )
+                threads.append( thread )
                 self.result_queue.put( "\n" )
             
                 # Update progressbar :
@@ -557,22 +565,22 @@ class NmapPage( ctk.CTkFrame ) :
 
             # 2. Show Numner of Hosts    
             if self.number_of_host_radio.get( ) == "on" :
-                self.run_in_thread( self.get_number_of_host, args=( host_list, ) )
+                thread = self.run_in_thread( self.get_number_of_host, args=( host_list, ) )
+                threads.append( thread )
                 self.result_queue.put( "\n" )
 
             # 3.Show Target Ip
             if self.ip_radio.get( ) == 'on' :
-                self.result_queue.put( '\nThe hosts ip are:\n' )
-                for num, host in enumerate( host_list, start=1 ) :
-                    self.result_queue.put( f"{ num } . { host }" )    
-                    self.result_queue.put( "\n")
+                thread = self.run_in_thread( self.nmap_getIp, args=( host_list, ) )
+                threads.append( thread )
             
                 # Update progressbar :
                 self.progressbar.set( 0.4 )
 
             # 4. Show running services
             if self.service_radio.get() == 'on' :
-                self.run_in_thread( self.scan_services, args = ( host_list, ) )
+                thread = self.run_in_thread( self.scan_services, args = ( host_list, ) )
+                threads.append( thread )
                 self.result_queue.put( "\n")
             
                 # Update progressbar :
@@ -580,7 +588,8 @@ class NmapPage( ctk.CTkFrame ) :
 
             # 5. Show operation system
             if self.os_radio.get( ) == 'on' :
-                self.run_in_thread( self.get_server_version, args = ( host_list, ) )
+                thread = self.run_in_thread( self.get_server_version, args = ( host_list, ) )
+                threads.append( thread )
                 self.result_queue.put( "\n")
             
                 # Update progressbar :
@@ -588,11 +597,16 @@ class NmapPage( ctk.CTkFrame ) :
 
             # 6. Show Server name
             if self.server_name_radio.get() == 'on' :
-                self.run_in_thread( self.get_server_name, args = ( host_list, ) )
+                thread = self.run_in_thread( self.get_server_name, args = ( host_list, ) )
+                threads.append( thread )
                 # Update progressbar :
                 self.progressbar.set( 1 )
 
+            # for thread in threads :
+            #     thread.join( ) # until all thread finished
+                
             self.result_queue.put( "\nScan completed.\n" )
+            self.progressbar.set( 1 )
 
         except nmap.PortScannerError as e :
             self.result_queue.put( f"Nmap PortScannerError: { str( e )}\n" )
@@ -601,6 +615,9 @@ class NmapPage( ctk.CTkFrame ) :
         except Exception as e :
             self.result_queue.put( f"An error occurred: { str( e )}\n" )
             self.progressbar.set( 0 )
+
+
+
     # def insert_record( self, new_data ) :
     #     self.new_data = new_data
     #     cur = self.conn.cursor( )
