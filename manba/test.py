@@ -1,4 +1,3 @@
-import tkinter as tk
 from PIL import Image
 
 # menu_icon = Image.open( "images/menu.png" )

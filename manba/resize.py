@@ -1,6 +1,6 @@
 from PIL import Image
 
-image = Image.open( "images/docker2.png" )
+image = Image.open( "images/logging.png" )
 image = image.resize( ( 100, 100 ) )
 
-image.save( "images/resized_images/docker.png" )
+image.save( "images/resized_images/logging.png" )

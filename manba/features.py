@@ -27,12 +27,24 @@ class Appearance( ctk.CTkFrame ) :
         )
         self.scale_optionmenu.set( "100%" )
 
+        # self.change_theme = ctk.CTkOptionMenu(
+        #         master,
+        #         values = [ 'breeze', 'cherry', 'coffee', 'lavender' ],
+        #         anchor = "center",
+        #         command = self.change_theme
+        # )
+
+
     def change_appearance( self, new_appearance_mode : str ):
-        ctk.set_appearance_mode( new_appearance_mode )
-    
+        ctk.set_appearance_mode( str( new_appearance_mode ) )
+
     def change_scale( self, new_scaling : str ):
         new_scaling_float = int( new_scaling.replace( "%", "" ) ) / 100
         ctk.set_widget_scaling( new_scaling_float )
+
+#     def change_theme( self, theme : str ):
+#         ctk.set_default_color_theme( f'./theme/{ str( theme ) }.json' )
+        
 
 class Clock( ctk.CTkFrame ) :
     def __init__( self, master ) :
@@ -40,19 +52,19 @@ class Clock( ctk.CTkFrame ) :
 
         self.date_label = ctk.CTkLabel(
                 master,
-                font = ("Segoe Script", 20),
+                font = ("Segoe Script", 30),
                 fg_color = "transparent",
                 text = strftime( "%B %d, %Y" ),
         )
         self.day_label = ctk.CTkLabel(
                 master,
-                font = ("Segoe Script", 20),
+                font = ("Segoe Script", 30),
                 fg_color = "transparent",
                 text = strftime( "%A" ),
         )         
         self.time_label = ctk.CTkLabel( 
                 master,
-                font = ("Segoe Script", 20),
+                font = ("Segoe Script", 30),
                 fg_color = "transparent",
                 text = strftime( "%H:%M:%S %p" ),
         )

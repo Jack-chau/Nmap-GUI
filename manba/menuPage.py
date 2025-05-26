@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 class SwitchMenu( ctk.CTkFrame ) :
    def __init__( self, master ) :
       super().__init__( master )
+
       #Config
       self.menu_gray = '#808080'
       self.selected_color = '#606060'
@@ -21,9 +22,9 @@ class SwitchMenu( ctk.CTkFrame ) :
             dark_image = Image.open( "images/resized_images/menu.png" ), 
             size=( self.icon_width, self.icon_height )
       )
-      self.nmap_icon = ctk.CTkImage( 
-            light_image = Image.open( 'images/resized_images/nmap.png' ),
-            dark_image = Image.open( "images/resized_images/nmap.png" ), 
+      self.docker_icon = ctk.CTkImage( 
+            light_image = Image.open( 'images/resized_images/docker.png' ),
+            dark_image = Image.open( "images/resized_images/docker.png" ), 
             size=( self.icon_width, self.icon_height )
       )
       self.ansible_icon = ctk.CTkImage( 
@@ -31,9 +32,9 @@ class SwitchMenu( ctk.CTkFrame ) :
             dark_image = Image.open( "images/resized_images/ansible.png" ), 
             size=( self.icon_width, self.icon_height )
       )
-      self.docker_icon = ctk.CTkImage( 
-            light_image = Image.open( 'images/resized_images/docker.png' ),
-            dark_image = Image.open( "images/resized_images/docker.png" ), 
+      self.logging_icon = ctk.CTkImage( 
+            light_image = Image.open( 'images/resized_images/logging.png' ),
+            dark_image = Image.open( "images/resized_images/logging.png" ), 
             size=( self.icon_width, self.icon_height )
       )
       self.schedule_icon = ctk.CTkImage( 
@@ -83,7 +84,7 @@ class SwitchMenu( ctk.CTkFrame ) :
       self.blank_btn_1 = ctk.CTkButton( 
             self.button_frame,
             text = '',
-            fg_color='transparent', 
+            fg_color = self.menu_gray, 
             hover_color = 'red',
             width = self.btn_width ,
             height = 150,
@@ -91,18 +92,18 @@ class SwitchMenu( ctk.CTkFrame ) :
       )
       self.blank_btn_1.pack( side = 'top', expand = True, fill = 'both' )
 
-      self.nmap_btn = ctk.CTkButton( 
+      self.docker_btn = ctk.CTkButton( 
             self.button_frame, 
-            image = self.nmap_icon, 
-            width = self.btn_width, 
+            image = self.docker_icon,
+            width = self.btn_width,
             height = self.btn_height,
-            text='' , 
-            fg_color=self.selected_color, 
+            text='' ,
+            fg_color=self.selected_color,
             hover_color = self.selected_color,
-            corner_radius = 0,
-            command = lambda : self.switch_page( indicator = self.nmap_btn ) 
+            corner_radius=0,
+            command = lambda : self.switch_page( indicator = self.docker_btn ) 
       )
-      self.nmap_btn.pack( side = 'top', expand = True, fill = 'both' )
+      self.docker_btn.pack( side = 'top', expand = True, fill = 'both' )
 
       self.ansible_btn = ctk.CTkButton( 
             self.button_frame,
@@ -117,19 +118,18 @@ class SwitchMenu( ctk.CTkFrame ) :
       )
       self.ansible_btn.pack( side = 'top', expand = True, fill = 'both' )
                   
-      self.docker_btn = ctk.CTkButton( 
+      self.logging_btn = ctk.CTkButton( 
             self.button_frame, 
-            image = self.docker_icon,
-            width = self.btn_width,
+            image = self.logging_icon, 
+            width = self.btn_width, 
             height = self.btn_height,
-            text='' ,
-            fg_color='transparent',
+            text='' , 
+            fg_color='transparent', 
             hover_color = self.selected_color,
-            corner_radius=0,
-            command = lambda : self.switch_page( indicator = self.docker_btn ) 
+            corner_radius = 0,
+            command = lambda : self.switch_page( indicator = self.logging_btn ) 
       )
-      self.docker_btn.pack( side = 'top', expand = True, fill = 'both' )
-
+      self.logging_btn.pack( side = 'top', expand = True, fill = 'both' )
       self.schedule_btn = ctk.CTkButton( 
             self.button_frame, 
             image = self.schedule_icon, 
@@ -170,53 +170,31 @@ class SwitchMenu( ctk.CTkFrame ) :
 
       # Label Frame
       self.label_frame = ctk.CTkFrame( 
-            self.menu_frame ,
+            self.menu_frame,
       )
 
       # Label 
       self.blk_label_1 = ctk.CTkButton( 
-            self.label_frame, text="", 
+            self.label_frame, 
+            text="", 
             height=20, 
             width=self.label_width,
             fg_color='transparent', 
-            state = 'disabled'
+            state = 'disabled',
+            font = self.font_style,
       )
       self.blk_label_1.pack( side = 'top', expand = True, fill = 'both' )
+
       self.blk_label_2 = ctk.CTkButton( 
             self.label_frame, 
             text="", 
             height=138, 
             width=self.label_width,
             fg_color='transparent', 
-            state = 'disabled'
+            state = 'disabled',
+            font = self.font_style,
       )
       self.blk_label_2.pack( side = 'top', expand = True, fill = 'both' )
-      
-      self.nmap_label = ctk.CTkButton( 
-            self.label_frame, 
-            text="Nmap Page", 
-            height = self.label_height, 
-            width = self.label_width, 
-            fg_color='transparent', 
-            font = self.font_style,
-            corner_radius = 0,
-            hover_color=self.selected_color,
-            command= lambda : self.switch_page( indicator = self.nmap_btn )
-      )
-      self.nmap_label.pack( side = 'top', expand = True, fill = 'both' )
-
-      self.ansible_label = ctk.CTkButton( 
-            self.label_frame, 
-            text = "Ansible Page", 
-            height = self.label_height, 
-            width = self.label_width,
-            fg_color = 'transparent', 
-            font = self.font_style,
-            corner_radius = 0,
-            hover_color=self.selected_color,
-            command= lambda : self.switch_page( indicator = self.ansible_btn )
-      )
-      self.ansible_label.pack( side = 'top', expand = True, fill = 'both' )
 
       self.docker_label = ctk.CTkButton( 
             self.label_frame, 
@@ -230,6 +208,32 @@ class SwitchMenu( ctk.CTkFrame ) :
             command= lambda : self.switch_page( indicator = self.docker_btn )
       )
       self.docker_label.pack( side = 'top', expand = True, fill = 'both' )
+
+      self.ansible_label = ctk.CTkButton( 
+            self.label_frame, 
+            text = "Package Page", 
+            height = self.label_height, 
+            width = self.label_width,
+            fg_color = 'transparent', 
+            font = self.font_style,
+            corner_radius = 0,
+            hover_color=self.selected_color,
+            command= lambda : self.switch_page( indicator = self.ansible_btn )
+      )
+      self.ansible_label.pack( side = 'top', expand = True, fill = 'both' )
+
+      self.logging_label = ctk.CTkButton( 
+            self.label_frame, 
+            text="Logging Page", 
+            height = self.label_height, 
+            width = self.label_width, 
+            fg_color='transparent', 
+            font = self.font_style,
+            corner_radius = 0,
+            hover_color=self.selected_color,
+            command= lambda : self.switch_page( indicator = self.logging_btn )
+      )
+      self.logging_label.pack( side = 'top', expand = True, fill = 'both' )
 
       self.schedule_label = ctk.CTkButton( 
             self.label_frame, 
@@ -268,9 +272,9 @@ class SwitchMenu( ctk.CTkFrame ) :
       self.blk_label_3.pack( side = 'top', expand = True, fill = 'both' )
 
    def switch_page( self, indicator ) :
-      self.nmap_btn.configure( fg_color = 'transparent' )
-      self.ansible_btn.configure( fg_color = 'transparent' )
       self.docker_btn.configure( fg_color = 'transparent' )
+      self.ansible_btn.configure( fg_color = 'transparent' )
+      self.logging_btn.configure( fg_color = 'transparent' )
       self.schedule_btn.configure( fg_color = 'transparent' )
       self.github_btn.configure( fg_color = 'transparent' )
       indicator.configure( fg_color = self.selected_color, hover_color = self.selected_color )
