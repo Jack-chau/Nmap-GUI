@@ -196,6 +196,41 @@ class DockerNetworkTab :
             pady = ( 25 , 0 ),
             padx = ( 0, 20 ),
         )
+        ##
+        self.port_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Port:",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.port_label.grid(
+            row = 4,
+            column = 0,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.port_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "8080",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.port_entry.grid(
+            row = 4,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
 
         self.network_setting_label = ctk.CTkLabel(
             self.left_frame,
@@ -208,7 +243,7 @@ class DockerNetworkTab :
             )
         )
         self.network_setting_label.grid(
-            row =4,
+            row =5,
             column = 0,
             columnspan = 2,
             sticky = 'ew' ,
@@ -227,7 +262,7 @@ class DockerNetworkTab :
             )
         )
         self.create_network_label.grid(
-            row =5,
+            row =6,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -243,7 +278,7 @@ class DockerNetworkTab :
         )
 
         self.create_network_entry.grid(
-            row = 5,
+            row = 6,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
@@ -262,7 +297,7 @@ class DockerNetworkTab :
             )
         )
         self.network_subnet_label.grid(
-            row =6,
+            row = 7,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -278,7 +313,7 @@ class DockerNetworkTab :
         )
 
         self.network_subnet_entry.grid(
-            row = 6,
+            row = 7,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
@@ -296,7 +331,7 @@ class DockerNetworkTab :
             )
         )
         self.network_gateway_label.grid(
-            row =7,
+            row =8,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -312,7 +347,7 @@ class DockerNetworkTab :
         )
 
         self.network_gateway_entry.grid(
-            row = 7,
+            row = 8,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
@@ -333,7 +368,7 @@ class DockerNetworkTab :
             )
         )
         self.network_delete.grid(
-            row =8,
+            row =9,
             column = 0,
             columnspan = 2,
             sticky = 'ew' ,
@@ -352,7 +387,7 @@ class DockerNetworkTab :
             )
         )
         self.network_delete_label.grid(
-            row =9,
+            row =10,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -368,7 +403,7 @@ class DockerNetworkTab :
         )
 
         self.network_delete_entry.grid(
-            row = 9,
+            row = 10,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
@@ -383,7 +418,7 @@ class DockerNetworkTab :
             font = ctk.CTkFont( "Segoe Script", 20 ),
         )
         self.network_execute.grid( 
-            row = 10,
+            row = 11,
             column = 0,
             columnspan = 2,
             sticky = 'we' ,

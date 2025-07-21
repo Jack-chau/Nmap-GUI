@@ -13,7 +13,7 @@ class Notorious( ctk.CTk ) :
         ctk.set_default_color_theme( './theme/rime.json' )
         ctk.set_widget_scaling( 1.0 )
         # root window size
-        self.title( "Dream Big" )
+        self.title( "IShowSpeed" )
         self.geometry( f'{1800}x{1200}+{180}+{80}' )
         #self.resizable( False, False )
 

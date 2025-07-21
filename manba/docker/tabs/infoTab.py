@@ -191,7 +191,7 @@ class DockerInfoTab :
 
         self.container_inspect = ctk.CTkCheckBox(
             self.left_frame ,
-            text = "Container logs",
+            text = "Container Inspect",
             onvalue = "on",
             offvalue = "off",
             font = ctk.CTkFont(
@@ -223,38 +223,38 @@ class DockerInfoTab :
             padx = ( 10, 20 ),
         )
 
-        self.image_inspect = ctk.CTkCheckBox(
-            self.left_frame ,
-            text = "Image Inspect",
-            onvalue = "on",
-            offvalue = "off",
-            font = ctk.CTkFont(
-            size=15,
-            )
-        )
-        self.image_inspect.grid(
-            row = 5,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 20, 20 ),
-            padx = ( 40, 0 ),
-        )
+        # self.image_inspect = ctk.CTkCheckBox(
+        #     self.left_frame ,
+        #     text = "Image Inspect",
+        #     onvalue = "on",
+        #     offvalue = "off",
+        #     font = ctk.CTkFont(
+        #     size=15,
+        #     )
+        # )
+        # self.image_inspect.grid(
+        #     row = 5,
+        #     column = 0,
+        #     sticky = 'w' ,
+        #     pady = ( 20, 20 ),
+        #     padx = ( 40, 0 ),
+        # )
 
-        self.image_inspect_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "input image id or name",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
+        # self.image_inspect_entry = ctk.CTkEntry(
+        #     self.left_frame ,
+        #     placeholder_text = "input image id or name",
+        #     font = ctk.CTkFont(
+        #         size=15,
+        #     )
+        # )
 
-        self.image_inspect_entry.grid(
-            row = 5,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 20, 20 ),
-            padx = ( 10, 20 ),
-        )
+        # self.image_inspect_entry.grid(
+        #     row = 5,
+        #     column = 1,
+        #     sticky = 'we' ,
+        #     pady = ( 20, 20 ),
+        #     padx = ( 10, 20 ),
+        # )
 
         self.network_inspect = ctk.CTkCheckBox(
             self.left_frame ,
@@ -266,7 +266,7 @@ class DockerInfoTab :
             )
         )
         self.network_inspect.grid(
-            row = 6,
+            row = 5,
             column = 0,
             sticky = 'w' ,
             pady = ( 20, 20 ),
@@ -282,7 +282,7 @@ class DockerInfoTab :
         )
 
         self.network_inspect_entry.grid(
-            row = 6,
+            row = 5,
             column = 1,
             sticky = 'we' ,
             pady = ( 20, 20 ),
@@ -297,7 +297,7 @@ class DockerInfoTab :
             font = ctk.CTkFont( "Segoe Script", 18 ),
         )
         self.check_it_out.grid( 
-            row = 7,
+            row = 6,
             column = 0,
             columnspan = 2,
             sticky = 'we' ,
