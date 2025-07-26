@@ -1,22 +1,28 @@
 import customtkinter as ctk
 from CTkTable import *
-from sidebar.features import Clock, Appearance, Textbox, Progressbar
+from sidebar.features import Clock, Appearance, Progressbar
 from datetime import datetime
-from docker.tabs.infoTab import DockerInfoTab
-from docker.tabs.imageTab import DockerImageTab
-from docker.tabs.containerTab import DockerContainerTab
-from docker.tabs.networkTab import DockerNetworkTab
-import docker
+#Docker Tabs
+from mydocker.tabs.infoTab import DockerInfoTab
+from mydocker.tabs.imageTab import DockerImageTab
+from mydocker.tabs.containerTab import DockerContainerTab
+from mydocker.tabs.networkTab import DockerNetworkTab
+#Docker Functions
+from mydocker.functions.infoFun import DockerInfoFuns
 
-class ContainerManagement( ctk.CTkFrame ) :
+class MyDockerPage( ctk.CTkFrame ) :
     def __init__( self, master ) :
         super( ).__init__( master )
         self.font_style = ( "Helventica bold", 15 )
-
+        self.info_funs = DockerInfoFuns( )
+        self.docker_page_gui( )
+        self.check_connection( )
+        
+    def docker_page_gui( self ) :
 ###Sidebar
         # docker Sidebar Frame
         self.docker_sidebar = ctk.CTkFrame( 
-            master, 
+            self.master, 
             width = 100, 
             corner_radius = 0 
         )
@@ -99,7 +105,7 @@ class ContainerManagement( ctk.CTkFrame ) :
 #Docker main windows
         # Docker Frame
         self.docker_frame = ctk.CTkFrame(
-            master,
+            self.master,
             width = 300 ,
             # border_width = 10,
             corner_radius = 0,
@@ -163,7 +169,7 @@ class ContainerManagement( ctk.CTkFrame ) :
 #CLI outpot frame
         # Text Box Frame
         self.docker_textbox_frame = ctk.CTkFrame( 
-            master, 
+            self.master, 
             # width = 70, 
             corner_radius = 0,
             border_width = 0, 
@@ -175,8 +181,13 @@ class ContainerManagement( ctk.CTkFrame ) :
             columnspan = 3,
             sticky = 'nsew',
         )
-        # Textbox
-        self.docker_textbox = Textbox( self.docker_textbox_frame ).textbox
+# Textbox
+        self.docker_textbox = ctk.CTkTextbox( 
+            self.docker_textbox_frame,
+            corner_radius = 0,
+            border_width = 0,
+            font = ctk.CTkFont( size=15, weight='bold' )
+        )
         self.docker_textbox.pack(
             side = 'top',
             padx = ( 50, 50 ),
@@ -197,9 +208,8 @@ class ContainerManagement( ctk.CTkFrame ) :
         # self.progressbar.forget()
 
 ### Note Frame
-        # Note Frame
         self.note_frame = ctk.CTkFrame( 
-            master, 
+            self.master, 
             width = 400,
             # border_width = 2,
         )
@@ -211,7 +221,7 @@ class ContainerManagement( ctk.CTkFrame ) :
             sticky = 'nsew',
         )
 
-        # Will Update to preview
+# Action Log
         self.action_log_tab = ctk.CTkTabview(
             self.note_frame,
             width = 400,
@@ -226,7 +236,7 @@ class ContainerManagement( ctk.CTkFrame ) :
             pady = ( 0, 0 )
         )
 
-        # Tab choice
+# Tab choice
         self.action_log_tab.add( 'Action Log' )
 
         self.action_label = ctk.CTkLabel(
@@ -254,7 +264,7 @@ class ContainerManagement( ctk.CTkFrame ) :
             sticky = "nsew" 
         )
 
-        # For demo Only
+# For demo Only
         test_list = [
             [ "ID", "Description" ],
             [ 1, 'docker images' ],
@@ -278,9 +288,9 @@ class ContainerManagement( ctk.CTkFrame ) :
             pady = ( 10, 0 ),
             sticky = "nsew"            
         )
-        # Remark Frame
+# Remark Frame
         self.remark_frame = ctk.CTkFrame( 
-            master, 
+            self.master, 
             width = 300,
             # border_width = 2,
             corner_radius = 0,
@@ -311,3 +321,7 @@ class ContainerManagement( ctk.CTkFrame ) :
 
     def clear_textbox(self):
         self.docker_textbox.delete( '0.0', 'end' )
+
+    def check_connection( self ) :
+        self.clear_textbox( )
+        self.docker_textbox.insert( 'end', self.info_funs.check_connection( ) )    

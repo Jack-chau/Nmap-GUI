@@ -75,16 +75,6 @@ class Clock( ctk.CTkFrame ) :
         self.date_label.configure( text = strftime( "%B %d, %Y" ) )
         self.time_label.after( 1000, func = self.update )
 
-class Textbox( ctk.CTkFrame ):
-    def __init__( self, master ) :
-        super().__init__( master )
-        self.textbox = ctk.CTkTextbox(
-                master,
-                corner_radius = 0,
-                border_width = 0,
-                # border_color = 'grey20',
-                font = ctk.CTkFont( size=15, weight='bold' )
-        )
 class Progressbar( ctk.CTkFrame ) :
     def __init__( self, master ) :
         super().__init__( master )

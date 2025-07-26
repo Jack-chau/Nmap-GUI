@@ -1,13 +1,12 @@
 import customtkinter as ctk
 from CTkTable import *
 
-class DockerInfoTab :
+class DockerInfoTab( ) :
     def __init__( self, docker_tab ) :
         self.info_tab = docker_tab.add( 'info' )
-        self._setup_ui( )
+        self.setup_ui( )
 
-    def _setup_ui( self ) :
-
+    def setup_ui( self ) :
         self.info_label = ctk.CTkLabel(
             self.info_tab,
             text = "Hello! Welcome to check docker information!",

@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from sidebar.menuPage import SwitchMenu
-from docker.dockerPage import ContainerManagement
+from mydocker.dockerPage import MyDockerPage
 
 def main() :
     app = Notorious()
@@ -35,7 +35,7 @@ class Notorious( ctk.CTk ) :
         self.switch_menu = SwitchMenu( self )
 
         # Docker Page
-        self.containerManagement = ContainerManagement( self )
+        self.MyDockerPage = MyDockerPage( self )
 
 if __name__ == "__main__":   
     main()
