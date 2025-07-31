@@ -7,18 +7,18 @@ from mydocker.tabs.infoTab import DockerInfoTab
 from mydocker.tabs.imageTab import DockerImageTab
 from mydocker.tabs.containerTab import DockerContainerTab
 from mydocker.tabs.networkTab import DockerNetworkTab
-#Docker Functions
-from mydocker.functions.infoFun import DockerInfoFuns
+# #Docker Functions
+# from mydocker.functions.infoFun import DockerInfoFuns
 
-class MyDockerPage( ctk.CTkFrame ) :
+class DockerMainFrame( ctk.CTkFrame ) :
     def __init__( self, master ) :
         super( ).__init__( master )
         self.font_style = ( "Helventica bold", 15 )
-        self.info_funs = DockerInfoFuns( )
-        self.docker_page_gui( )
-        self.check_connection( )
+        # self.info_funs = DockerInfoFuns( )
+        # self.docker_out_frame( )
+        # self.check_connection( )
         
-    def docker_page_gui( self ) :
+    def docker_out_frame( self ) :
 ###Sidebar
         # docker Sidebar Frame
         self.docker_sidebar = ctk.CTkFrame( 
@@ -166,7 +166,7 @@ class MyDockerPage( ctk.CTkFrame ) :
         self.container_tab = DockerContainerTab( self.docker_tab )
         self.network_tab = DockerNetworkTab( self.docker_tab )
 
-#CLI outpot frame
+#CLI output frame
         # Text Box Frame
         self.docker_textbox_frame = ctk.CTkFrame( 
             self.master, 
@@ -318,10 +318,3 @@ class MyDockerPage( ctk.CTkFrame ) :
             "0.0",
             "\nRemarks:\n\n"
         )
-
-    def clear_textbox(self):
-        self.docker_textbox.delete( '0.0', 'end' )
-
-    def check_connection( self ) :
-        self.clear_textbox( )
-        self.docker_textbox.insert( 'end', self.info_funs.check_connection( ) )    

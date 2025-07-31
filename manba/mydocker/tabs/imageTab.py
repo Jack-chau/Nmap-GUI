@@ -159,7 +159,7 @@ class DockerImageTab :
 
         self.image_command_label = ctk.CTkLabel(
             self.left_frame,
-            text = "Through command:",
+            text = "Full command:",
             font = ctk.CTkFont(
                 family="Arial",
                 size=16,

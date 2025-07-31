@@ -153,7 +153,7 @@ class DockerInfoTab( ) :
             padx = ( 10, 0 ),
         )
 
-        self.all_containers = ctk.CTkCheckBox(
+        self.docker_networks = ctk.CTkCheckBox(
             self.left_frame ,
             text = "Docker Networks",
             onvalue = "on",
@@ -163,7 +163,7 @@ class DockerInfoTab( ) :
             )
         )
 
-        self.all_containers.grid(
+        self.docker_networks.grid(
             row = 3,
             column = 0,
             sticky = 'w' ,
@@ -290,13 +290,28 @@ class DockerInfoTab( ) :
 
         self.check_it_out = ctk.CTkButton( 
             self.left_frame, 
-            text="CHECK IT OUT!",
+            text="CHECK IT OUT",
             width = 200,
             height = 40,
             font = ctk.CTkFont( "Segoe Script", 18 ),
         )
         self.check_it_out.grid( 
             row = 6,
+            column = 0,
+            columnspan = 2,
+            sticky = 'we' ,
+            pady = ( 35 , 10 ),
+            padx = ( 10, 10 ),
+        )
+        self.clear_btn = ctk.CTkButton( 
+            self.left_frame, 
+            text="@_@ CLEAR @_@",
+            width = 200,
+            height = 40,
+            font = ctk.CTkFont( "Segoe Script", 18 ),
+        )
+        self.clear_btn.grid( 
+            row = 7,
             column = 0,
             columnspan = 2,
             sticky = 'we' ,

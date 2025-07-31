@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from sidebar.menuPage import SwitchMenu
-from mydocker.dockerPage import MyDockerPage
+from mydocker.myDockerPage import MyDockerPage
 
 def main() :
     app = Notorious()

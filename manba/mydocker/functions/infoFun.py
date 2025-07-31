@@ -31,40 +31,115 @@ class DockerInfoFuns( ) :
 # Check docker client version
 	def check_docker_client_version( self ) :
 		client_ver = docker.__version__
-		retun( client_ver )
+		return( f"The docker client version is: { client_ver }\n" )
 
 # Check docker server version
 	def check_docker_server_version( self ) :
 		server_ver = self.client.version( )
-		return( server_ver[ "Version" ] )
+		return( f"The docker server version is: {server_ver[ "Version" ]}\n" )
 
 # Check docker context
 	def show_docker_contexts( self ) :
 		try :
-			result = subprocess.run( [ 'docker', 'context', 'ls' ], capture_output = True, text = True, check = True )
-			return( result.stdout )
+			result = subprocess.run( 
+										[ 'docker', 'context', 'ls' ], 
+										capture_output = True, 
+										text = True, 
+										check = True 
+									)
+			lines = result.stdout.splitlines()
+			formatted_output = ""
+
+			if lines :
+				headers = lines[0].split()
+				formatted_output = f"{headers[0]:<20} {headers[1]:<25} {headers[3]}\n"
+				formatted_output += "-" * 150 + "\n"
+
+				for line in lines[1:2]:
+					if line.strip( ):
+						parts = line.split( )
+						formatted_output += f"{parts[0]} {parts[1]:<13} {parts[3]:<23} {' '.join(parts[6:])}\n"
+				for line in lines[2:]:	
+					if line.strip( ):
+						parts = line.split( )
+						formatted_output += f"{parts[0]:<17} {parts[1]} {parts[2]:<18} {' '.join(parts[3:])}\n"
+					
+			return formatted_output
+
 		except subprocess.CalledProcessError as e :
 			return( f"Error executing command: {e}\nError output: {e.stderr}" )
 
 # Check docker info in detail
 	def show_docker_info( self ) :
 		try :
-			result = subprocess.run( [ 'docker', 'info' ], capture_output = True, text = True, check = True )
+			result = subprocess.run( 
+										[ 'docker', 'info' ], 
+										capture_output = True, 
+										text = True, 
+										check = True 
+									)
 			return( result.stdout )
 		except subprocess.CalledProcessError as e :
 			return( f"Error executing command: {e}\nError output: {e.stderr}" )
+
+# Check docker network
+	def show_network_contexts( self ) :
+		try :
+			result = subprocess.run( 
+				[ 'docker', 'network', 'ls' ], 
+				capture_output = True, 
+				text = True, 
+				check = True 
+			)
+			
+			lines = result.stdout.strip().split( '\n' )
+			formatted_output = ''
+
+			if lines :
+				headers = lines[0].split( )
+				formatted_output = f"{headers[0]} {headers[1]:<17} {headers[2]:<35} {headers[3]}\n"
+				formatted_output += "-" * 150 + '\n'
+				
+				for line in lines[1:2]:
+					if line.strip( ) :
+						parts = line.split( )
+						formatted_output += f"{parts[0]:<24} {parts[1]:<37} {parts[2]} \n"
+
+				for line in lines[2:3]:
+					if line.strip( ):
+						parts = line.split()
+						formatted_output += f"{parts[0]:<25} {parts[1]:<38} {parts[2]} \n"
+				
+				for line in lines[3:4]:
+					if line.strip( ):
+						parts = line.split()
+						formatted_output += f"{parts[0]:<25} {parts[1]:<27} {parts[2]} \n"
+
+				for line in lines[4:]:
+					if line.strip( ):
+						parts = line.split()
+						formatted_output += f"{parts[0]:<24} {parts[1]:<37} {parts[2]} \n"
+
+			return( formatted_output )
+		except subprocess.CalledProcessError as e :
+			return( f"Error executing command: {e}\nError output: {e.stderr}" )
+
+
 
 # Show all containers
 	def show_all_containers( self ) :
 		containers = self.client.containers.list( all = all )
 		containers_list = list( )
+		# network_info = dict()
 		for container in containers :
+			network_settings = container.attrs['NetworkSettings']['Networks']
 			containers_list.append(
 				{
 					'id' : container.short_id,
 					'name' : container.name,
 					'status' : container.status,
 					'newtwork_name' : list( container.attrs['NetworkSettings']['Networks'].keys())[0],
+					'network_type' : container.attrs['NetworkSettings']['Networks'][network_name]['driver'],
 					'ip_addr' : container.attrs['NetworkSettings']['IPAddress'],
 					'port' : container.attrs['NetworkSettings']['Ports']
 				}
@@ -103,8 +178,8 @@ class DockerInfoFuns( ) :
 				}
 			)
 		if len( running_containers_list ) > 0 :
-				self.show_container_info( running_containers_list )
-			# return( running_containers_list )
+				result = self.show_container_info( running_containers_list )
+				return( result )
 		else :
 			return( "No running containers" )
 
@@ -117,37 +192,42 @@ class DockerInfoFuns( ) :
 		newtwork_name = True
 		ip_addr = True
 		port = True
-		num_of_container = 1
+		num_of_container = 0
+		result = ''
+
 		for i in data_list:
 			if i['id'] and id == True :
-				keys = f"{'id'}\t"
-				values = f"{i['id']}\t"
+				keys = f"{'Container ID':<20}"
+				values = f"{i['id']:<16}"
 
 			if i['name'] and name == True :
-				keys += f"\t{'name'}\t\t"
-				values += f"{i['name']}\t\t"
+				keys += f"{'Name':<18}"
+				values += f"{i['name']:<17}"
 
 			if i['status'] and status == True :
-				keys += f"{'status'}\t\t" 
-				values += f"{i['status']}\t\t"
+				keys += f"{'Status':<15}" 
+				values += f"{i['status']:<13}"
 				
-			if i['network_type'] and newtwork_name == True :
-				keys += f"{'network_type'}\t" 
-				values += f"{i['network_type']}\t\t"  
-
 			if i['newtwork_name'] and newtwork_name == True :
-				keys += f"{'newtwork_name'}\t\t" 
-				values += f"{i['newtwork_name']}\t" 
+				keys += f"{'Newtwork Name':<20}" 
+				values += f"{i['newtwork_name']:<27}" 
+
+			if i['network_type'] and network_type == True :
+				keys += f"{'Network Type':<20}" 
+				values += f"{i['network_type']:<17}"
 
 			if i['ip_addr'] and ip_addr == True :
-				keys += f"{'ip_addr'}\t\t" 
-				values += f"{i['ip_addr']}\t" 
+				keys += f"{'IP addr':<20}" 
+				values += f"{i['ip_addr']:<18}" 
 
 			if i['ports'] and port == True :
-				keys += f"{'port'}\t\t" 
-				values += f"{i['ports']}\t" 
+				keys += f"{'Port':<20}" 
+				values += f"{i['ports']:<18}" 
+
 			num_of_container += 1
-			return( f"The NO:{num_of_container} container status:\n{keys}\n{values}\n")
+			result += f"The NO:{str(num_of_container)} container status:\n{keys}\n{values}\n"
+
+		return( result)
 
 # Container Inspect
 	def inspect_container( self, target_container ) :
@@ -155,34 +235,33 @@ class DockerInfoFuns( ) :
 			target_container = self.client.containers.get( target_container )
 			container_attrs = target_container.attrs
 			result = ( f"Container Name: { target_container.name }\n" )
-			retult += ( f"Container ID: { target_container.id }\n" )
+			result += ( f"Container ID: { target_container.id }\n" )
 
-			retult += ( f"Status: { target_container.status }\n" )
-			retult += ( f"Image: { target_container.image.tags }\n" )
-			retult += ( f"Time Created: { target_container.attrs[ "Created" ] }\n" )
+			result += ( f"Status: { target_container.status }\n" )
+			result += ( f"Image: { target_container.image.tags }\n" )
+			result += ( f"Time Created: { target_container.attrs[ "Created" ] }\n" )
 
-			retult += ( "\nNetwork Settings:" )
+			result += ( "\nNetwork Settings:" )
 			networks = target_container.attrs[ 'NetworkSettings' ][ 'Networks' ]
 			port = target_container.attrs[ 'NetworkSettings' ][ 'Ports' ]
 			if port : 
 				for net_name, net_config in networks.items( ) :
-					retult += ( f"\tNetwork: { net_name }\n" )
-					retult += ( f"\tIP Address: {net_config["IPAddress"]}\n")
-					retult += ( f"\tPorts: { ', '.join( port.keys())}\n" )
-				return retult
+					result += ( f"\t\tNetwork: { net_name }\n" )
+					result += ( f"\t\tIP Address: {net_config["IPAddress"]}\n")
+					result += ( f"\t\tPorts: { ', '.join( port.keys())}\n" )
+				return result
 			else :
 				for net_name, net_config in networks.items( ) :
-					retult += ( f"\tNetwork: { net_name }\n" )
-					retult += ( f"\tIP Address: {net_config["IPAddress"]}\n" )
+					result += ( f"\t\tNetwork: { net_name }\n" )
+					result += ( f"\t\tIP Address: {net_config["IPAddress"]}\n" )
 					return result
-		except docker.errors.NotFound:
+		except:
 			return (f"Container {target_container} not found\n")
-		except docker.errors.APIError as e:
-			return(f"Docker API error: {e}\n")
 
 	def inspect_network( self, target_network ) :
 		try :
 			network = self.client.networks.get( target_network )
+			result = '';
 			output = {
 				"Name" : network.name,
 				"ID" : network.id,
@@ -193,14 +272,10 @@ class DockerInfoFuns( ) :
 			}
 			
 			for key, value in output.items( ):
-				return( f"{key:10}: {value}" )
+				result += ( f"{key:5}: {value}\n" )
+			return result
 
 		except docker.errors.NotFound :
 			return f"Network {target_network} not found."
 		except Exception as e :
 			return f"Error: {str(e)}"
-
-	def check_it_out( self ) :
-		self.info_tab = DockerInfoTab( )
-		self.docker_page = MyDockerPage( )
-		self.docker_page.docker_textbox.insert( self.check_connection( ) )
