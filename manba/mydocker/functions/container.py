@@ -1,4 +1,3 @@
-
 class DockerContainer :
 	def __init__( self ):
 		try :
@@ -6,7 +5,15 @@ class DockerContainer :
 		except :
 			print( 'Fail to initialize Docker client')
 
-	def run_container( self, image, command = None, detach = True, ports = None, name = None, network = None, static_ip = None ) :
+	def run_container( self, 
+					   image, 
+					   command = None, 
+					   detach = True, 
+					   static_ip = None,
+					   name = None, 
+					   network = None, 
+					   ports = None, 
+					) :
 		try :
 			container = self.client.containers.run( 
 				image = image,

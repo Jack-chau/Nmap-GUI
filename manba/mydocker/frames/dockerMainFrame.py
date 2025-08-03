@@ -1,14 +1,14 @@
 import customtkinter as ctk
 from CTkTable import *
+# Menu Bar
 from sidebar.features import Clock, Appearance, Progressbar
 from datetime import datetime
-#Docker Tabs
-from mydocker.tabs.infoTab import DockerInfoTab
-from mydocker.tabs.imageTab import DockerImageTab
-from mydocker.tabs.containerTab import DockerContainerTab
-from mydocker.tabs.networkTab import DockerNetworkTab
-# #Docker Functions
-# from mydocker.functions.infoFun import DockerInfoFuns
+# Frames
+from mydocker.frames.infoTab import DockerInfoTab
+from mydocker.frames.imageTab import DockerImageTab
+from mydocker.frames.containerTab import DockerContainerTab
+from mydocker.frames.networkTab import DockerNetworkTab
+
 
 class DockerMainFrame( ctk.CTkFrame ) :
     def __init__( self, master ) :

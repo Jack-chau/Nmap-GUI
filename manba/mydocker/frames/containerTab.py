@@ -66,10 +66,14 @@ class DockerContainerTab :
         self.left_frame.grid_rowconfigure( 3, weight = 1 )
         self.left_frame.grid_rowconfigure( 4, weight = 1 )
         self.left_frame.grid_rowconfigure( 5, weight = 1 )
+        self.left_frame.grid_rowconfigure( 6, weight = 1 )
+        self.left_frame.grid_rowconfigure( 7, weight = 1 )
+        self.left_frame.grid_rowconfigure( 8, weight = 1 )
+        self.left_frame.grid_rowconfigure( 9, weight = 1 )
 
         self.container_label = ctk.CTkLabel(
             self.left_frame,
-            text = "Container Configuration",
+            text = "Create Container",
             font = ctk.CTkFont(
                 family="Courier New",
                 size=18,
@@ -87,9 +91,9 @@ class DockerContainerTab :
         )
 
 ### Create Docker Container
-        self.container_start_label = ctk.CTkLabel(
+        self.name_label = ctk.CTkLabel(
             self.left_frame,
-            text = "Run Container: ",
+            text = "Container Name: ",
             font = ctk.CTkFont(
                 family="Arial",
                 size=16,
@@ -98,30 +102,188 @@ class DockerContainerTab :
             )
         )
 
-        self.container_start_label.grid(
-            row = 1,
+        self.name_label.grid(
             column = 0,
+            row = 1,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
             padx = ( 40, 0 ),
         )
 
-        self.container_start_entry = ctk.CTkEntry(
+        self.name_entry = ctk.CTkEntry(
             self.left_frame ,
-            placeholder_text = "container idx",
+            placeholder_text = "Container Name",
             font = ctk.CTkFont(
                 size=15,
             )
         )
 
-        self.container_start_entry.grid(
+        self.name_entry.grid(
             row = 1,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
             padx = ( 0, 20 ),
         )
-#
+
+        self.image_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Image: ",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.image_label.grid(
+            column = 0,
+            row = 2,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.image_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "Image:version",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.image_entry.grid(
+            row = 2,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
+
+        self.network_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Network Name: ",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.network_label.grid(
+            column = 0,
+            row = 3,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.network_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "Network Name",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.network_entry.grid(
+            row = 3,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
+
+        self.staticIP_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Static IP: ",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.staticIP_label.grid(
+            column = 0,
+            row = 4,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.staticIP_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "Network Name",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.staticIP_entry.grid(
+            row = 4,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
+
+        self.port_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Port: ",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+        self.port_label.grid(
+            column = 0,
+            row = 5,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.port_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "Network Name",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.port_entry.grid(
+            row = 5,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
+
+# Stop or Remove Container
+        self.container_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Stop or Remove Container",
+            font = ctk.CTkFont(
+                family="Courier New",
+                size=18,
+                weight="bold",
+                overstrike=False
+            )
+        )
+        self.container_label.grid(
+            column = 0,
+            row = 6,
+            columnspan = 2,
+            pady = ( 20, 0 ),
+            padx = ( 10, 10 ),
+            sticky = 'ew',
+        )
         self.container_stop_label = ctk.CTkLabel(
             self.left_frame,
             text = "Stop Container: ",
@@ -134,7 +296,7 @@ class DockerContainerTab :
         )
 
         self.container_stop_label.grid(
-            row = 2,
+            row = 7,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -150,42 +312,7 @@ class DockerContainerTab :
         )
 
         self.container_stop_entry.grid(
-            row = 2,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
-
-        self.container_command_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Through command:",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-
-        self.container_command_label.grid(
-            row = 3,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
-
-        self.container_command_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "docker run ...",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.container_command_entry.grid(
-            row = 3,
+            row = 7,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
@@ -204,7 +331,7 @@ class DockerContainerTab :
         )
 
         self.container_removal_label.grid(
-            row =4,
+            row =8,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -220,47 +347,13 @@ class DockerContainerTab :
         )
 
         self.container_removal_entry.grid(
-            row = 4,
+            row = 8,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
             padx = ( 0, 20 ),
         )
-
-        self.docker_exec = ctk.CTkLabel(
-            self.left_frame,
-            text = "Exec docker container:",
-            font = ctk.CTkFont(
-                family="Arial",
-                size = 16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-        self.docker_exec.grid(
-            row =5,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 20 ),
-            padx = ( 40, 0 ),
-        )
-
-        self.container_exec_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "container idx",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.container_exec_entry.grid(
-            row = 5,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 20 ),
-            padx = ( 0, 20 ),
-        )
-
+    
         self.container_execute = ctk.CTkButton( 
             self.left_frame, 
             text="Execute",
@@ -269,7 +362,7 @@ class DockerContainerTab :
             font = ctk.CTkFont( "Segoe Script", 20 ),
         )
         self.container_execute.grid( 
-            row = 6,
+            row = 9,
             column = 0,
             columnspan = 2,
             sticky = 'we' ,

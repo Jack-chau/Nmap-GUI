@@ -71,167 +71,8 @@ class DockerNetworkTab :
         self.left_frame.grid_rowconfigure( 8, weight = 0 )
         self.left_frame.grid_rowconfigure( 9, weight = 0 )
         self.left_frame.grid_rowconfigure( 10, weight = 0 )
-
-        self.network_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Container Network Configuration",
-            font = ctk.CTkFont(
-                family="Courier New",
-                size=18,
-                weight="bold",
-                overstrike=False
-            )
-        )
-        self.network_label.grid(
-            column = 0,
-            row = 0,
-            columnspan = 2,
-            pady = ( 20, 0 ),
-            padx = ( 10, 10 ),
-            sticky = 'ew',
-        )
-
-### Create Docker network
-        self.network_assign_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Choose the container ",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-
-        self.network_assign_label.grid(
-            row = 1,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
-
-        self.network_assign_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "container idx",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.network_assign_entry.grid(
-            row = 1,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
-#
-        self.network_choice_entry = ctk.CTkLabel(
-            self.left_frame,
-            text = "Choose Network: ",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-
-        self.network_choice_entry.grid(
-            row = 2,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
-
-        self.network_choice_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "my_docker_network",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.network_choice_entry.grid(
-            row = 2,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
-
-        self.network_static_ip_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Static IP:",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-
-        self.network_static_ip_label.grid(
-            row = 3,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
-
-        self.network_static_ip_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "172.18.0.xxx",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.network_static_ip_entry.grid(
-            row = 3,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
-        ##
-        self.port_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Port:",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-
-        self.port_label.grid(
-            row = 4,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
-
-        self.port_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "8080",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.port_entry.grid(
-            row = 4,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
-
+        self.left_frame.grid_rowconfigure( 11, weight = 0 )
+        
         self.network_setting_label = ctk.CTkLabel(
             self.left_frame,
             text = "Create Docker Network",
@@ -243,7 +84,7 @@ class DockerNetworkTab :
             )
         )
         self.network_setting_label.grid(
-            row =5,
+            row =0,
             column = 0,
             columnspan = 2,
             sticky = 'ew' ,
@@ -262,7 +103,7 @@ class DockerNetworkTab :
             )
         )
         self.create_network_label.grid(
-            row =6,
+            row =1,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -278,7 +119,7 @@ class DockerNetworkTab :
         )
 
         self.create_network_entry.grid(
-            row = 6,
+            row = 1,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
@@ -297,7 +138,7 @@ class DockerNetworkTab :
             )
         )
         self.network_subnet_label.grid(
-            row = 7,
+            row = 2,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -313,7 +154,7 @@ class DockerNetworkTab :
         )
 
         self.network_subnet_entry.grid(
-            row = 7,
+            row = 2,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
@@ -331,7 +172,7 @@ class DockerNetworkTab :
             )
         )
         self.network_gateway_label.grid(
-            row =8,
+            row =3,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -347,15 +188,12 @@ class DockerNetworkTab :
         )
 
         self.network_gateway_entry.grid(
-            row = 8,
+            row = 3,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
             padx = ( 0, 20 ),
         )
-
-
-
 
         self.network_delete = ctk.CTkLabel(
             self.left_frame,
@@ -368,7 +206,7 @@ class DockerNetworkTab :
             )
         )
         self.network_delete.grid(
-            row =9,
+            row =4,
             column = 0,
             columnspan = 2,
             sticky = 'ew' ,
@@ -387,7 +225,7 @@ class DockerNetworkTab :
             )
         )
         self.network_delete_label.grid(
-            row =10,
+            row =5,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -403,13 +241,172 @@ class DockerNetworkTab :
         )
 
         self.network_delete_entry.grid(
-            row = 10,
+            row = 5,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
             padx = ( 0, 20 ),
         )
 
+
+### Assign Static IP
+        self.network_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Assign Static IP to Container",
+            font = ctk.CTkFont(
+                family="Courier New",
+                size=18,
+                weight="bold",
+                overstrike=False
+            )
+        )
+        self.network_label.grid(
+            column = 0,
+            row = 6,
+            columnspan = 2,
+            pady = ( 20, 0 ),
+            padx = ( 10, 10 ),
+            sticky = 'ew',
+        )
+        self.network_assign_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Choose the container ",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.network_assign_label.grid(
+            row = 7,
+            column = 0,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.network_assign_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "container idx",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.network_assign_entry.grid(
+            row = 7,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
+#
+        self.network_choice_entry = ctk.CTkLabel(
+            self.left_frame,
+            text = "Choose Network: ",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.network_choice_entry.grid(
+            row = 8,
+            column = 0,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.network_choice_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "my_docker_network",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.network_choice_entry.grid(
+            row = 8,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
+
+        self.network_static_ip_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Static IP:",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.network_static_ip_label.grid(
+            row = 9,
+            column = 0,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.network_static_ip_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "172.18.0.xxx",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.network_static_ip_entry.grid(
+            row = 9,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
+        ##
+        self.port_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Port:",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.port_label.grid(
+            row = 10,
+            column = 0,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.port_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "8080",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.port_entry.grid(
+            row = 10,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
         self.network_execute = ctk.CTkButton( 
             self.left_frame, 
             text="Execute",

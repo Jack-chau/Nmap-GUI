@@ -1,6 +1,6 @@
 import customtkinter as ctk
-from mydocker.dockerMainFrame import DockerMainFrame
-from mydocker.tabs.infoTab import DockerInfoTab
+from mydocker.frames.dockerMainFrame import DockerMainFrame
+from mydocker.frames.infoTab import DockerInfoTab
 from mydocker.functions.infoFun import DockerInfoFuns
 from mydocker.functions.imageFun import DockerImageFuns
 
