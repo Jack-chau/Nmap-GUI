@@ -85,7 +85,7 @@ class DockerContainerTab :
             column = 0,
             row = 0,
             columnspan = 2,
-            pady = ( 20, 0 ),
+            pady = ( 10, 0 ),
             padx = ( 10, 10 ),
             sticky = 'ew',
         )
@@ -106,7 +106,7 @@ class DockerContainerTab :
             column = 0,
             row = 1,
             sticky = 'w' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
         )
 
@@ -122,7 +122,7 @@ class DockerContainerTab :
             row = 1,
             column = 1,
             sticky = 'we' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 0, 20 ),
         )
 
@@ -141,7 +141,7 @@ class DockerContainerTab :
             column = 0,
             row = 2,
             sticky = 'w' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
         )
 
@@ -157,7 +157,7 @@ class DockerContainerTab :
             row = 2,
             column = 1,
             sticky = 'we' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 0, 20 ),
         )
 
@@ -176,7 +176,7 @@ class DockerContainerTab :
             column = 0,
             row = 3,
             sticky = 'w' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
         )
 
@@ -192,7 +192,7 @@ class DockerContainerTab :
             row = 3,
             column = 1,
             sticky = 'we' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 0, 20 ),
         )
 
@@ -211,13 +211,13 @@ class DockerContainerTab :
             column = 0,
             row = 4,
             sticky = 'w' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
         )
 
         self.staticIP_entry = ctk.CTkEntry(
             self.left_frame ,
-            placeholder_text = "Network Name",
+            placeholder_text = "172.18.0.10",
             font = ctk.CTkFont(
                 size=15,
             )
@@ -227,13 +227,13 @@ class DockerContainerTab :
             row = 4,
             column = 1,
             sticky = 'we' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 0, 20 ),
         )
 
-        self.port_label = ctk.CTkLabel(
+        self.pub_port_label = ctk.CTkLabel(
             self.left_frame,
-            text = "Port: ",
+            text = "Published Port: ",
             font = ctk.CTkFont(
                 family="Arial",
                 size=16,
@@ -241,31 +241,47 @@ class DockerContainerTab :
                 overstrike=False
             )
         )
-        self.port_label.grid(
+        self.pub_port_label.grid(
             column = 0,
             row = 5,
             sticky = 'w' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
         )
 
-        self.port_entry = ctk.CTkEntry(
+        self.pub_port_entry = ctk.CTkEntry(
             self.left_frame ,
-            placeholder_text = "Network Name",
+            placeholder_text = "hostport:container_port",
             font = ctk.CTkFont(
                 size=15,
             )
         )
 
-        self.port_entry.grid(
+        self.pub_port_entry.grid(
             row = 5,
             column = 1,
             sticky = 'we' ,
-            pady = ( 25 , 0 ),
+            pady = ( 5 , 0 ),
             padx = ( 0, 20 ),
         )
 
+        self.create_container_btn = ctk.CTkButton( 
+            self.left_frame, 
+            text="Create Container",
+            width = 140,
+            height = 40,
+            font = ctk.CTkFont( "Segoe Script", 15 ),
+        )
+        self.create_container_btn.grid( 
+            row = 6,
+            column = 0,
+            columnspan = 2,
+            sticky = 'e' ,
+            pady = ( 10 , 0 ),
+            padx = ( 10, 20 ),
+        )
 # Stop or Remove Container
+
         self.container_label = ctk.CTkLabel(
             self.left_frame,
             text = "Stop or Remove Container",
@@ -278,12 +294,47 @@ class DockerContainerTab :
         )
         self.container_label.grid(
             column = 0,
-            row = 6,
+            row = 7,
             columnspan = 2,
-            pady = ( 20, 0 ),
+            pady = ( 10, 0 ),
             padx = ( 10, 10 ),
             sticky = 'ew',
         )
+        self.container_start_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "Start Container: ",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.container_start_label.grid(
+            row = 8,
+            column = 0,
+            sticky = 'w' ,
+            pady = ( 25 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.container_start_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "container idx",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.container_start_entry.grid(
+            row = 8,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 25 , 0 ),
+            padx = ( 0, 20 ),
+        )
+
         self.container_stop_label = ctk.CTkLabel(
             self.left_frame,
             text = "Stop Container: ",
@@ -296,7 +347,7 @@ class DockerContainerTab :
         )
 
         self.container_stop_label.grid(
-            row = 7,
+            row = 9,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -312,7 +363,7 @@ class DockerContainerTab :
         )
 
         self.container_stop_entry.grid(
-            row = 7,
+            row = 9,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
@@ -331,7 +382,7 @@ class DockerContainerTab :
         )
 
         self.container_removal_label.grid(
-            row =8,
+            row = 10,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
@@ -347,7 +398,7 @@ class DockerContainerTab :
         )
 
         self.container_removal_entry.grid(
-            row = 8,
+            row = 10,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
@@ -357,17 +408,17 @@ class DockerContainerTab :
         self.container_execute = ctk.CTkButton( 
             self.left_frame, 
             text="Execute",
-            width = 250,
-            height = 50,
-            font = ctk.CTkFont( "Segoe Script", 20 ),
+            width = 140,
+            height = 40,
+            font = ctk.CTkFont( "Segoe Script", 15 ),
         )
         self.container_execute.grid( 
-            row = 9,
+            row = 11,
             column = 0,
             columnspan = 2,
-            sticky = 'we' ,
+            sticky = 'e' ,
             pady = ( 10 , 20 ),
-            padx = ( 10, 10 ),
+            padx = ( 10, 20 ),
         )
 
 ##### Right Frame

@@ -1,6 +1,5 @@
 import docker
 import subprocess
-import concurrent.futures
 
 class DockerImageFuns :
 	def __init__( self, root=None ):
@@ -66,7 +65,6 @@ class DockerImageFuns :
 
 	def pull_image_command( self, command, callback = None ) :
 
-		# def run_command( ) :
 		try :
 			output = ''
 			pull_result = subprocess.run( 
@@ -89,6 +87,3 @@ class DockerImageFuns :
 			if callback :
 				callback( 'fail to pull image' )
 		
-		# with concurrent.futures.ThreadPoolExecutor( ) as executor :
-		# 	thread = executor.submit( run_command )
-

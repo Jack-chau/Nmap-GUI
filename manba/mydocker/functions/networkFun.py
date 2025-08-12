@@ -1,11 +1,14 @@
-class DockerInfo :
+import docker
+class DockerNetworkFun( ) :
 	def __init__( self ):
 		try :
 			self.client = docker.from_env( )
 		except :
-			print( 'Fail to initialize Docker client')		
-    def list_network( self ):
-    return self.client.networks.list()
+			print( 'Fail to initialize Docker client')
+
+	
+	def list_networks( self ) :
+		return( self.client.networks.list( ) )
 		
 	def create_network( self, name, driver = "bridge" ) :
 		return self.client.networks.create( name, driver=driver )
