@@ -4,7 +4,7 @@ import webbrowser
 
 class DockerNetworkTab :
     def __init__( self, docker_tab ) :
-        self.network_tab = docker_tab.add( 'network' )
+        self.network_tab = docker_tab.add( 'Network' )
         self._setup_ui( )
 
     def _setup_ui( self ) :

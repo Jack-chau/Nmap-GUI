@@ -8,6 +8,7 @@ from mydocker.frames.infoTab import DockerInfoTab
 from mydocker.frames.imageTab import DockerImageTab
 from mydocker.frames.containerTab import DockerContainerTab
 from mydocker.frames.networkTab import DockerNetworkTab
+from mydocker.frames.advanceTab import DockerAdvanceTab
 
 
 class DockerMainFrame( ctk.CTkFrame ) :
@@ -165,6 +166,7 @@ class DockerMainFrame( ctk.CTkFrame ) :
         self.image_tab = DockerImageTab( self.docker_tab )
         self.container_tab = DockerContainerTab( self.docker_tab )
         self.network_tab = DockerNetworkTab( self.docker_tab )
+        self.advance_tab = DockerAdvanceTab( self.docker_tab )
 
 #CLI output frame
         # Text Box Frame

@@ -4,7 +4,7 @@ import webbrowser
 
 class DockerImageTab :
     def __init__( self, docker_tab ) :
-        self.image_tab = docker_tab.add( 'image' )
+        self.image_tab = docker_tab.add( 'Image' )
         self._setup_ui( )
 
     def _setup_ui( self ) :

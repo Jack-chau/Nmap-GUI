@@ -1,9 +1,9 @@
 import customtkinter as ctk
 from CTkTable import *
 
-class DockerInfoTab( ) :
+class DockerAdvanceTab( ) :
     def __init__( self, docker_tab ) :
-        self.info_tab = docker_tab.add( 'Info' )
+        self.info_tab = docker_tab.add( 'Advance' )
         self.setup_ui( )
 
     def setup_ui( self ) :

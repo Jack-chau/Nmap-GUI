@@ -4,7 +4,7 @@ import webbrowser
 
 class DockerContainerTab :
     def __init__( self, docker_tab ) :
-        self.container_tab = docker_tab.add( 'container' )
+        self.container_tab = docker_tab.add( 'Container' )
         self._setup_ui( )
 
     def _setup_ui( self ) :
