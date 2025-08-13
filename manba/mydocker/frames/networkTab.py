@@ -23,8 +23,8 @@ class DockerNetworkTab :
         )
 
         self.network_label.pack(
-            pady = 5 ,
-            padx = 5 ,
+            pady = 5,
+            padx = 5,
         )
 
         self.left_frame = ctk.CTkFrame(
@@ -73,9 +73,9 @@ class DockerNetworkTab :
         self.left_frame.grid_rowconfigure( 10, weight = 0 )
         self.left_frame.grid_rowconfigure( 11, weight = 0 )
         
-        self.network_setting_label = ctk.CTkLabel(
+        self.create_delete_label = ctk.CTkLabel(
             self.left_frame,
-            text = "Create Docker Network",
+            text = "Create or Delete Docker Network",
             font = ctk.CTkFont(
                 family="Courier New",
                 size=18,
@@ -83,7 +83,7 @@ class DockerNetworkTab :
                 overstrike=False
             )
         )
-        self.network_setting_label.grid(
+        self.create_delete_label.grid(
             row =0,
             column = 0,
             columnspan = 2,
@@ -92,6 +92,7 @@ class DockerNetworkTab :
             padx = ( 10, 10 ),
         )
 
+# Create Docker Network
         self.create_network_label = ctk.CTkLabel(
             self.left_frame,
             text = "Create docker network:",
@@ -126,8 +127,7 @@ class DockerNetworkTab :
             padx = ( 0, 20 ),
         )
 
-#####
-        self.network_subnet_label = ctk.CTkLabel(
+        self.subnet_label = ctk.CTkLabel(
             self.left_frame,
             text = "Subnet:",
             font = ctk.CTkFont(
@@ -137,7 +137,7 @@ class DockerNetworkTab :
                 overstrike=False
             )
         )
-        self.network_subnet_label.grid(
+        self.subnet_label.grid(
             row = 2,
             column = 0,
             sticky = 'w' ,
@@ -145,7 +145,7 @@ class DockerNetworkTab :
             padx = ( 40, 0 ),
         )
 
-        self.network_subnet_entry = ctk.CTkEntry(
+        self.subnet_entry = ctk.CTkEntry(
             self.left_frame ,
             placeholder_text = "172.18.0.0/16",
             font = ctk.CTkFont(
@@ -153,7 +153,7 @@ class DockerNetworkTab :
             )
         )
 
-        self.network_subnet_entry.grid(
+        self.subnet_entry.grid(
             row = 2,
             column = 1,
             sticky = 'we' ,
@@ -161,7 +161,7 @@ class DockerNetworkTab :
             padx = ( 0, 20 ),
         )
 
-        self.network_gateway_label = ctk.CTkLabel(
+        self.gateway_label = ctk.CTkLabel(
             self.left_frame,
             text = "Gateway:",
             font = ctk.CTkFont(
@@ -171,7 +171,7 @@ class DockerNetworkTab :
                 overstrike=False
             )
         )
-        self.network_gateway_label.grid(
+        self.gateway_label.grid(
             row =3,
             column = 0,
             sticky = 'w' ,
@@ -179,7 +179,7 @@ class DockerNetworkTab :
             padx = ( 40, 0 ),
         )
 
-        self.network_gateway_entry = ctk.CTkEntry(
+        self.gateway_entry = ctk.CTkEntry(
             self.left_frame ,
             placeholder_text = "172.18.0.1",
             font = ctk.CTkFont(
@@ -187,7 +187,7 @@ class DockerNetworkTab :
             )
         )
 
-        self.network_gateway_entry.grid(
+        self.gateway_entry.grid(
             row = 3,
             column = 1,
             sticky = 'we' ,
@@ -195,26 +195,43 @@ class DockerNetworkTab :
             padx = ( 0, 20 ),
         )
 
-        self.network_delete = ctk.CTkLabel(
-            self.left_frame,
-            text = "Delete Docker Network",
-            font = ctk.CTkFont(
-                family="Courier New",
-                size=18,
-                weight="bold",
-                overstrike=False
-            )
-        )
-        self.network_delete.grid(
-            row =4,
-            column = 0,
-            columnspan = 2,
-            sticky = 'ew' ,
-            pady = ( 25 , 0 ),
-            padx = ( 10, 10 ),
-        )
+        # self.create_network_execute = ctk.CTkButton( 
+        #     self.left_frame, 
+        #     text="Execute",
+        #     width = 140,
+        #     height = 40,
+        #     font = ctk.CTkFont( "Segoe Script", 15 ),
+        # )
+        # self.create_network_execute.grid( 
+        #     row = 4,
+        #     column = 0,
+        #     columnspan = 2,
+        #     sticky = 'e' ,
+        #     pady = ( 10 , 0 ),
+        #     padx = ( 10, 20 ),
+        # )
 
-        self.network_delete_label = ctk.CTkLabel(
+# Delect Docker Network
+        # self.network_delete = ctk.CTkLabel(
+        #     self.left_frame,
+        #     text = "Delete Docker Network",
+        #     font = ctk.CTkFont(
+        #         family="Courier New",
+        #         size=18,
+        #         weight="bold",
+        #         overstrike=False
+        #     )
+        # )
+        # self.network_delete.grid(
+        #     row =5,
+        #     column = 0,
+        #     columnspan = 2,
+        #     sticky = 'ew' ,
+        #     pady = ( 25 , 0 ),
+        #     padx = ( 10, 10 ),
+        # )
+
+        self.delete_label = ctk.CTkLabel(
             self.left_frame,
             text = "Delete network:",
             font = ctk.CTkFont(
@@ -224,15 +241,15 @@ class DockerNetworkTab :
                 overstrike=False
             )
         )
-        self.network_delete_label.grid(
-            row =5,
+        self.delete_label.grid(
+            row =4,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 0 ),
             padx = ( 40, 0 ),
         )
 
-        self.network_delete_entry = ctk.CTkEntry(
+        self.delete_entry = ctk.CTkEntry(
             self.left_frame ,
             placeholder_text = "network idx",
             font = ctk.CTkFont(
@@ -240,17 +257,32 @@ class DockerNetworkTab :
             )
         )
 
-        self.network_delete_entry.grid(
-            row = 5,
+        self.delete_entry.grid(
+            row = 4,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
             padx = ( 0, 20 ),
         )
 
+        self.create_delete_execute = ctk.CTkButton( 
+            self.left_frame, 
+            text="Execute",
+            width = 140,
+            height = 40,
+            font = ctk.CTkFont( "Segoe Script", 15 ),
+        )
+        self.create_delete_execute.grid( 
+            row = 5,
+            column = 0,
+            columnspan = 2,
+            sticky = 'e' ,
+            pady = ( 10 , 0 ),
+            padx = ( 10, 20 ),
+        )
 
 ### Assign Static IP
-        self.network_label = ctk.CTkLabel(
+        self.staticIP_label = ctk.CTkLabel(
             self.left_frame,
             text = "Assign Static IP to Container",
             font = ctk.CTkFont(
@@ -260,7 +292,7 @@ class DockerNetworkTab :
                 overstrike=False
             )
         )
-        self.network_label.grid(
+        self.staticIP_label.grid(
             column = 0,
             row = 6,
             columnspan = 2,
@@ -268,7 +300,7 @@ class DockerNetworkTab :
             padx = ( 10, 10 ),
             sticky = 'ew',
         )
-        self.network_assign_label = ctk.CTkLabel(
+        self.assign_container_label = ctk.CTkLabel(
             self.left_frame,
             text = "Choose the container ",
             font = ctk.CTkFont(
@@ -279,7 +311,7 @@ class DockerNetworkTab :
             )
         )
 
-        self.network_assign_label.grid(
+        self.assign_container_label.grid(
             row = 7,
             column = 0,
             sticky = 'w' ,
@@ -287,7 +319,7 @@ class DockerNetworkTab :
             padx = ( 40, 0 ),
         )
 
-        self.network_assign_entry = ctk.CTkEntry(
+        self.assign_container_entry = ctk.CTkEntry(
             self.left_frame ,
             placeholder_text = "container idx",
             font = ctk.CTkFont(
@@ -295,15 +327,15 @@ class DockerNetworkTab :
             )
         )
 
-        self.network_assign_entry.grid(
+        self.assign_container_entry.grid(
             row = 7,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
             padx = ( 0, 20 ),
         )
-#
-        self.network_choice_entry = ctk.CTkLabel(
+
+        self.network_name_label = ctk.CTkLabel(
             self.left_frame,
             text = "Choose Network: ",
             font = ctk.CTkFont(
@@ -314,7 +346,7 @@ class DockerNetworkTab :
             )
         )
 
-        self.network_choice_entry.grid(
+        self.network_name_label.grid(
             row = 8,
             column = 0,
             sticky = 'w' ,
@@ -322,7 +354,7 @@ class DockerNetworkTab :
             padx = ( 40, 0 ),
         )
 
-        self.network_choice_entry = ctk.CTkEntry(
+        self.network_name_entry = ctk.CTkEntry(
             self.left_frame ,
             placeholder_text = "my_docker_network",
             font = ctk.CTkFont(
@@ -330,7 +362,7 @@ class DockerNetworkTab :
             )
         )
 
-        self.network_choice_entry.grid(
+        self.network_name_entry.grid(
             row = 8,
             column = 1,
             sticky = 'we' ,
@@ -338,7 +370,7 @@ class DockerNetworkTab :
             padx = ( 0, 20 ),
         )
 
-        self.network_static_ip_label = ctk.CTkLabel(
+        self.static_ip_label = ctk.CTkLabel(
             self.left_frame,
             text = "Static IP:",
             font = ctk.CTkFont(
@@ -349,7 +381,7 @@ class DockerNetworkTab :
             )
         )
 
-        self.network_static_ip_label.grid(
+        self.static_ip_label.grid(
             row = 9,
             column = 0,
             sticky = 'w' ,
@@ -357,7 +389,7 @@ class DockerNetworkTab :
             padx = ( 40, 0 ),
         )
 
-        self.network_static_ip_entry = ctk.CTkEntry(
+        self.static_ip_entry = ctk.CTkEntry(
             self.left_frame ,
             placeholder_text = "172.18.0.xxx",
             font = ctk.CTkFont(
@@ -365,14 +397,14 @@ class DockerNetworkTab :
             )
         )
 
-        self.network_static_ip_entry.grid(
+        self.static_ip_entry.grid(
             row = 9,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 0 ),
             padx = ( 0, 20 ),
         )
-        ##
+        
         self.port_label = ctk.CTkLabel(
             self.left_frame,
             text = "Port:",
@@ -407,20 +439,21 @@ class DockerNetworkTab :
             pady = ( 25 , 0 ),
             padx = ( 0, 20 ),
         )
-        self.network_execute = ctk.CTkButton( 
+
+        self.staticIp_execute = ctk.CTkButton( 
             self.left_frame, 
             text="Execute",
-            width = 250,
-            height = 50,
-            font = ctk.CTkFont( "Segoe Script", 20 ),
+            width = 140,
+            height = 40,
+            font = ctk.CTkFont( "Segoe Script", 15 ),
         )
-        self.network_execute.grid( 
+        self.staticIp_execute.grid( 
             row = 11,
             column = 0,
             columnspan = 2,
-            sticky = 'we' ,
-            pady = ( 20 , 10 ),
-            padx = ( 10, 10 ),
+            sticky = 'e' ,
+            pady = ( 20 , 0 ),
+            padx = ( 10, 20 ),
         )
 
 ##### Right Frame

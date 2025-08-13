@@ -127,5 +127,5 @@ class DockerContainerFun :
 		except Exception as e :
 			return( e )
 
-a = DockerContainerFun( )
-a.new_container( name='jack', image = 'ubuntu', network = 'my_docker_network', static_ip = '172.18.12.12', ports = '8000:80' )
+# a = DockerContainerFun( )
+# a.new_container( name='jack', image = 'ubuntu', network = 'my_docker_network', static_ip = '172.18.12.12', ports = '8000:80' )
