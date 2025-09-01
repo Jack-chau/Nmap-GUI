@@ -69,47 +69,33 @@ class DockerNetworkFun( ) :
 			return f"Unexpected error: {str(e)}\n"	
 
 
-	# def set_static_ip(self, container_id, network_name, ip_addr):
-    #     """Assign static IP to container in specified network
-        
-    #     Args:
-    #         container_id (str): Container ID or name
-    #         network_name (str): Network name
-    #         ip_addr (str): IPv4 address to assign
-            
-    #     Returns:
-    #         str: Success/error message
-            
-    #     Raises:
-    #         RuntimeError: If operation fails
-    #     """
-    #     try:
-    #         # Get container and network objects
-    #         container = self.client.containers.get(container_id)  # Fixed: containers instead of container
-    #         network = self.client.networks.get(network_name)
+	def set_static_ip(self, container_name, network_name, ip_addr, port_mapping):
+		try:
+		# Get container and network objects
+			container = self.client.containers.get( container_name )
+			network = self.client.networks.get( network_name )
 
-    #         # Disconnect if already connected
-    #         if network_name in container.attrs['NetworkSettings']['Networks']:
-    #             network.disconnect(container)
+            # Disconnect if already connected
+			# if network_name in container.attrs['NetworkSettings']['Networks']:
+			# 	network.disconnect(container)
 
-    #         # Connect with static IP
-    #         network.connect(
-    #             container,
-    #             ipv4_address=ip_addr
-    #         )
+            # Connect with static IP
+			network.connect(
+				container = container_name,
+				ipv4_address=ip_addr
+			)
 
-    #         # Verify assignment
-    #         container.reload()
-    #         assigned_ip = container.attrs['NetworkSettings']['Networks'][network_name]['IPAddress']
-            
-    #         if assigned_ip == ip_addr:
-    #             return f"Successfully assigned static IP {ip_addr} to container {container_id}"
-    #         return "IP assignment verification failed"
-            
-    #     except docker.errors.NotFound as e:
-    #         raise RuntimeError(f"Container or network not found: {str(e)}")
-    #     except Exception as e:
-    #         raise RuntimeError(f"Failed to set static IP: {str(e)}")
+            # Verify assignment
+			container.reload()
+			assigned_ip = container.attrs['NetworkSettings']['Networks'][network_name]['IPAddress']
+			
+			if assigned_ip == ip_addr:
+				return f"Successfully assigned static IP {ip_addr} to container {container_name}"
+			return "IP assignment verification failed"
+		except docker.errors.NotFound as e:
+			raise RuntimeError(f"Container or network not found: {str(e)}")
+		except Exception as e:
+			raise RuntimeError(f"Failed to set static IP: {str(e)}")
 
 
 dnf = DockerNetworkFun()

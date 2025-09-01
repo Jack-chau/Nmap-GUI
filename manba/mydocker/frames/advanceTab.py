@@ -3,13 +3,13 @@ from CTkTable import *
 
 class DockerAdvanceTab( ) :
     def __init__( self, docker_tab ) :
-        self.info_tab = docker_tab.add( 'Advance' )
+        self.advance_tab = docker_tab.add( 'Advance' )
         self.setup_ui( )
 
     def setup_ui( self ) :
-        self.info_label = ctk.CTkLabel(
-            self.info_tab,
-            text = "Hello! Welcome to check docker information!",
+        self.advance_label = ctk.CTkLabel(
+            self.advance_tab,
+            text = "Hello! Here is the magic begin ~",
             font = ctk.CTkFont(
                 family="Courier New",
                 size=16,
@@ -20,13 +20,13 @@ class DockerAdvanceTab( ) :
             )
         )
 
-        self.info_label.pack(
+        self.advance_label.pack(
             pady = 5 ,
             padx = 5 ,
         )
 
         self.left_frame = ctk.CTkFrame(
-            self.info_tab,
+            self.advance_tab,
             corner_radius = 10,
             
         )
@@ -39,7 +39,7 @@ class DockerAdvanceTab( ) :
         )
 
         self.right_frame = ctk.CTkFrame(
-            self.info_tab,
+            self.advance_tab,
             corner_radius = 10,
             
         )
@@ -63,9 +63,9 @@ class DockerAdvanceTab( ) :
         self.left_frame.grid_rowconfigure( 6, weight = 0 )
         self.left_frame.grid_rowconfigure( 7, weight = 0 )
 
-        self.check_label = ctk.CTkLabel(
+        self.install_label = ctk.CTkLabel(
             self.left_frame,
-            text = "What you want to check? ^_^''",
+            text = "What you want to install? >_<* ",
             font = ctk.CTkFont(
                 family="Courier New",
                 size=16,
@@ -73,7 +73,7 @@ class DockerAdvanceTab( ) :
                 overstrike=False
             )
         )
-        self.check_label.grid(
+        self.install_label.grid(
             column = 0,
             row = 0,
             columnspan = 2,
@@ -83,16 +83,16 @@ class DockerAdvanceTab( ) :
         )
 
 ### Check Box
-        self.docker_cli_version = ctk.CTkCheckBox(
+        self.net_tools = ctk.CTkCheckBox(
             self.left_frame ,
-            text = "Docker Client Version",
+            text = "Net-tools",
             onvalue = "on",
             offvalue = "off",
             font = ctk.CTkFont(
                 size=15,
             )
         )
-        self.docker_cli_version.grid(
+        self.net_tools.grid(
             row = 1,
             column = 0,
             sticky = 'w' ,
@@ -100,9 +100,9 @@ class DockerAdvanceTab( ) :
             padx = ( 40, 0 ),
         )
 
-        self.docker_server_version = ctk.CTkCheckBox(
+        self.iputils_ping = ctk.CTkCheckBox(
             self.left_frame ,
-            text = "Docker Server Version",
+            text = "Iputils",
             onvalue = "on",
             offvalue = "off",
             font = ctk.CTkFont(
@@ -110,7 +110,7 @@ class DockerAdvanceTab( ) :
             )
         )
 
-        self.docker_server_version.grid(
+        self.iputils_ping.grid(
             row = 1,
             column = 1,
             sticky = 'w' ,
@@ -118,9 +118,9 @@ class DockerAdvanceTab( ) :
             padx = ( 10, 20 ),
         )
 
-        self.docker_context = ctk.CTkCheckBox(
+        self.sudo = ctk.CTkCheckBox(
             self.left_frame ,
-            text = "Docker context",
+            text = "Sudo",
             onvalue = "on",
             offvalue = "off",
             font = ctk.CTkFont(
@@ -128,7 +128,7 @@ class DockerAdvanceTab( ) :
             )
         )
 
-        self.docker_context.grid(
+        self.sudo.grid(
             row = 2,
             column = 0,
             sticky = 'w' ,
@@ -136,16 +136,16 @@ class DockerAdvanceTab( ) :
             padx = ( 40, 0 ),
         )
 
-        self.docker_info = ctk.CTkCheckBox(
+        self.openssh_client = ctk.CTkCheckBox(
             self.left_frame ,
-            text = "Docker Info",
+            text = "Openssh-client",
             onvalue = "on",
             offvalue = "off",
             font = ctk.CTkFont(
             size=15,
             )
         )
-        self.docker_info.grid(
+        self.openssh_client.grid(
             row = 2,
             column = 1,
             sticky = 'w' ,
@@ -153,9 +153,9 @@ class DockerAdvanceTab( ) :
             padx = ( 10, 0 ),
         )
 
-        self.docker_networks = ctk.CTkCheckBox(
+        self.python3 = ctk.CTkCheckBox(
             self.left_frame ,
-            text = "Docker Networks",
+            text = "Python3",
             onvalue = "on",
             offvalue = "off",
             font = ctk.CTkFont(
@@ -163,7 +163,7 @@ class DockerAdvanceTab( ) :
             )
         )
 
-        self.docker_networks.grid(
+        self.python3.grid(
             row = 3,
             column = 0,
             sticky = 'w' ,
@@ -171,16 +171,16 @@ class DockerAdvanceTab( ) :
             padx = ( 40, 0 ),
         )
 
-        self.running_containers = ctk.CTkCheckBox(
+        self.wget = ctk.CTkCheckBox(
             self.left_frame ,
-            text = "Running Containers",
+            text = "Wget",
             onvalue = "on",
             offvalue = "off",
             font = ctk.CTkFont(
             size=15,
             )
         )
-        self.running_containers.grid(
+        self.wget.grid(
             row = 3,
             column = 1,
             sticky = 'w' ,
@@ -188,83 +188,35 @@ class DockerAdvanceTab( ) :
             padx = ( 10, 0 ),
         )
 
-        self.container_inspect = ctk.CTkCheckBox(
-            self.left_frame ,
-            text = "Container Inspect",
-            onvalue = "on",
-            offvalue = "off",
+        self.container_config = ctk.CTkLabel(
+            self.left_frame,
+            text = "Container Configuration ",
             font = ctk.CTkFont(
-            size=15,
+                family = "Courier New",
+                size = 16,
+                weight = "bold",
+                overstrike = False
             )
         )
-        self.container_inspect.grid(
-            row = 4,
+        self.container_config.grid(
             column = 0,
-            sticky = 'w',
-            pady = ( 20, 20 ),
-            padx = ( 40, 0 ),
-        )
-
-
-        self.container_inspect_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "input container id or name",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.container_inspect_entry.grid(
             row = 4,
-            column = 1,
-            sticky = 'we' ,
+            columnspan = 2,
             pady = ( 20, 20 ),
-            padx = ( 10, 20 ),
+            padx = ( 10, 10 ),
+            sticky = 'ew',
         )
 
-        # self.image_inspect = ctk.CTkCheckBox(
-        #     self.left_frame ,
-        #     text = "Image Inspect",
-        #     onvalue = "on",
-        #     offvalue = "off",
-        #     font = ctk.CTkFont(
-        #     size=15,
-        #     )
-        # )
-        # self.image_inspect.grid(
-        #     row = 5,
-        #     column = 0,
-        #     sticky = 'w' ,
-        #     pady = ( 20, 20 ),
-        #     padx = ( 40, 0 ),
-        # )
-
-        # self.image_inspect_entry = ctk.CTkEntry(
-        #     self.left_frame ,
-        #     placeholder_text = "input image id or name",
-        #     font = ctk.CTkFont(
-        #         size=15,
-        #     )
-        # )
-
-        # self.image_inspect_entry.grid(
-        #     row = 5,
-        #     column = 1,
-        #     sticky = 'we' ,
-        #     pady = ( 20, 20 ),
-        #     padx = ( 10, 20 ),
-        # )
-
-        self.network_inspect = ctk.CTkCheckBox(
+        self.container_name = ctk.CTkCheckBox(
             self.left_frame ,
-            text = "Network Inspect",
+            text = "Container Name:",
             onvalue = "on",
             offvalue = "off",
             font = ctk.CTkFont(
             size=15,
             )
         )
-        self.network_inspect.grid(
+        self.container_name.grid(
             row = 5,
             column = 0,
             sticky = 'w' ,
@@ -272,15 +224,15 @@ class DockerAdvanceTab( ) :
             padx = ( 40, 0 ),
         )
 
-        self.network_inspect_entry = ctk.CTkEntry(
+        self.container_name_entry = ctk.CTkEntry(
             self.left_frame ,
-            placeholder_text = "input image id or name",
+            placeholder_text = "ID or Name",
             font = ctk.CTkFont(
                 size=15,
             )
         )
 
-        self.network_inspect_entry.grid(
+        self.container_name_entry.grid(
             row = 5,
             column = 1,
             sticky = 'we' ,
@@ -288,15 +240,49 @@ class DockerAdvanceTab( ) :
             padx = ( 10, 20 ),
         )
 
-        self.check_it_out = ctk.CTkButton( 
+        self.ip_address = ctk.CTkCheckBox(
+            self.left_frame ,
+            text = "IP address:",
+            onvalue = "on",
+            offvalue = "off",
+            font = ctk.CTkFont(
+            size=15,
+            )
+        )
+        self.ip_address.grid(
+            row = 6,
+            column = 0,
+            sticky = 'w' ,
+            pady = ( 20, 20 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.ip_address_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "IP address",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.ip_address_entry.grid(
+            row = 6,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 20, 20 ),
+            padx = ( 10, 20 ),
+        )
+
+        self.go_install = ctk.CTkButton( 
             self.left_frame, 
-            text="CHECK IT OUT",
+            text="$.$ Go Install $.$",
             width = 200,
             height = 40,
             font = ctk.CTkFont( "Segoe Script", 18 ),
         )
-        self.check_it_out.grid( 
-            row = 6,
+
+        self.go_install.grid( 
+            row = 7,
             column = 0,
             columnspan = 2,
             sticky = 'we' ,
@@ -311,7 +297,7 @@ class DockerAdvanceTab( ) :
             font = ctk.CTkFont( "Segoe Script", 18 ),
         )
         self.clear_btn.grid( 
-            row = 7,
+            row = 8,
             column = 0,
             columnspan = 2,
             sticky = 'we' ,

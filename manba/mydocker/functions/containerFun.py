@@ -53,6 +53,8 @@ class DockerContainerFun :
 
 		if base_image in image_defaults:
 			command = image_defaults[base_image]
+		else :
+			command = None
 
 		port = kwargs.pop('ports', dict( ) )
 
