@@ -7,7 +7,6 @@ from mydocker.functions.imageFun import DockerImageFuns
 from mydocker.functions.containerFun import DockerContainerFun
 from mydocker.functions.networkFun import DockerNetworkFun
 
-
 class MyDockerPage( ctk.CTkFrame ) :
     def __init__( self, master ) :
         super( ).__init__( master )
@@ -20,7 +19,7 @@ class MyDockerPage( ctk.CTkFrame ) :
         self.network_funs = DockerNetworkFun( )
 
 # Combine Docker GUI and Functions
-        self.main_frame.docker_out_frame( )
+        self.main_frame.docker_frame( )
         self.check_connection( )
         self.main_frame.info_tab.check_it_out.configure( command = self.docker_info )
         self.main_frame.info_tab.clear_btn.configure( command = self.clear_textbox )

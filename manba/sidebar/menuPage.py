@@ -1,12 +1,14 @@
 import customtkinter as ctk
 from PIL import Image, ImageTk
+from mydocker.myDockerPage import MyDockerPage
+from myansible.myAnsiblePage import MyAnsiblePage
 
 class SwitchMenu( ctk.CTkFrame ) :
    def __init__( self, master ) :
       super().__init__( master )
 
-      #Config
-      self.menu_gray = ["#6E8BA4", "#4A5D6B"]
+# Variable Initiation
+      self.menu_bg_color = ["#6E8BA4", "#4A5D6B"]
       self.selected_color = ["#5F7A8E", "#3A4A54"]
       self.icon_width = 50
       self.icon_height = 50
@@ -15,8 +17,8 @@ class SwitchMenu( ctk.CTkFrame ) :
       self.label_width = 250
       self.label_height = 10
       self.font_style = ( "Comic Sans MS", 30 )
-      
-      # Icon Location
+     
+# Icon Location
       self.menu_icon = ctk.CTkImage( 
             light_image = Image.open( "images/resized_images/menu.png" ), 
             dark_image = Image.open( "images/resized_images/menu.png" ), 
@@ -53,8 +55,8 @@ class SwitchMenu( ctk.CTkFrame ) :
             size=( self.icon_width , self.icon_height )
       )
 
-      # Menu frame
-      self.menu_frame = ctk.CTkFrame( master, width = 150, fg_color = self.menu_gray, corner_radius = 0 )
+# Menu frame
+      self.menu_frame = ctk.CTkFrame( master, width = 150, fg_color = self.menu_bg_color, corner_radius = 0 )
       self.menu_frame.grid( row = 0, column = 1, rowspan = 4, sticky = 'nsew' )
       self.menu_frame.grid_columnconfigure( 0, weight = 0 )
       self.menu_frame.grid_columnconfigure( 1, weight = 10 )
@@ -63,7 +65,7 @@ class SwitchMenu( ctk.CTkFrame ) :
       # Button Frame
       self.button_frame = ctk.CTkFrame( 
             self.menu_frame, 
-            fg_color = self.menu_gray, 
+            fg_color = self.menu_bg_color, 
       )
       self.button_frame.grid( row = 0, column = 0, sticky = 'nsew' )
 
@@ -84,7 +86,7 @@ class SwitchMenu( ctk.CTkFrame ) :
       self.blank_btn_1 = ctk.CTkButton( 
             self.button_frame,
             text = '',
-            fg_color = self.menu_gray, 
+            fg_color = self.menu_bg_color, 
             hover_color = 'red',
             width = self.btn_width ,
             height = 160,
@@ -101,7 +103,7 @@ class SwitchMenu( ctk.CTkFrame ) :
             # fg_color=self.selected_color,
             # hover_color = self.selected_color,
             corner_radius=0,
-            command = lambda : self.switch_page( indicator = self.docker_btn ) 
+            # command = lambda : self.switch_page( indicator = self.docker_btn ) 
       )
       self.docker_btn.pack( side = 'top', expand = True, fill = 'both' )
 
@@ -114,7 +116,7 @@ class SwitchMenu( ctk.CTkFrame ) :
             fg_color='transparent',
             # hover_color = self.selected_color,
             corner_radius=0,
-            command = lambda : self.switch_page( indicator = self.ansible_btn ) 
+            # command = lambda : self.switch_page( indicator = self.ansible_btn ) 
       )
       self.ansible_btn.pack( side = 'top', expand = True, fill = 'both' )
                   
@@ -131,6 +133,7 @@ class SwitchMenu( ctk.CTkFrame ) :
             # command = lambda : self.switch_page( indicator = self.logging_btn) 
       )
       self.logging_btn.pack( side = 'top', expand = True, fill = 'both' )
+
       self.schedule_btn = ctk.CTkButton( 
             self.button_frame, 
             # image = self.schedule_icon, 
@@ -209,7 +212,7 @@ class SwitchMenu( ctk.CTkFrame ) :
             text_color = ["#2A2C2F", "#F2F7FC"],
             corner_radius = 0,
             # hover_color=self.selected_color,
-            command= lambda : self.switch_page( indicator = self.docker_btn )
+            # command = lambda : self.switch_page( indicator = self.docker_btn )
       )
       self.docker_label.pack( side = 'top', expand = True, fill = 'both' )
 
@@ -223,7 +226,7 @@ class SwitchMenu( ctk.CTkFrame ) :
             corner_radius = 0,
             text_color = ["#2A2C2F", "#F2F7FC"],
             # hover_color=self.selected_color,
-            command= lambda : self.switch_page( indicator = self.ansible_btn )
+            # command = lambda : self.switch_page( indicator = self.ansible_btn )
       )
       self.ansible_label.pack( side = 'top', expand = True, fill = 'both' )
 
@@ -284,14 +287,6 @@ class SwitchMenu( ctk.CTkFrame ) :
             fg_color='transparent',
       )
       self.blk_label_3.pack( side = 'top', expand = True, fill = 'both' )
-
-   def switch_page( self, indicator ) :
-      self.docker_btn.configure( fg_color = 'transparent' )
-      self.ansible_btn.configure( fg_color = 'transparent' )
-      # self.logging_btn.configure( fg_color = 'transparent' )
-      # self.schedule_btn.configure( fg_color = 'transparent' )
-      # self.github_btn.configure( fg_color = 'transparent' )
-      indicator.configure( fg_color = self.selected_color, hover_color = self.selected_color )
 
    def extending_animation( self ) :
       self.label_frame.grid( row = 0, column = 1, sticky = 'nsew' )

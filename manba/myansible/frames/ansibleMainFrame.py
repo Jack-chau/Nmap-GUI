@@ -4,26 +4,23 @@ from CTkTable import *
 from sidebar.features import Clock, Appearance, Progressbar
 from datetime import datetime
 # Frames
-from mydocker.frames.infoTab import DockerInfoTab
-from mydocker.frames.imageTab import DockerImageTab
-from mydocker.frames.containerTab import DockerContainerTab
-from mydocker.frames.networkTab import DockerNetworkTab
-from mydocker.frames.advanceTab import DockerAdvanceTab
+# from myansible.frames.inventoryTab import AnsibleInventoryTab
+# from myansible.frames.playbookTab import AnsiblePlaybookTab
 
-
-class DockerMainFrame( ctk.CTkFrame ) :
+class AnsibleMainFrame( ctk.CTkFrame ) :
     def __init__( self, master ) :
         super( ).__init__( master )
-        
-    def docker_frame( self ) :
-###Sidebar
-        # docker Sidebar Frame
-        self.docker_sidebar = ctk.CTkFrame( 
+
+    def ansible_frame( self ) :
+###SideBar
+
+    # Ansible Sidebar Frame
+        self.ansible_sidebar = ctk.CTkFrame( 
             self.master, 
             width = 100, 
             corner_radius = 0 
         )
-        self.docker_sidebar.grid( 
+        self.ansible_sidebar.grid( 
             row = 0, 
             rowspan = 4,
             columnspan = 2,
@@ -31,10 +28,10 @@ class DockerMainFrame( ctk.CTkFrame ) :
             sticky = 'nsew' 
         )
 
-        # Sidebar
+    # Sidebar
         self.page_label = ctk.CTkLabel( 
-            self.docker_sidebar, 
-            text = "Docker Page", 
+            self.ansible_sidebar, 
+            text = "Ansible Page", 
             font = ctk.CTkFont("Segoe Script", 30 ),
         )
         self.page_label.pack( 
@@ -44,23 +41,23 @@ class DockerMainFrame( ctk.CTkFrame ) :
         )
 
         # Clock
-        self.date_label = Clock( self.docker_sidebar ).date_label
+        self.date_label = Clock( self.ansible_sidebar ).date_label
         self.date_label.pack(
             side = 'top',
             pady = ( 100, 0 )
         )
-        self.day_label = Clock( self.docker_sidebar ).day_label
+        self.day_label = Clock( self.ansible_sidebar ).day_label
         self.day_label.pack(
             side = 'top',
         )
-        self.time_label = Clock( self.docker_sidebar ).time_label
+        self.time_label = Clock( self.ansible_sidebar ).time_label
         self.time_label.pack(
             side = 'top',
             pady = ( 15 , 0)
         )
         
-        # Appearance
-        self.appearance_label = Appearance( self.docker_sidebar ).appearance_label
+    # Appearance
+        self.appearance_label = Appearance( self.ansible_sidebar ).appearance_label
         self.appearance_label.configure( 
             font = ctk.CTkFont("Segoe Script", 25 )
         )
@@ -69,7 +66,7 @@ class DockerMainFrame( ctk.CTkFrame ) :
             pady = ( 250, 20 )
         )
 
-        self.appearance_option_menu = Appearance( self.docker_sidebar ).appearance_optionmenu
+        self.appearance_option_menu = Appearance( self.ansible_sidebar ).appearance_optionmenu
         self.appearance_option_menu.configure(
             width = 200,
             height = 50, 
@@ -81,7 +78,7 @@ class DockerMainFrame( ctk.CTkFrame ) :
             pady = ( 20, 20 )
         )
 
-        self.scale_label = Appearance( self.docker_sidebar ).scale_label
+        self.scale_label = Appearance( self.ansible_sidebar ).scale_label
         self.scale_label.configure( 
             font = ctk.CTkFont("Segoe Script", 25 )
         )
@@ -90,7 +87,7 @@ class DockerMainFrame( ctk.CTkFrame ) :
             pady = ( 20, 20 )
         )
 
-        self.scale_optionmenu = Appearance( self.docker_sidebar ).scale_optionmenu
+        self.scale_optionmenu = Appearance( self.ansible_sidebar ).scale_optionmenu
         self.scale_optionmenu.configure(
             width = 200,
             height = 50,
@@ -99,94 +96,32 @@ class DockerMainFrame( ctk.CTkFrame ) :
         )
         self.scale_optionmenu.pack( )
 
-#Docker main windows
-        # Docker Frame
-        self.docker_frame = ctk.CTkFrame(
-            self.master,
-            width = 300 ,
-            # border_width = 10,
-            corner_radius = 0,
-        )
-        self.docker_frame.grid( 
-            row = 0, 
-            column = 4,
-            columnspan = 3,
-            rowspan = 2,
-            sticky = 'nsew',
-        )
+############ Ansible tab 
 
-        self.docker_manager = ctk.CTkLabel(
-            self.docker_frame,
-            text = "Docker Manager",
-            font = ctk.CTkFont(
-                family="Courier New",
-                size=25,
-                weight="bold",
-                slant="italic",
-                # underline=True,
-                overstrike=False
-            )
-        )
 
-        self.docker_manager.pack(
-            fill = 'both',
-            pady = (30,10),
-            padx = ( 10, 10 )
-        )
-
-        self.docker_tab = ctk.CTkTabview(
-            self.docker_frame ,
-            width = 900,
-            height = 200,
-            anchor = "nw",
-            # border_width = 2
-        )
-        self.docker_tab.pack(
-            fill = 'both',
-            expand = True,
-            padx = ( 50, 50) ,
-            pady = ( 0, 20 ),
-            
-        )
-
-        self.docker_tab._segmented_button.configure(
-            font = ( "Helventica bold", 15 ),
-            width = 500,
-            height =30,
-            dynamic_resizing = False, 
-            # corner_radius = 6,
-
-        )
-# Docker tabs
-        self.info_tab = DockerInfoTab( self.docker_tab )
-        self.image_tab = DockerImageTab( self.docker_tab )
-        self.container_tab = DockerContainerTab( self.docker_tab )
-        self.network_tab = DockerNetworkTab( self.docker_tab )
-        self.advance_tab = DockerAdvanceTab( self.docker_tab )
 
 #CLI output frame
-        # Text Box Frame
-        self.docker_textbox_frame = ctk.CTkFrame( 
+    # Text Box Frame
+        self.ansible_textbox_frame = ctk.CTkFrame( 
             self.master, 
-            # width = 70, 
             corner_radius = 0,
             border_width = 0, 
         )
-        self.docker_textbox_frame.grid( 
+        self.ansible_textbox_frame.grid( 
             row = 2, 
             rowspan = 2, 
             column = 4,
             columnspan = 3,
             sticky = 'nsew',
         )
-# Textbox
-        self.docker_textbox = ctk.CTkTextbox( 
-            self.docker_textbox_frame,
+    # Textbox
+        self.ansible_textbox = ctk.CTkTextbox( 
+            self.ansible_textbox_frame,
             corner_radius = 0,
             border_width = 0,
             font = ctk.CTkFont( size=15, weight='bold' )
         )
-        self.docker_textbox.pack(
+        self.ansible_textbox.pack(
             side = 'top',
             padx = ( 50, 50 ),
             pady = ( 0, 0 ),
@@ -194,8 +129,8 @@ class DockerMainFrame( ctk.CTkFrame ) :
             fill = 'both',
         )
         
-        # Progress bar
-        self.progressbar = Progressbar( self.docker_textbox_frame ).progressbar
+    # Progress bar
+        self.progressbar = Progressbar( self.ansible_textbox_frame ).progressbar
         self.progressbar.pack(
             side = 'top',
             fill = 'both',
@@ -205,7 +140,7 @@ class DockerMainFrame( ctk.CTkFrame ) :
         self.progressbar.set( 0 )
         # self.progressbar.forget()
 
-### Note Frame
+# Note Frame
         self.note_frame = ctk.CTkFrame( 
             self.master, 
             width = 400,
@@ -219,7 +154,7 @@ class DockerMainFrame( ctk.CTkFrame ) :
             sticky = 'nsew',
         )
 
-# Action Log
+    # Action Log
         self.action_log_tab = ctk.CTkTabview(
             self.note_frame,
             width = 400,
@@ -234,7 +169,7 @@ class DockerMainFrame( ctk.CTkFrame ) :
             pady = ( 0, 0 )
         )
 
-# Tab choice
+    # Tab choice
         self.action_log_tab.add( 'Action Log' )
 
         self.action_label = ctk.CTkLabel(
