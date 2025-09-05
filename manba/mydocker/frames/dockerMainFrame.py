@@ -100,11 +100,10 @@ class DockerMainFrame( ctk.CTkFrame ) :
         self.scale_optionmenu.pack( )
 
 #Docker main windows
-        # Docker Frame
+        # Docker Tab Frame
         self.docker_frame = ctk.CTkFrame(
             self.master,
             width = 300 ,
-            # border_width = 10,
             corner_radius = 0,
         )
         self.docker_frame.grid( 
@@ -139,7 +138,6 @@ class DockerMainFrame( ctk.CTkFrame ) :
             width = 900,
             height = 200,
             anchor = "nw",
-            # border_width = 2
         )
         self.docker_tab.pack(
             fill = 'both',
@@ -154,8 +152,6 @@ class DockerMainFrame( ctk.CTkFrame ) :
             width = 500,
             height =30,
             dynamic_resizing = False, 
-            # corner_radius = 6,
-
         )
 # Docker tabs
         self.info_tab = DockerInfoTab( self.docker_tab )

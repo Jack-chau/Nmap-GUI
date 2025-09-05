@@ -4,8 +4,8 @@ from CTkTable import *
 from sidebar.features import Clock, Appearance, Progressbar
 from datetime import datetime
 # Frames
-# from myansible.frames.inventoryTab import AnsibleInventoryTab
-# from myansible.frames.playbookTab import AnsiblePlaybookTab
+from myansible.frames.inventoryTab import AnsibleInventoryTab
+from myansible.frames.playbookTab import AnsiblePlaybookTab
 
 class AnsibleMainFrame( ctk.CTkFrame ) :
     def __init__( self, master ) :
@@ -98,7 +98,63 @@ class AnsibleMainFrame( ctk.CTkFrame ) :
 
 ############ Ansible tab 
 
+        # Ansible Tab Frame
+        self.ansible_frame = ctk.CTkFrame(
+            self.master,
+            width = 300 ,
+            corner_radius = 0,
+        )
+        self.ansible_frame.grid( 
+            row = 0, 
+            column = 4,
+            columnspan = 3,
+            rowspan = 2,
+            sticky = 'nsew',
+        )
 
+        self.ansible_application = ctk.CTkLabel(
+            self.ansible_frame,
+            text = "Ansible Applicaiton",
+            font = ctk.CTkFont(
+                family="Courier New",
+                size=25,
+                weight="bold",
+                slant="italic",
+                overstrike=False
+            )
+        )
+
+        self.ansible_application.pack(
+            fill = 'both',
+            pady = (30,10),
+            padx = ( 10, 10 )
+        )
+
+        self.ansible_tab = ctk.CTkTabview(
+            self.ansible_frame ,
+            width = 900,
+            height = 200,
+            anchor = "nw",
+            # border_width = 2
+        )
+        self.ansible_tab.pack(
+            fill = 'both',
+            expand = True,
+            padx = ( 50, 50) ,
+            pady = ( 0, 20 ),
+            
+        )
+
+        self.ansible_tab._segmented_button.configure(
+            font = ( "Helventica bold", 15 ),
+            width = 500,
+            height =30,
+            dynamic_resizing = False, 
+
+        )
+# Docker tabs
+        self.inventory_tab = AnsibleInventoryTab( self.ansible_tab )
+        self.playbook_tab = AnsiblePlaybookTab( self.ansible_tab )
 
 #CLI output frame
     # Text Box Frame
