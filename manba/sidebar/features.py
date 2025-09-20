@@ -66,11 +66,11 @@ class Clock( ctk.CTkFrame ) :
                 master,
                 font = ("Segoe Script", 30),
                 fg_color = "transparent",
-                text = strftime( "%H:%M:%S %p" ),
+                text = strftime( "%H:%M:%S" ),
         )
         self.time_label.after( 1000, func = self.update )
     def update( self ):
-        self.time_label.configure( text = strftime( "%H:%M:%S %p" ) )
+        self.time_label.configure( text = strftime( "%H:%M:%S" ) )
         self.day_label.configure( text = strftime( "%A" ) )
         self.date_label.configure( text = strftime( "%B %d, %Y" ) )
         self.time_label.after( 1000, func = self.update )

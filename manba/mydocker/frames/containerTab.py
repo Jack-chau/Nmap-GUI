@@ -1,11 +1,47 @@
 import customtkinter as ctk
 from CTkTable import *
 import webbrowser
+import docker
 
 class DockerContainerTab :
     def __init__( self, docker_tab ) :
         self.container_tab = docker_tab.add( 'Container' )
+        self.client = docker.from_env( )
+        self.show_all_containers( )
         self._setup_ui( )
+
+    # Show all containers
+    def show_all_containers( self ) :
+        all_containers = self.client.containers.list( all = all )
+        all_containers_list = list( )
+        for container in all_containers :
+            network_settings = container.attrs['NetworkSettings']['Networks']
+            # Get network if exists
+            if network_settings :
+                network_info = dict( )
+                # for key and values in network_settings.items( )
+                for network_name, network_setting in network_settings.items( ) :
+                    network = self.client.networks.get( network_setting[ 'NetworkID' ] )
+                    network_info[network_name] = {
+                        'driver' : network.attrs['Driver'],
+                        'network_id' : network.id,
+                        'ip_address' : network_setting['IPAddress'],
+                        }
+            all_containers_list.append(
+                {
+					'id' : container.short_id,
+					'name' : container.name,
+					'status' : container.status,
+					'newtwork_name' : list( network_info.keys() )[0],
+					'network_type' : network_info[network_name]['driver'],
+					'ip_addr' : network_info[network_name]['ip_address'] ,
+					'ports' : ', '.join( container.attrs['NetworkSettings']['Ports'].keys() )
+				}
+			)
+        if len( all_containers_list ) > 0 :
+            return( all_containers_list )
+        else :
+            return( "No running containers" )
 
     def _setup_ui( self ) :
 
@@ -436,44 +472,64 @@ class DockerContainerTab :
             column = 0,
             row = 0,
             columnspan = 2,
-            pady = ( 20, 0 ),
-            padx = ( 10, 10 ),
+            pady = ( 10, 0 ),
+            padx = ( 60, 10 ),
             sticky = 'ew',
         )
 
         # For demo Only
-        test_container_list = [
-            [ "idx", "ID", "Names" ,"Tag"],
-            [ '1', '2b7c51034242', 'hello', 'latest' ],
-            [ '2', '2b7c51034242', 'ubuntu', 'latest' ],
-            [ '3', '2b7c51034242', 'nginx', 'alpine' ],
-            [ '4', '2b7c51034242', 'nginx', 'latest' ],
-            [ '5', '2b7c51034242', 'hello-world', 'latest' ],
-            [ '6', '2b7c51034242', 'hello', 'latest' ],
-            [ '7', '2b7c51034242', 'ubuntu', 'latest' ],
-            [ '8', '2b7c51034242', 'nginx', 'alpine' ],
-            [ '9', '2b7c51034242', 'nginx', 'latest' ],
-            [ '10', '2b7c51034242', 'hello-world', 'latest' ],
-            [ '11', '2b7c51034242', 'hello', 'latest' ],
-            [ '12', '2b7c51034242', 'ubuntu', 'latest' ],
-            [ '13', '2b7c51034242', 'nginx', 'alpine' ],
-            [ '14', '2b7c51034242', 'nginx', 'latest' ],
-            [ '15', '2b7c51034242', 'hello-world', 'latest' ],
-        ]
+        running_container = self.show_all_containers( )
+        self.container_list = list( )
+        self.container_list.append( [ 'Name','Status','Action'])
+        for i in running_container :
+            self.container_list.append( [ i['name'], i['status'] ] )
+        print( self.container_list )
 
-        self.show_container_table = CTkTable( 
+        
+
+        self.id_table = CTkTable( 
                 master = self.right_frame,
-                values = test_container_list,
-                width = 100
-            )
-        self.show_container_table.grid(
+                values = self.container_list,
+                width = 50,
+        )
+
+        self.id_table.grid(
             row = 1,
             column = 0,
             columnspan = 2,
-            padx= ( 20, 0 ),
+            padx= ( 30, 0 ),
             pady = ( 10, 0 ),
-            sticky = "ew"            
+            sticky = "ew"
         )
+
+        # for 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         self.refrash_btn = ctk.CTkButton( 

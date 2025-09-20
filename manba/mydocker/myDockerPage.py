@@ -2,10 +2,11 @@ import customtkinter as ctk
 # import main frame and tabs
 from mydocker.frames.dockerMainFrame import DockerMainFrame
 # import functions
-from mydocker.functions.infoFun import DockerInfoFuns
+# from mydocker.functions.infoFun import DockerInfoFuns
 from mydocker.functions.imageFun import DockerImageFuns
 from mydocker.functions.containerFun import DockerContainerFun
 from mydocker.functions.networkFun import DockerNetworkFun
+from mydocker.functions.trobleShootFun import DockerTBFun
 
 class MyDockerPage( ctk.CTkFrame ) :
     def __init__( self, master ) :
@@ -13,16 +14,16 @@ class MyDockerPage( ctk.CTkFrame ) :
 # Inheritant GUI
         self.main_frame = DockerMainFrame( master )
 # Ingeritant Functions
-        self.info_funs = DockerInfoFuns( )
         self.image_funs = DockerImageFuns( )
         self.container_funs = DockerContainerFun( )
         self.network_funs = DockerNetworkFun( )
+        self.ts_funs = DockerTBFun( )
 
 # Combine Docker GUI and Functions
         self.main_frame.docker_frame( )
         self.check_connection( )
-        self.main_frame.info_tab.check_it_out.configure( command = self.docker_info )
-        self.main_frame.info_tab.clear_btn.configure( command = self.clear_textbox )
+        # self.main_frame.info_tab.check_it_out.configure( command = self.docker_info )
+        # self.main_frame.info_tab.clear_btn.configure( command = self.clear_textbox )
         self.main_frame.image_tab.image_execute.configure( command = self.docker_image )
         self.main_frame.container_tab.create_container_btn.configure( command = self.create_docker_container )
         self.main_frame.container_tab.container_execute.configure( command = self.docker_container )
@@ -30,40 +31,43 @@ class MyDockerPage( ctk.CTkFrame ) :
     def clear_textbox( self ) :
         self.main_frame.docker_textbox.delete( '0.0', 'end' )
 
-# For Docker Info Tab
     def check_connection( self ) :
         self.clear_textbox( )
-        self.main_frame.docker_textbox.insert( 'end', self.info_funs.check_connection( ) )
+        self.main_frame.docker_textbox.insert( 'end', self.ts_funs.check_connection( ) )
 
-    def update_textbox( self, text ) :
-        self.main_frame.docker_textbox.insert( 'end', text )
-        self.main_frame.docker_textbox.see( 'end' )
+# For Docker Info Tab
+    # def update_textbox( self, text ) :
+    #     self.main_frame.docker_textbox.insert( 'end', text )
+    #     self.main_frame.docker_textbox.see( 'end' )
 
-    def docker_info( self ) :
-        self.clear_textbox( )
-        if self.main_frame.info_tab.docker_cli_version.get() == 'on':
-            self.main_frame.docker_textbox.insert( 'end', self.info_funs.check_docker_client_version( ) )
-        
-        if self.main_frame.info_tab.docker_server_version.get() == 'on':
-            self.main_frame.docker_textbox.insert( 'end', self.info_funs.check_docker_server_version( ) )
-        
-        if self.main_frame.info_tab.docker_context.get() == 'on':    
-            self.main_frame.docker_textbox.insert( 'end', self.info_funs.show_docker_contexts( ) )        
-        
-        if self.main_frame.info_tab.docker_info.get() == 'on':    
-            self.main_frame.docker_textbox.insert( 'end', self.info_funs.show_docker_info( ) )        
-        
-        if self.main_frame.info_tab.docker_networks.get() == 'on':    
-            self.main_frame.docker_textbox.insert( 'end', self.info_funs.show_network_contexts( ) ) 
+    # def docker_info( self ) :
+    #     self.clear_textbox( )
+    #     if self.main_frame.info_tab.check_connection.get() == 'on':
+    #         self.main_frame.docker_textbox.insert( 'end', self.info_funs.check_connection( ) )
 
-        if self.main_frame.info_tab.running_containers.get() == 'on':    
-            self.main_frame.docker_textbox.insert( 'end', self.info_funs.show_runing_containers( ) )        
+    #     if self.main_frame.info_tab.docker_cli_version.get() == 'on':
+    #         self.main_frame.docker_textbox.insert( 'end', self.info_funs.check_docker_client_version( ) )
+
+    #     if self.main_frame.info_tab.docker_server_version.get() == 'on':
+    #         self.main_frame.docker_textbox.insert( 'end', self.info_funs.check_docker_server_version( ) )
         
-        if self.main_frame.info_tab.container_inspect.get() == 'on':    
-            self.main_frame.docker_textbox.insert( 'end', self.info_funs.inspect_container( self.main_frame.info_tab.container_inspect_entry.get() ) )        
+    #     if self.main_frame.info_tab.docker_context.get() == 'on':    
+    #         self.main_frame.docker_textbox.insert( 'end', self.info_funs.show_docker_contexts( ) )        
         
-        if self.main_frame.info_tab.network_inspect.get() == 'on':    
-            self.main_frame.docker_textbox.insert( 'end', self.info_funs.inspect_network( self.main_frame.info_tab.network_inspect_entry.get() ) )        
+    #     if self.main_frame.info_tab.docker_info.get() == 'on':    
+    #         self.main_frame.docker_textbox.insert( 'end', self.info_funs.show_docker_info( ) )        
+        
+    #     if self.main_frame.info_tab.docker_networks.get() == 'on':    
+    #         self.main_frame.docker_textbox.insert( 'end', self.info_funs.show_network_contexts( ) ) 
+
+    #     if self.main_frame.info_tab.running_containers.get() == 'on':    
+    #         self.main_frame.docker_textbox.insert( 'end', self.info_funs.show_runing_containers( ) )        
+        
+    #     if self.main_frame.info_tab.container_inspect.get() == 'on':    
+    #         self.main_frame.docker_textbox.insert( 'end', self.info_funs.inspect_container( self.main_frame.info_tab.container_inspect_entry.get() ) )        
+        
+    #     if self.main_frame.info_tab.network_inspect.get() == 'on':    
+    #         self.main_frame.docker_textbox.insert( 'end', self.info_funs.inspect_network( self.main_frame.info_tab.network_inspect_entry.get() ) )        
 
 # For Docker Image Tab
     def docker_image( self ) :
