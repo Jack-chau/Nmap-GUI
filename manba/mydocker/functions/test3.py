@@ -1,47 +1,56 @@
 import customtkinter as ctk
+from tkinter import messagebox
 
-class ContainerManager:
+class CheckboxTableApp( ctk.CTk ):
     def __init__( self ) :
-        self.app = ctk.CTk( )
-        self.app.title( "Container Management" )
-        self.app.geometry( '700x300' )
+        self.title( "Checkbox Table Example" )
+        self.geometry( "600x400" )
 
-        self.data = [
-            ["my-nginx2", "exited"],
-            ["my-nginx", "exited"]
-        ]
-        
-        self.create_container_table( )
+        # Configure grid layout
+        self.grid.columnconfigure( 0, weight = 1)
+        self.grid.rowconfigure( 1, weight = 1 )
 
-    def create_container_table( )
-    # Main frame for the table
-    table_frame = ctk.CTkFrame( self.app )
-    table_frame.pack( padx=20, pady=20, fill='both', expand=True )
-    
-    headers = ['Name', "Status", 'Action' ]
+        self.create_table( )
 
-    for col, header in enumerate( headers ): 
-        header_label = ctk.CTkLabel(
-            table_frame,
-            text = header,
-            font = ctk.CTkFont( weight="bold", size=14 ),
-            height = 40,
-            fg_color="#2E86AB",
-            text_color="white"
+        self.get_selected_button = ctk.CTkButton(
+            self,
+            text = "Get Selected",
+            command = self.get_selected_items
         )
-        # Make the Action header span3 colums worth of space
-        if header == "Action" :
-            header_label.header_label.grid(row=0, column=col, columnspan=3, padx=2, pady=2, sticky="nsew")
-        else:
-                header_label.grid(row=0, column=col, padx=2, pady=2, sticky="nsew")
-    
-    for row, row_data in enumerate( self.data, 1 ) :
-        for col in range( 2 ) :
+        self.get_selected_button.grid( row = 2, column = 0, padx = 10, pady = 10, sticky = 'e' )
+
+    def create_table( self ) :
+        self.checkboxes = [ ]
+        
+        self.data = [
+            {"idx": 1, "id": "2b7c51034242", "name": "nginx02"},
+            {"idx": 2, "id": "2b7c51034242", "name": "nginx01"},
+            {"idx": 3, "id": "2b7c51034242", "name": "my_web_server"},
+            {"idx": 4, "id": "2b7c51034242", "name": "ubuntu02"},
+            {"idx": 5, "id": "2b7c51034242", "name": "ubuntu01"}
+        ]
+
+        # Create a frame for the entire table
+        table_container = ctk.CTkFrame( self ):
+        table_container.grid(row=0, column=0, padx=10, pady=10, sticky="nsew", rowspan=2)
+        table_container.grid_columnconfigure(0, weight=1)
+        table_container.grid_rowconfigure(1, weight=1)
+
+        # Create header labels
+        header = [ 'Select', 'ID', 'Names' ]
+        for i, header in enumerate( headers ) :
             label = ctk.CTkLabel(
-                table_frame,
-                text = row_data[col],
-                height = 35,
-                corner_radius = 5,
-                fg_color = "#F8F9FA" if row % 2 == 0 else "#E9ECEF",
-                text_color="black"
+                header_frame,
+                text = heander,
+                font = ctk.CTkFont( weight = 'bold' )
             )
+            if i == 0 :
+                label.grid(row=0, column=i, padx=(10, 5), pady=10, sticky="w")
+            elif i == len(headers) - 1:
+                label.grid(row=0, column=i, padx=(5, 10), pady=10, sticky="ew")
+            else:
+                label.grid(row=0, column=i, padx=5, pady=10, sticky="ew")
+        
+
+
+

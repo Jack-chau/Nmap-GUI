@@ -36,9 +36,9 @@ class MyDockerPage( ctk.CTkFrame ) :
         self.main_frame.docker_textbox.insert( 'end', self.ts_funs.check_connection( ) )
 
 # For Docker Info Tab
-    # def update_textbox( self, text ) :
-    #     self.main_frame.docker_textbox.insert( 'end', text )
-    #     self.main_frame.docker_textbox.see( 'end' )
+    def update_textbox( self, text ) :
+        self.main_frame.docker_textbox.insert( 'end', text )
+        self.main_frame.docker_textbox.see( 'end' )
 
     # def docker_info( self ) :
     #     self.clear_textbox( )

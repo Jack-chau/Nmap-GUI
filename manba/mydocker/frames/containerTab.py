@@ -477,23 +477,37 @@ class DockerContainerTab :
             sticky = 'ew',
         )
 
-        # For demo Only
-        running_container = self.show_all_containers( )
+# Container Management Table
+
+    # Data Preparation
+
         self.container_list = list( )
-        self.container_list.append( [ 'Name','Status','Action'])
-        for i in running_container :
-            self.container_list.append( [ i['name'], i['status'] ] )
-        print( self.container_list )
+        headers =  [ "Select", "Name", "Status", "Netowrk", "ip_addr" ]
 
+        self.container_list.append( headers )
         
+        # Extract data to a 2D array
+        
+        running_container = self.show_all_containers( )
 
-        self.id_table = CTkTable( 
+        for i in running_container :
+            self.container_list.append( [ "💔", 
+                                          i['name'], 
+                                          f'{"🏃" if i["status"] == "running" else "💤"}',
+                                          f"{ i["newtwork_name"] if i["newtwork_name"] else "📵" }",
+                                          f"{ i["ip_addr"] if i["ip_addr"] else "📵" }",
+                                        ] )
+        # self.checkbox_state = [False] * len( running_container )
+
+        self.container_table = CTkTable( 
                 master = self.right_frame,
                 values = self.container_list,
-                width = 50,
+                width = 80,
+                corner_radius = 3,
+                command = self.on_table_click
         )
 
-        self.id_table.grid(
+        self.container_table.grid(
             row = 1,
             column = 0,
             columnspan = 2,
@@ -502,48 +516,33 @@ class DockerContainerTab :
             sticky = "ew"
         )
 
-        # for 
+    def on_table_click( self, cell ) :
+        row, column = cell["row"] , cell["column"]
+        if row > 0 and column == 0:
+            if self.container_list[row][0] == '💔' :
+                self.container_list[row][0] = '💘'
+            else :
+                self.container_list[row][0] = '💔'
+
+            self.container_table.update_values( self.container_list )
 
 
+            # container_name = self.container_list[row][1]
+            # print(f"Container '{container_name}' selected: {self.checkbox_states[row-1]}")
+    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        self.refrash_btn = ctk.CTkButton( 
-            self.right_frame, 
-            text="Refresh",
-            width = 130,
-            height = 30,
-            font = ctk.CTkFont( "Segoe Script", 15 ),
-        )
-        self.refrash_btn.grid( 
-            row = 2,
-            column = 0,
-            columnspan = 2,
-            sticky = 'e' ,
-            pady = ( 35 , 0 ),
-            padx = ( 10, 10 ),
-        )
+        # self.refrash_btn = ctk.CTkButton( 
+        #     self.right_frame, 
+        #     text="Refresh",
+        #     width = 130,
+        #     height = 30,
+        #     font = ctk.CTkFont( "Segoe Script", 15 ),
+        # )
+        # self.refrash_btn.grid( 
+        #     row = 3,
+        #     column = 0,
+        #     columnspan = 2,
+        #     sticky = 'e' ,
+        #     pady = ( 35 , 0 ),
+        #     padx = ( 10, 10 ),
+        # )
