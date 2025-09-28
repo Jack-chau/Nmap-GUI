@@ -2,12 +2,12 @@ import customtkinter as ctk
 from CTkTable import *
 import webbrowser
 import docker
+import subprocess
 
 class DockerContainerTab :
     def __init__( self, docker_tab ) :
         self.container_tab = docker_tab.add( 'Container' )
         self.client = docker.from_env( )
-        self.show_all_containers( )
         self._setup_ui( )
 
     # Show all containers
@@ -316,151 +316,11 @@ class DockerContainerTab :
             pady = ( 10 , 0 ),
             padx = ( 10, 20 ),
         )
-# Stop or Remove Container
-
-        self.container_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Stop or Remove Container",
-            font = ctk.CTkFont(
-                family="Courier New",
-                size=18,
-                weight="bold",
-                overstrike=False
-            )
-        )
-        self.container_label.grid(
-            column = 0,
-            row = 7,
-            columnspan = 2,
-            pady = ( 10, 0 ),
-            padx = ( 10, 10 ),
-            sticky = 'ew',
-        )
-        self.container_start_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Start Container: ",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-
-        self.container_start_label.grid(
-            row = 8,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
-
-        self.container_start_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "container idx",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.container_start_entry.grid(
-            row = 8,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
-
-        self.container_stop_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Stop Container: ",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-
-        self.container_stop_label.grid(
-            row = 9,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
-
-        self.container_stop_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "container idx",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.container_stop_entry.grid(
-            row = 9,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
-
-        self.container_removal_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Remove container:",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-
-        self.container_removal_label.grid(
-            row = 10,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
-
-        self.container_removal_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "container idx",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
-
-        self.container_removal_entry.grid(
-            row = 10,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
-    
-        self.container_execute = ctk.CTkButton( 
-            self.left_frame, 
-            text="Execute",
-            width = 140,
-            height = 40,
-            font = ctk.CTkFont( "Segoe Script", 15 ),
-        )
-        self.container_execute.grid( 
-            row = 11,
-            column = 0,
-            columnspan = 2,
-            sticky = 'e' ,
-            pady = ( 10 , 20 ),
-            padx = ( 10, 20 ),
-        )
 
 ##### Right Frame
         self.show_container_label = ctk.CTkLabel(
             self.right_frame,
-            text = "Docker container information",
+            text = "Docker Container Information",
             font = ctk.CTkFont(
                 family="Courier New",
                 size=18,
@@ -480,24 +340,27 @@ class DockerContainerTab :
 # Container Management Table
 
     # Data Preparation
-
+    
         self.container_list = list( )
-        headers =  [ "Select", "Name", "Status", "Netowrk", "ip_addr" ]
+        headers =  [ "Select", "Name", "Status", "Netowrk", "IP Address" ]
 
         self.container_list.append( headers )
         
         # Extract data to a 2D array
         
         running_container = self.show_all_containers( )
+        for i in range( 13 ) :
+            self.container_list.append( [] )
 
-        for i in running_container :
-            self.container_list.append( [ "💔", 
-                                          i['name'], 
-                                          f'{"🏃" if i["status"] == "running" else "💤"}',
-                                          f"{ i["newtwork_name"] if i["newtwork_name"] else "📵" }",
-                                          f"{ i["ip_addr"] if i["ip_addr"] else "📵" }",
-                                        ] )
-        # self.checkbox_state = [False] * len( running_container )
+        for i, container in enumerate( running_container, 1 ) :
+            self.container_list[i]= [ "▢", 
+                                      container['name'], 
+                                      container["status"],
+                                      container["newtwork_name"],
+                                      container["ip_addr"],
+                                    ]
+
+
 
         self.container_table = CTkTable( 
                 master = self.right_frame,
@@ -516,33 +379,193 @@ class DockerContainerTab :
             sticky = "ew"
         )
 
+        self.run_btn = ctk.CTkButton( 
+            self.right_frame, 
+            text="Run",
+            width = 130,
+            height = 30,
+            font = ctk.CTkFont( "Segoe Script", 15 ),
+            command = self.run_container
+        )
+        self.run_btn.grid( 
+            row = 2,
+            column = 0,
+            # columnspan = 2,
+            sticky = 'e' ,
+            pady = ( 35 , 0 ),
+            padx = ( 10, 10 ),
+        )
+
+        self.stop_btn = ctk.CTkButton( 
+            self.right_frame, 
+            text="Stop",
+            width = 130,
+            height = 30,
+            font = ctk.CTkFont( "Segoe Script", 15 ),
+            command = self.stop_container
+        )
+        self.stop_btn.grid( 
+            row = 2,
+            column = 1,
+            # columnspan = 2,
+            sticky = 'e' ,
+            pady = ( 35 , 0 ),
+            padx = ( 10, 10 ),
+        )
+
+        self.remove_btn = ctk.CTkButton( 
+            self.right_frame, 
+            text="Remove",
+            width = 130,
+            height = 30,
+            font = ctk.CTkFont( "Segoe Script", 15 ),
+            command = self.remove_container
+        )
+        self.remove_btn.grid( 
+            row = 3,
+            column = 0,
+            # columnspan = 2,
+            sticky = 'e' ,
+            pady = ( 35 , 0 ),
+            padx = ( 10, 10 ),
+        )
+
+        self.refrash_btn = ctk.CTkButton( 
+            self.right_frame, 
+            text="Refresh",
+            width = 130,
+            height = 30,
+            font = ctk.CTkFont( "Segoe Script", 15 ),
+            command = self.refrest_container_list,
+        )
+        self.refrash_btn.grid( 
+            row = 3,
+            column = 1,
+            # columnspan = 2,
+            sticky = 'e' ,
+            pady = ( 35 , 0 ),
+            padx = ( 10, 10 ),
+        )
+
     def on_table_click( self, cell ) :
         row, column = cell["row"] , cell["column"]
         if row > 0 and column == 0:
-            if self.container_list[row][0] == '💔' :
-                self.container_list[row][0] = '💘'
+            if self.container_list[row][0] == '▢' :
+                self.container_list[row][0] = '🗹'
             else :
-                self.container_list[row][0] = '💔'
-
+                self.container_list[row][0] = '▢'
             self.container_table.update_values( self.container_list )
+        # print( self.container_list )
 
+    def selected_container( self ) :
+        select_list = list()
+        for row_idx, row in enumerate( self.container_list[1:], 1 ):
+            for column_idx, column in enumerate( row ) :
+                if column == '🗹' :
+                    select_list.append( self.container_list[row_idx] )
+        return select_list
 
-            # container_name = self.container_list[row][1]
-            # print(f"Container '{container_name}' selected: {self.checkbox_states[row-1]}")
-    
+    def run_container( self ) :
+        run_name_list = list()
+        err_list = list()
+        result = ''
+        for row_idx, row in enumerate( self.container_list[1:], 1 ):
+            if row[0] == '🗹' and row[2] != "running" :
+                run_name_list.append( row[1] )
+            elif row[0] == '🗹' and row[2] == "running" :
+                err_list.append( row[1] )
+                    
+        try:
+            for i in err_list :
+                result += f"The Container {i} is already running!!!\n"
 
-        # self.refrash_btn = ctk.CTkButton( 
-        #     self.right_frame, 
-        #     text="Refresh",
-        #     width = 130,
-        #     height = 30,
-        #     font = ctk.CTkFont( "Segoe Script", 15 ),
-        # )
-        # self.refrash_btn.grid( 
-        #     row = 3,
-        #     column = 0,
-        #     columnspan = 2,
-        #     sticky = 'e' ,
-        #     pady = ( 35 , 0 ),
-        #     padx = ( 10, 10 ),
-        # )
+            for i in run_name_list :
+                    run_cont = subprocess.run( 
+                        [ 'docker', 'start', str( i ) ],
+                        capture_output = True,
+                        text = True,
+                    )
+                    result += f"The Container {i} is runing!!!\n"
+        except Exception as e :
+            return( e )
+        self.refrest_container_list()
+        return result
+
+    def stop_container( self ) :
+        stop_name_list = list()
+        err_list = list()
+        result = ''
+        for row_idx, row in enumerate( self.container_list[1:], 1 ):
+            if row[0] == '🗹' and row[2] == "running" :
+                stop_name_list.append( row[1] )
+            elif row[0] == '🗹' and row[2] != "running" :
+                err_list.append( row[1] )
+                    
+        try:
+            for i in err_list :
+                result += f"The Container {i} is not running!!!\n"
+
+            for i in stop_name_list :
+                    run_cont = subprocess.run( 
+                        [ 'docker', 'stop', str( i ) ],
+                        capture_output = True,
+                        text = True,
+                    )
+                    result += f"The Container {i} is stoped!!!\n"
+        except Exception as e :
+            return( e )
+        self.refrest_container_list()
+        return result
+        
+
+    def remove_container( self ) :
+        running_list = list()
+        stoped_list = list()
+        result = ''
+        for row_idx, row in enumerate( self.container_list[1:], 1 ):
+            if row[0] == '🗹' and row[2] == "running" :
+                running_list.append( row[1] )
+            elif row[0] == '🗹' and row[2] != "running" :
+                stoped_list.append( row[1] )
+                    
+        try:
+            for i in stoped_list :
+                run_cont = subprocess.run( 
+                        [ 'docker', 'rm', str( i ) ],
+                        capture_output = True,
+                        text = True,
+                    )
+                result += f"The Container {i} is removed!!!\n"
+
+            for i in running_list :
+                    run_cont = subprocess.run( 
+                        [ 'docker', 'stop', str( i ) ],
+                        capture_output = True,
+                        text = True,
+                    )
+                    run_cont = subprocess.run( 
+                        [ 'docker', 'rm', str( i ) ],
+                        capture_output = True,
+                        text = True,
+                    )
+                    
+                    result += f"The Container {i} is removed!!!\n"
+        except Exception as e :
+            return( e )
+        self.refrest_container_list()
+        return result
+
+    def refrest_container_list( self ) :
+        self.container_list.clear()
+        headers =  [ "Select", "Name", "Status", "Netowrk", "ip_addr" ]
+        self.container_list.append( headers )
+        running_container = self.show_all_containers( )
+        for i in running_container :
+            self.container_list.append( [ "▢", 
+                                          i['name'], 
+                                          i["status"],
+                                          i["newtwork_name"],
+                                          i["ip_addr"],
+                                        ] )
+
+        self.container_table.update_values( self.container_list )

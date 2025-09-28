@@ -2,6 +2,8 @@ import customtkinter as ctk
 from sidebar.menuPage import SwitchMenu
 from mydocker.myDockerPage import MyDockerPage
 from myansible.myAnsiblePage import MyAnsiblePage
+import pygame
+# import threading
 
 def main() :
     app = Notorious()
@@ -18,6 +20,15 @@ class Notorious( ctk.CTk ) :
         self.geometry( f'{1800}x{1200}+{180}+{80}' )
         # self.resizable( False, False )
 
+# Default Page
+        # thread1 = threading.Thread( target = self.docker_page )
+        # thread1.start()
+        self.docker_page()
+# Music
+        # thread2 = threading.Thread( target = self.play_music )
+        # thread2.start()
+        self.play_music()
+    
         # define grid ( 10 column * 4 row )
         self.grid_columnconfigure( 0, weight = 0 )
         self.grid_columnconfigure( 1, weight = 0 )
@@ -41,8 +52,8 @@ class Notorious( ctk.CTk ) :
         self.switch_menu.ansible_btn.configure( command = lambda : self.switch_page( indicator = self.switch_menu.ansible_btn , page = self.ansible_page ) )
         self.switch_menu.ansible_label.configure( command = lambda : self.switch_page( indicator = self.switch_menu.ansible_btn , page = self.ansible_page ) )
 
-        # Default Page
-        self.docker_page( )
+
+
 
     def docker_page( self ) : 
         self.DockerPage = MyDockerPage( self )
@@ -57,10 +68,15 @@ class Notorious( ctk.CTk ) :
         # self.switch_menu.schedule_btn.configure( fg_color = 'transparent' )
         # self.switch_menu.github_btn.configure( fg_color = 'transparent' )
         indicator.configure( fg_color = self.switch_menu.selected_color, hover_color = self.switch_menu.selected_color )
-        # for frame in self.DockerPage.winfo_children( ) :
-        #     frame.destroy( )
-        page( )
-        
+        # thread3 = threading.Thread( target = page )
+        # thread3.start()
+        page()
+
+    
+    def play_music( self ) :
+        pygame.mixer.init()
+        pygame.mixer.music.load( "./Music/cso.mp3" )
+        pygame.mixer.music.play( loops = 0 )
 
 if __name__ == "__main__":   
     main()
