@@ -52,9 +52,6 @@ class Notorious( ctk.CTk ) :
         self.switch_menu.ansible_btn.configure( command = lambda : self.switch_page( indicator = self.switch_menu.ansible_btn , page = self.ansible_page ) )
         self.switch_menu.ansible_label.configure( command = lambda : self.switch_page( indicator = self.switch_menu.ansible_btn , page = self.ansible_page ) )
 
-
-
-
     def docker_page( self ) : 
         self.DockerPage = MyDockerPage( self )
 

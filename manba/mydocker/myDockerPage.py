@@ -28,6 +28,10 @@ class MyDockerPage( ctk.CTkFrame ) :
 # Container Tab
         self.main_frame.container_tab.create_container_btn.configure( command = self.create_docker_container )
 
+# Troble Shooting Tab
+        self.main_frame.trobleshoot_tab.check_it_out.configure( command = self.docker_info )
+        self.main_frame.trobleshoot_tab.clear_btn.configure( command = self.clear_textbox )
+
 
     def clear_textbox( self ) :
         self.main_frame.docker_textbox.delete( '0.0', 'end' )
@@ -36,7 +40,6 @@ class MyDockerPage( ctk.CTkFrame ) :
         self.clear_textbox( )
         self.main_frame.docker_textbox.insert( 'end', self.ts_funs.check_connection( ) )
 
-# For Docker Info Tab
     def update_textbox( self, text ) :
         self.main_frame.docker_textbox.insert( 'end', text )
         self.main_frame.docker_textbox.see( 'end' )
@@ -109,8 +112,36 @@ class MyDockerPage( ctk.CTkFrame ) :
             print( f"❌Fail to create container" )
             print( e )
 
+# For Trobleshoot Tab
 
+    def docker_info( self ) :
+        self.clear_textbox( )
+        if self.main_frame.trobleshoot_tab.check_connection.get() == 'on':
+            self.main_frame.docker_textbox.insert( 'end', self.ts_funs.check_connection( ) )
 
+        if self.main_frame.trobleshoot_tab.docker_cli_version.get() == 'on':
+            self.main_frame.docker_textbox.insert( 'end', self.ts_funs.check_docker_client_version( ) )
+
+        if self.main_frame.trobleshoot_tab.docker_server_version.get() == 'on':
+            self.main_frame.docker_textbox.insert( 'end', self.ts_funs.check_docker_server_version( ) )
+        
+        if self.main_frame.trobleshoot_tab.docker_context.get() == 'on':    
+            self.main_frame.docker_textbox.insert( 'end', self.ts_funs.show_docker_contexts( ) )        
+        
+        if self.main_frame.trobleshoot_tab.docker_info.get() == 'on':    
+            self.main_frame.docker_textbox.insert( 'end', self.ts_funs.show_docker_info( ) )        
+        
+        if self.main_frame.trobleshoot_tab.docker_networks.get() == 'on':    
+            self.main_frame.docker_textbox.insert( 'end', self.ts_funs.show_network_contexts( ) ) 
+
+        if self.main_frame.trobleshoot_tab.running_containers.get() == 'on':    
+            self.main_frame.docker_textbox.insert( 'end', self.ts_funs.show_runing_containers( ) )        
+        
+        if self.main_frame.trobleshoot_tab.container_inspect.get() == 'on':    
+            self.main_frame.docker_textbox.insert( 'end', self.ts_funs.inspect_container( self.main_frame.trobleshoot_tab.container_inspect_entry.get() ) )        
+        
+        if self.main_frame.trobleshoot_tab.network_inspect.get() == 'on':    
+            self.main_frame.docker_textbox.insert( 'end', self.ts_funs.inspect_network( self.main_frame.trobleshoot_tab.network_inspect_entry.get() ) ) 
 
 
         

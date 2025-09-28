@@ -3,12 +3,12 @@ from CTkTable import *
 
 class DockerTSTab( ) :
     def __init__( self, docker_tab ) :
-        self.info_tab = docker_tab.add( 'Trobleshoot' )
+        self.ts_tab = docker_tab.add( 'Trobleshoot' )
         self.setup_ui( )
 
     def setup_ui( self ) :
         self.info_label = ctk.CTkLabel(
-            self.info_tab,
+            self.ts_tab,
             text = "Hello! Welcome to check docker information!",
             font = ctk.CTkFont(
                 family="Courier New",
@@ -26,7 +26,7 @@ class DockerTSTab( ) :
         )
 
         self.left_frame = ctk.CTkFrame(
-            self.info_tab,
+            self.ts_tab,
             corner_radius = 10,
             
         )
@@ -39,7 +39,7 @@ class DockerTSTab( ) :
         )
 
         self.right_frame = ctk.CTkFrame(
-            self.info_tab,
+            self.ts_tab,
             corner_radius = 10,
             
         )
