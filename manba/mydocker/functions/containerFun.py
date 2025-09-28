@@ -78,7 +78,7 @@ class DockerContainerFun :
 			if network != 'bridge' :
 				docker_network = self.client.networks.get( "bridge" )
 				docker_network.disconnect( container )
-				
+
 			container.reload( )
 
 			result = ''
@@ -126,61 +126,3 @@ class DockerContainerFun :
 			return( all_containers_list )
 		else :
 			return( "No running containers" )
-
-# Can delete
-	# def container_table_value( self ) :
-	# 	container_list = list( )
-	# 	headers =  [ "Select", "Name", "Status", "Netowrk", "ip_addr" ]
-	# 	container_list.append( headers )
-
-    #     # Extract data to a 2D array
-        
-	# 	running_container = self.show_all_containers( )
-
-	# 	for i in running_container :
-	# 		container_list.append( [ "▢", 
-    #                                       i['name'], 
-    #                                       i["status"],
-    #                                       i["newtwork_name"],
-    #                                       i["ip_addr"],
-    #                                     ] )
-	# 	return container_list
-
-
-	# def start_container( self, container ) :
-	# 	result = ''
-	# 	try :
-	# 		container = self.client.containers.get( str( container ) )
-	# 		container.start( )
-	# 		result += f"container: { container }\nhas been started\n\n"
-
-	# 		result += self.docker_ps( )
-	# 		return result
-
-	# 	except Exception as e :
-	# 		return( e )
-
-	# def stop_container( self, container_id ) :
-	# 	result = ''
-	# 	try :
-	# 		container = self.client.containers.get( container_id )
-	# 		container.stop()
-	# 		result += f"container: {container_id}\nhas been stoped\n\n"
-
-	# 		result += self.docker_ps( )
-	# 		return( result )
-			
-	# 	except Exception as e :
-	# 		return( e )
-	
-	# def remove_container( self, container_id , force = False ) :
-	# 	result = ''
-	# 	try :
-	# 		container = self.client.containers.get( container_id )
-	# 		container.remove( force = force )
-	# 		result += f"container: {container_id}\nhas been removed\n\n"
-
-	# 		result += self.docker_ps_all( )
-	# 		return result
-	# 	except Exception as e :
-	# 		return( e )

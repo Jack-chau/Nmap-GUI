@@ -360,8 +360,6 @@ class DockerContainerTab :
                                       container["ip_addr"],
                                     ]
 
-
-
         self.container_table = CTkTable( 
                 master = self.right_frame,
                 values = self.container_list,
