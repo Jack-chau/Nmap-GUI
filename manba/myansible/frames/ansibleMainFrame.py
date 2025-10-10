@@ -196,13 +196,13 @@ class AnsibleMainFrame( ctk.CTkFrame ) :
         self.progressbar.set( 0 )
         # self.progressbar.forget()
 
-# Note Frame
-        self.note_frame = ctk.CTkFrame( 
+# Remark
+        self.remark_frame = ctk.CTkFrame( 
             self.master, 
             width = 400,
             # border_width = 2,
         )
-        self.note_frame.grid( 
+        self.remark_frame.grid( 
             row = 0, 
             column = 7,
             columnspan = 2,
@@ -210,13 +210,13 @@ class AnsibleMainFrame( ctk.CTkFrame ) :
             sticky = 'nsew',
         )
 
-    # Action Log
-        self.action_log_tab = ctk.CTkTabview(
-            self.note_frame,
+    # Remark
+        self.remark_tab = ctk.CTkTabview(
+            self.remark_frame,
             width = 400,
             height = 500,
         )
-        self.action_log_tab.pack(
+        self.remark_tab.pack(
             fill = 'both' ,
             expand = True,
 
@@ -226,84 +226,84 @@ class AnsibleMainFrame( ctk.CTkFrame ) :
         )
 
     # Tab choice
-        self.action_log_tab.add( 'Action Log' )
+        self.remark_tab.add( 'Remarks' )
 
-        self.action_label = ctk.CTkLabel(
-            self.action_log_tab.tab( 'Action Log' ), 
-            text = "Action Log : ",
+        self.remark_label = ctk.CTkLabel(
+            self.remark_tab.tab( 'Remarks' ), 
+            text = "Automation Tools",
             font = ( "Comic Sans MS", 30 ),
             width = 400,
         )
-        self.action_label.grid(
+        self.remark_label.grid(
             row = 0, 
             column = 0, 
             padx = ( 10, 0 ), 
             pady = ( 20, 0 ), 
             sticky = "nsew",
         )
-        self.scrollable_frame = ctk.CTkScrollableFrame(
-            self.action_log_tab.tab( 'Action Log' ),
-            height = 400,
-        )
-        self.scrollable_frame.grid(
-            row = 1,
-            column = 0,
-            padx= ( 10, 0 ),
-            pady = ( 10, 0 ),
-            sticky = "nsew" 
-        )
+        # self.scrollable_frame = ctk.CTkScrollableFrame(
+        #     self.remark_tab.tab( 'Remark' ),
+        #     height = 400,
+        # )
+        # self.scrollable_frame.grid(
+        #     row = 1,
+        #     column = 0,
+        #     padx= ( 10, 0 ),
+        #     pady = ( 10, 0 ),
+        #     sticky = "nsew" 
+        # )
 
 # For demo Only
-        test_list = [
-            [ "ID", "Description" ],
-            [ 1, 'docker images' ],
-            [ 2, 'docker ps' ],
-            [ 3, 'docker ps -a' ],
-            [ 4, 'docker network ls' ],
-            [ 5, 'docker run --help' ],
-            [ 6, 'docker' ]
-        ]
+        # test_list = [
+        #     [ "ID", "Description" ],
+        #     [ 1, 'docker images' ],
+        #     [ 2, 'docker ps' ],
+        #     [ 3, 'docker ps -a' ],
+        #     [ 4, 'docker network ls' ],
+        #     [ 5, 'docker run --help' ],
+        #     [ 6, 'docker' ]
+        # ]
 
-        self.action_table = CTkTable( 
-                master = self.scrollable_frame,
-                values = test_list,
-                hover_color = 'gray20',
-                width = 180
-            )
-        self.action_table.grid(
-            row = 1,
-            column = 0,
-            padx= ( 10, 0 ),
-            pady = ( 10, 0 ),
-            sticky = "nsew"            
-        )
-# Remark Frame
-        self.remark_frame = ctk.CTkFrame( 
-            self.master, 
-            width = 300,
-            # border_width = 2,
-            corner_radius = 0,
-        )
-        self.remark_frame.grid( 
-            row = 2, 
-            column = 7,
-            columnspan = 2,
-            rowspan = 2,
-            sticky = 'nsew',
-        )
-        self.remark_box = ctk.CTkTextbox(
-            self.remark_frame,
-            font = ( "Comic Sans MS", 20 ),
-            border_width = 0,
-            corner_radius = 0,
-        )
-        self.remark_box.pack(
-            side = 'top',
-            expand = True,
-            fill = 'both'
+        # self.action_table = CTkTable( 
+        #         master = self.scrollable_frame,
+        #         values = test_list,
+        #         hover_color = 'gray20',
+        #         width = 180
+        #     )
+        # self.action_table.grid(
+        #     row = 1,
+        #     column = 0,
+        #     padx= ( 10, 0 ),
+        #     pady = ( 10, 0 ),
+        #     sticky = "nsew"            
+        # )
+# Music Player
+        # self.music_frame = ctk.CTkFrame( 
+        #     self.master, 
+        #     width = 400,
+        #     # border_width = 2,
+        #     # corner_radius = 0,
+        # )
+        # self.remark_frame.grid( 
+        #     row = 2, 
+        #     column = 7,
+        #     columnspan = 2,
+        #     rowspan = 2,
+        #     sticky = 'nsew',
+        # )
+        # self.music_box = ctk.CTkTextbox(
+        #     self.remark_frame,
+        #     font = ( "Comic Sans MS", 20 ),
+        #     border_width = 0,
+        #     corner_radius = 0,
+        # )
+        # self.music_box.pack(
+        #     side = 'top',
+        #     expand = True,
+        #     # fill = 'both'
     
-        )
-        self.remark_box.insert( 
-            "0.0",
-            "\nRemarks:\n\n"
-        )
+        # )
+        # self.remark_box.insert( 
+        #     "0.0",
+        #     "\nMusic Player:\n\n"
+        # )

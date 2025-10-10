@@ -89,40 +89,40 @@ class AnsibleInventoryTab :
         )
 
 ### Add Section Container
-        self.section_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Add Section: ",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
+        # self.section_label = ctk.CTkLabel(
+        #     self.left_frame,
+        #     text = "Add Section: ",
+        #     font = ctk.CTkFont(
+        #         family="Arial",
+        #         size=16,
+        #         weight="bold",
+        #         overstrike=False
+        #     )
+        # )
 
-        self.section_label.grid(
-            column = 0,
-            row = 1,
-            sticky = 'w' ,
-            pady = ( 5 , 0 ),
-            padx = ( 40, 0 ),
-        )
+        # self.section_label.grid(
+        #     column = 0,
+        #     row = 1,
+        #     sticky = 'w' ,
+        #     pady = ( 5 , 0 ),
+        #     padx = ( 40, 0 ),
+        # )
 
-        self.section_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "Section:",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
+        # self.section_entry = ctk.CTkEntry(
+        #     self.left_frame ,
+        #     placeholder_text = "Section:",
+        #     font = ctk.CTkFont(
+        #         size=15,
+        #     )
+        # )
 
-        self.section_entry.grid(
-            row = 1,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 5 , 0 ),
-            padx = ( 0, 20 ),
-        )
+        # self.section_entry.grid(
+        #     row = 1,
+        #     column = 1,
+        #     sticky = 'we' ,
+        #     pady = ( 5 , 0 ),
+        #     padx = ( 0, 20 ),
+        # )
 
         self.ip_label = ctk.CTkLabel(
             self.left_frame,
@@ -137,7 +137,7 @@ class AnsibleInventoryTab :
 
         self.ip_label.grid(
             column = 0,
-            row = 2,
+            row = 1,
             sticky = 'w' ,
             pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
@@ -152,7 +152,7 @@ class AnsibleInventoryTab :
         )
 
         self.ip_entry.grid(
-            row = 2,
+            row = 1,
             column = 1,
             sticky = 'we' ,
             pady = ( 5 , 0 ),
@@ -172,7 +172,7 @@ class AnsibleInventoryTab :
 
         self.user_label.grid(
             column = 0,
-            row = 3,
+            row = 2,
             sticky = 'w' ,
             pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
@@ -187,7 +187,7 @@ class AnsibleInventoryTab :
         )
 
         self.user_entry.grid(
-            row = 3,
+            row = 2,
             column = 1,
             sticky = 'we' ,
             pady = ( 5 , 0 ),
@@ -207,7 +207,7 @@ class AnsibleInventoryTab :
 
         self.user_password_label.grid(
             column = 0,
-            row = 4,
+            row = 3,
             sticky = 'w' ,
             pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
@@ -222,7 +222,7 @@ class AnsibleInventoryTab :
         )
 
         self.user_password_entry.grid(
-            row = 4,
+            row = 3,
             column = 1,
             sticky = 'we' ,
             pady = ( 5 , 0 ),
@@ -242,7 +242,7 @@ class AnsibleInventoryTab :
 
         self.file_name_label.grid(
             column = 0,
-            row = 5,
+            row = 4,
             sticky = 'w' ,
             pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
@@ -256,7 +256,7 @@ class AnsibleInventoryTab :
             )
         )
         self.file_name_entry.grid(
-            row = 5,
+            row = 4,
             column = 1,
             sticky = 'we' ,
             pady = ( 5 , 0 ),
@@ -271,7 +271,7 @@ class AnsibleInventoryTab :
             font = ctk.CTkFont( "Segoe Script", 15 ),
         )
         self.run_btn.grid( 
-            row = 6,
+            row = 5,
             column = 0,
             # columnspan = 2,
             sticky = 'e' ,
@@ -287,7 +287,7 @@ class AnsibleInventoryTab :
             font = ctk.CTkFont( "Segoe Script", 15 ),
         )
         self.read_btn.grid( 
-            row = 6,
+            row = 5,
             column = 1,
             # columnspan = 2,
             sticky = 'e' ,
@@ -303,7 +303,7 @@ class AnsibleInventoryTab :
             font = ctk.CTkFont( "Segoe Script", 15 ),
         )
         self.save_btn.grid( 
-            row = 7,
+            row = 6,
             column = 0,
             # columnspan = 2,
             sticky = 'e' ,
@@ -319,7 +319,7 @@ class AnsibleInventoryTab :
             font = ctk.CTkFont( "Segoe Script", 15 ),
         )
         self.clear_btn.grid( 
-            row = 7,
+            row = 6,
             column = 1,
             # columnspan = 2,
             sticky = 'e' ,

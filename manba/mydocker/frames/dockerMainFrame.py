@@ -211,17 +211,17 @@ class DockerMainFrame( ctk.CTkFrame ) :
             row = 0, 
             column = 7,
             columnspan = 2,
-            rowspan = 2,
+            rowspan = 4,
             sticky = 'nsew',
         )
 
-# Action Log
-        self.action_log_tab = ctk.CTkTabview(
+# Remark
+        self.remark_tab = ctk.CTkTabview(
             self.note_frame,
             width = 400,
             height = 500,
         )
-        self.action_log_tab.pack(
+        self.remark_tab.pack(
             fill = 'both' ,
             expand = True,
 
@@ -230,85 +230,87 @@ class DockerMainFrame( ctk.CTkFrame ) :
             pady = ( 0, 0 )
         )
 
-# Tab choice
-        self.action_log_tab.add( 'Action Log' )
+# # Tab choice
+        self.remark_tab.add( 'Remarks' )
 
-        self.action_label = ctk.CTkLabel(
-            self.action_log_tab.tab( 'Action Log' ), 
-            text = "Action Log : ",
+        self.remark_label = ctk.CTkLabel(
+            self.remark_tab.tab( 'Remarks' ), 
+            text = "Docker Management: ",
             font = ( "Comic Sans MS", 30 ),
             width = 400,
         )
-        self.action_label.grid(
+        self.remark_label.grid(
             row = 0, 
+            rowspan = 2,
             column = 0, 
             padx = ( 10, 0 ), 
             pady = ( 20, 0 ), 
             sticky = "nsew",
         )
-        self.scrollable_frame = ctk.CTkScrollableFrame(
-            self.action_log_tab.tab( 'Action Log' ),
-            height = 400,
+        self.remark_frame = ctk.CTkScrollableFrame(
+            self.remark_tab.tab( 'Remarks' ),
+            height = 750,
         )
-        self.scrollable_frame.grid(
+        self.remark_frame.grid(
             row = 1,
             column = 0,
+            rowspan = 3,
             padx= ( 10, 0 ),
             pady = ( 10, 0 ),
             sticky = "nsew" 
         )
 
-# For demo Only
-        test_list = [
-            [ "ID", "Description" ],
-            [ 1, 'docker images' ],
-            [ 2, 'docker ps' ],
-            [ 3, 'docker ps -a' ],
-            [ 4, 'docker network ls' ],
-            [ 5, 'docker run --help' ],
-            [ 6, 'docker' ]
-        ]
+# # For demo Only
+#         test_list = [
+#             [ "ID", "Description" ],
+#             [ 1, 'docker images' ],
+#             [ 2, 'docker ps' ],
+#             [ 3, 'docker ps -a' ],
+#             [ 4, 'docker network ls' ],
+#             [ 5, 'docker run --help' ],
+#             [ 6, 'docker' ]
+#         ]
 
-        self.action_table = CTkTable( 
-                master = self.scrollable_frame,
-                values = test_list,
-                hover_color = 'gray20',
-                width = 180
-            )
-        self.action_table.grid(
-            row = 1,
-            column = 0,
-            padx= ( 10, 0 ),
-            pady = ( 10, 0 ),
-            sticky = "nsew"            
-        )
-# Remark Frame
-        self.remark_frame = ctk.CTkFrame( 
-            self.master, 
-            width = 300,
-            # border_width = 2,
-            corner_radius = 0,
-        )
-        self.remark_frame.grid( 
-            row = 2, 
-            column = 7,
-            columnspan = 2,
-            rowspan = 2,
-            sticky = 'nsew',
-        )
-        self.remark_box = ctk.CTkTextbox(
-            self.remark_frame,
-            font = ( "Comic Sans MS", 20 ),
-            border_width = 0,
-            corner_radius = 0,
-        )
-        self.remark_box.pack(
-            side = 'top',
-            expand = True,
-            fill = 'both'
+#         self.action_table = CTkTable( 
+#                 master = self.scrollable_frame,
+#                 values = test_list,
+#                 hover_color = 'gray20',
+#                 width = 180
+#             )
+#         self.action_table.grid(
+#             row = 1,
+#             column = 0,
+#             padx= ( 10, 0 ),
+#             pady = ( 10, 0 ),
+#             sticky = "nsew"            
+#         )
+# # Music Player Frame
+#         self.remark_frame = ctk.CTkFrame( 
+#             self.master, 
+#             width = 300,
+#             # border_width = 2,
+#             corner_radius = 0,
+#         )
+#         self.remark_frame.grid( 
+#             row = 2, 
+#             column = 7,
+#             columnspan = 2,
+#             rowspan = 2,
+#             sticky = 'nsew',
+#         )
+#         self.remark_box = ctk.CTkTextbox(
+#             self.remark_frame,
+#             font = ( "Comic Sans MS", 20 ),
+#             border_width = 0,
+#             corner_radius = 0,
+#         )
+#         self.remark_box.pack(
+#             side = 'top',
+#             expand = True,
+#             fill = 'both'
     
-        )
-        self.remark_box.insert( 
-            "0.0",
-            "\nRemarks:\n\n"
-        )
+#         )
+#         self.remark_box.insert( 
+#             "0.0",
+#             "\nRemarks:\n\n"
+#         )
