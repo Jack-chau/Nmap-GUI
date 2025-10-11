@@ -9,6 +9,7 @@ class DockerContainerTab :
         self.container_tab = docker_tab.add( 'Container' )
         self.client = docker.from_env( )
         self._setup_ui( )
+        self.refrest_container_list( )
 
     # Show all containers
     def show_all_containers( self ) :
@@ -127,6 +128,7 @@ class DockerContainerTab :
         )
 
 ### Create Docker Container
+# container_name
         self.name_label = ctk.CTkLabel(
             self.left_frame,
             text = "Container Name: ",
@@ -161,7 +163,7 @@ class DockerContainerTab :
             pady = ( 5 , 0 ),
             padx = ( 0, 20 ),
         )
-
+# Container Image
         self.image_label = ctk.CTkLabel(
             self.left_frame,
             text = "Image: ",
@@ -196,7 +198,7 @@ class DockerContainerTab :
             pady = ( 5 , 0 ),
             padx = ( 0, 20 ),
         )
-
+# container network
         self.network_label = ctk.CTkLabel(
             self.left_frame,
             text = "Network Name: ",
@@ -231,7 +233,7 @@ class DockerContainerTab :
             pady = ( 5 , 0 ),
             padx = ( 0, 20 ),
         )
-
+# Containter Static Ip
         self.staticIP_label = ctk.CTkLabel(
             self.left_frame,
             text = "Static IP: ",
@@ -258,7 +260,6 @@ class DockerContainerTab :
                 size=15,
             )
         )
-
         self.staticIP_entry.grid(
             row = 4,
             column = 1,
@@ -266,7 +267,80 @@ class DockerContainerTab :
             pady = ( 5 , 0 ),
             padx = ( 0, 20 ),
         )
+# username
+        self.username_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "User name: ",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
 
+        self.username_label.grid(
+            row = 5,
+            column = 0,
+            sticky = 'w' ,
+            pady = ( 5 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.username_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "JackChau",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.username_entry.grid(
+            row = 5,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 5 , 0 ),
+            padx = ( 0, 20 ),
+        )
+# user password
+        self.password_label = ctk.CTkLabel(
+            self.left_frame,
+            text = "User password: ",
+            font = ctk.CTkFont(
+                family="Arial",
+                size=16,
+                weight="bold",
+                overstrike=False
+            )
+        )
+
+        self.password_label.grid(
+            row = 6,
+            column = 0,
+            sticky = 'w' ,
+            pady = ( 5 , 0 ),
+            padx = ( 40, 0 ),
+        )
+
+        self.password_entry = ctk.CTkEntry(
+            self.left_frame ,
+            placeholder_text = "P@ssw0rd",
+            font = ctk.CTkFont(
+                size=15,
+            )
+        )
+
+        self.password_entry.grid(
+            row = 6,
+            column = 1,
+            sticky = 'we' ,
+            pady = ( 5 , 0 ),
+            padx = ( 0, 20 ),
+        )
+
+
+
+# container publish port
         self.pub_port_label = ctk.CTkLabel(
             self.left_frame,
             text = "Published Port: ",
@@ -279,7 +353,7 @@ class DockerContainerTab :
         )
         self.pub_port_label.grid(
             column = 0,
-            row = 5,
+            row = 7,
             sticky = 'w' ,
             pady = ( 5 , 0 ),
             padx = ( 40, 0 ),
@@ -294,7 +368,7 @@ class DockerContainerTab :
         )
 
         self.pub_port_entry.grid(
-            row = 5,
+            row = 7,
             column = 1,
             sticky = 'we' ,
             pady = ( 5 , 0 ),
@@ -309,7 +383,7 @@ class DockerContainerTab :
             font = ctk.CTkFont( "Segoe Script", 15 ),
         )
         self.create_container_btn.grid( 
-            row = 6,
+            row = 8,
             column = 0,
             columnspan = 2,
             sticky = 'e' ,
