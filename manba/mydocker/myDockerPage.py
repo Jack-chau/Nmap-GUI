@@ -28,6 +28,9 @@ class MyDockerPage( ctk.CTkFrame ) :
 # Container Tab
         self.main_frame.container_tab.create_container_btn.configure( command = self.create_docker_container )
 
+# Network Tab
+        self.main_frame.network_tab.create_network_execute.configure( command = self.create_network )
+
 # Troble Shooting Tab
         self.main_frame.trobleshoot_tab.check_it_out.configure( command = self.docker_info )
         self.main_frame.trobleshoot_tab.clear_btn.configure( command = self.clear_textbox )
@@ -52,7 +55,6 @@ class MyDockerPage( ctk.CTkFrame ) :
         image_name = self.main_frame.image_tab.image_name_entry.get( )
         image_version = self.main_frame.image_tab.image_version_entry.get( )
         command = self.main_frame.image_tab.image_command_entry.get( )
-        rmi_image = self.main_frame.image_tab.image_removal_entry.get( )
 
         if command :
             self.main_frame.image_tab.image_name_entry.configure( state="disabled" )
@@ -71,8 +73,8 @@ class MyDockerPage( ctk.CTkFrame ) :
             except Exception as e:
                 self.update_textbox(f"Error: {str(e)}\n")
 
-        elif rmi_image:
-            self.image_funs.remove_image( rmi_image, callback = self.update_textbox)
+        # elif rmi_image:
+            # self.image_funs.remove_image( rmi_image, callback = self.update_textbox)
         else:
             self.update_textbox("Error: No image specified\n")
 
@@ -110,6 +112,26 @@ class MyDockerPage( ctk.CTkFrame ) :
 
         except Exception as e :
             print( f"❌Fail to create container" )
+            print( e )
+
+    def create_network( self ) :
+        self.clear_textbox( )
+        network_name = self.main_frame.network_tab.create_network_entry.get( )
+        subnet_name = self.main_frame.network_tab.subnet_entry.get( )
+        gateway_name = self.main_frame.network_tab.gateway_entry.get( )
+        try :
+            result = self.network_funs.create_network(
+                name = network_name ,
+                subnet = subnet_name ,
+                gateway = gateway_name
+            )
+            if result :
+                self.update_textbox( result )
+            else :
+                self.update_textbox( "Fail to create network" )
+
+        except Exception as e :
+            print( f"❌Fail to create network" )
             print( e )
 
 # For Trobleshoot Tab

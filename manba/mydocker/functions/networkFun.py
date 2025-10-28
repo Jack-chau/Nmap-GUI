@@ -53,7 +53,9 @@ class DockerNetworkFun( ) :
 				output += f"docker network name: {name} has been created.\n\n"
 				output += self.list_networks( )
 			else :
-				print( "Failed to create network." )
+				output +=  "Failed to create network." 
+				
+			return output
 
 		except docker.errors.APIError as e:
 			return f"Failed to create network: {str(e)}\n"

@@ -231,49 +231,49 @@ class DockerNetworkTab :
         #     padx = ( 10, 10 ),
         # )
 
-        self.delete_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Delete network:",
-            font = ctk.CTkFont(
-                family="Arial",
-                size = 16,
-                weight="bold",
-                overstrike=False
-            )
-        )
-        self.delete_label.grid(
-            row =4,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
+        # self.delete_label = ctk.CTkLabel(
+        #     self.left_frame,
+        #     text = "Delete network:",
+        #     font = ctk.CTkFont(
+        #         family="Arial",
+        #         size = 16,
+        #         weight="bold",
+        #         overstrike=False
+        #     )
+        # )
+        # self.delete_label.grid(
+        #     row =4,
+        #     column = 0,
+        #     sticky = 'w' ,
+        #     pady = ( 25 , 0 ),
+        #     padx = ( 40, 0 ),
+        # )
 
-        self.delete_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "network idx",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
+        # self.delete_entry = ctk.CTkEntry(
+        #     self.left_frame ,
+        #     placeholder_text = "network idx",
+        #     font = ctk.CTkFont(
+        #         size=15,
+        #     )
+        # )
 
-        self.delete_entry.grid(
-            row = 4,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
+        # self.delete_entry.grid(
+        #     row = 4,
+        #     column = 1,
+        #     sticky = 'we' ,
+        #     pady = ( 25 , 0 ),
+        #     padx = ( 0, 20 ),
+        # )
 
-        self.create_delete_execute = ctk.CTkButton( 
+        self.create_network_execute = ctk.CTkButton( 
             self.left_frame, 
-            text="Execute",
+            text="Create",
             width = 140,
             height = 40,
             font = ctk.CTkFont( "Segoe Script", 15 ),
         )
-        self.create_delete_execute.grid( 
-            row = 5,
+        self.create_network_execute.grid( 
+            row = 4,
             column = 0,
             columnspan = 2,
             sticky = 'e' ,
@@ -478,12 +478,12 @@ class DockerNetworkTab :
 
         # For demo Only
         test_id_list = [
-            [ 'idx', "ID", "Names" ],
-            [ '1', '2b7c51034242', 'nginx02' ],
-            [ '2', '2b7c51034242', 'nginx01' ],
-            [ '3', '2b7c51034242', 'my_web_server' ],
-            [ '4', '2b7c51034242', 'ubuntu02' ],
-            [ '5', '2b7c51034242', 'ubuntu01' ],
+            [  "ID", "Names" ],
+            [ '2b7c51034242', 'nginx02' ],
+            [ '2b7c51034242', 'nginx01' ],
+            [ '2b7c51034242', 'my_web_server' ],
+            [ '2b7c51034242', 'ubuntu02' ],
+            [ '2b7c51034242', 'ubuntu01' ],
         ]
 
         self.check_id_table = CTkTable( 
@@ -537,12 +537,12 @@ class DockerNetworkTab :
         )
         
         test_network_list = [
-            [ 'idx',"Network ID", "Names" ],
-            [ '1','41ecd807f659', 'docker_network_123' ],
-            [ '2','22a4550ffe7a', 'bridge' ],
-            [ '3','10f57fa303b9', 'host' ],
-            [ '4','c683be21172b', 'my_docker_network' ],
-            [ '5','2b7ee5201314', 'nonw' ],
+            [ 'Select',"Network ID", "Names" ],
+            [ '▢','41ecd807f659', 'docker_network_123' ],
+            [ '▢','22a4550ffe7a', 'bridge' ],
+            [ '▢','10f57fa303b9', 'host' ],
+            [ '▢','c683be21172b', 'my_docker_network' ],
+            [ '▢','2b7ee5201314', 'nonw' ],
         ]
 
         self.test_network_list = CTkTable( 

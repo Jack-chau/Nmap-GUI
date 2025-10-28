@@ -192,40 +192,40 @@ class DockerImageTab :
             padx = ( 0, 20 ),
         )
 
-        self.image_removal_label = ctk.CTkLabel(
-            self.left_frame,
-            text = "Remove Image:",
-            font = ctk.CTkFont(
-                family="Arial",
-                size=16,
-                weight="bold",
-                overstrike=False
-            )
-        )
+        # self.image_removal_label = ctk.CTkLabel(
+        #     self.left_frame,
+        #     text = "Remove Image:",
+        #     font = ctk.CTkFont(
+        #         family="Arial",
+        #         size=16,
+        #         weight="bold",
+        #         overstrike=False
+        #     )
+        # )
 
-        self.image_removal_label.grid(
-            row =4,
-            column = 0,
-            sticky = 'w' ,
-            pady = ( 25 , 0 ),
-            padx = ( 40, 0 ),
-        )
+        # self.image_removal_label.grid(
+        #     row =4,
+        #     column = 0,
+        #     sticky = 'w' ,
+        #     pady = ( 25 , 0 ),
+        #     padx = ( 40, 0 ),
+        # )
 
-        self.image_removal_entry = ctk.CTkEntry(
-            self.left_frame ,
-            placeholder_text = "remove by name or id",
-            font = ctk.CTkFont(
-                size=15,
-            )
-        )
+        # self.image_removal_entry = ctk.CTkEntry(
+        #     self.left_frame ,
+        #     placeholder_text = "remove by name or id",
+        #     font = ctk.CTkFont(
+        #         size=15,
+        #     )
+        # )
 
-        self.image_removal_entry.grid(
-            row = 4,
-            column = 1,
-            sticky = 'we' ,
-            pady = ( 25 , 0 ),
-            padx = ( 0, 20 ),
-        )
+        # self.image_removal_entry.grid(
+        #     row = 4,
+        #     column = 1,
+        #     sticky = 'we' ,
+        #     pady = ( 25 , 0 ),
+        #     padx = ( 0, 20 ),
+        # )
 
         self.docker_hub_label = ctk.CTkLabel(
             self.left_frame,
@@ -238,7 +238,7 @@ class DockerImageTab :
             )
         )
         self.docker_hub_label.grid(
-            row =5,
+            row =4,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 20 ),
@@ -263,7 +263,7 @@ class DockerImageTab :
         )
 
         self.docker_hub_btn.grid(
-            row = 5,
+            row = 4,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 20 ),
@@ -271,7 +271,7 @@ class DockerImageTab :
         )
 
         self.docker_hub_label.grid(
-            row =5,
+            row =4,
             column = 0,
             sticky = 'w' ,
             pady = ( 25 , 20 ),
@@ -285,7 +285,7 @@ class DockerImageTab :
         )
 
         self.docker_hub_btn.grid(
-            row = 5,
+            row = 4,
             column = 1,
             sticky = 'we' ,
             pady = ( 25 , 20 ),
@@ -293,13 +293,13 @@ class DockerImageTab :
         )
         self.image_execute = ctk.CTkButton( 
             self.left_frame, 
-            text="Execute",
+            text="Build",
             width = 250,
             height = 50,
             font = ctk.CTkFont( "Segoe Script", 20 ),
         )
         self.image_execute.grid( 
-            row = 6,
+            row = 5,
             column = 0,
             columnspan = 2,
             sticky = 'we' ,
@@ -329,19 +329,18 @@ class DockerImageTab :
 
         # For demo Only
         test_image_list = [
-            [ 'idx',"ID", "Names" ,"Tag"],
-            [ '1','2b7c51034242', 'hello', 'latest' ],
-            [ '2','2b7c51034242', 'ubuntu', 'latest' ],
-            [ '3','2b7c51034242', 'nginx', 'alpine' ],
-            [ '4','2b7c51034242', 'nginx', 'latest' ],
-            [ '5','2b7c51034242', 'hello-world', 'latest' ],
+            [ 'Select',"ID", "Names" ,"Tag"],
+            [ '▢','2b7c51034242', 'hello', 'latest' ],
+            [ '▢','2b7c51034242', 'ubuntu', 'latest' ],
+            [ '▢','2b7c51034242', 'nginx', 'alpine' ],
+            [ '▢','2b7c51034242', 'nginx', 'latest' ],
+            [ '▢','2b7c51034242', 'hello-world', 'latest' ],
         ]
 
         self.show_image_table = CTkTable( 
                 master = self.right_frame,
                 # header_color = '',
                 values = test_image_list,
-                hover_color = 'gray20',
                 width = 100
             )
         self.show_image_table.grid(

@@ -358,12 +358,12 @@ class DockerTSTab( ) :
 
         # For demo Only
         test_id_list = [
-            [ 'idx', "ID", "Names" ],
-            [ '1', '2b7c51034242', 'nginx02' ],
-            [ '2', '2b7c51034242', 'nginx01' ],
-            [ '3', '2b7c51034242', 'my_web_server' ],
-            [ '4', '2b7c51034242', 'ubuntu02' ],
-            [ '5', '2b7c51034242', 'ubuntu01' ],
+            [ "ID", "Names" ],
+            [ '2b7c51034242', 'nginx02' ],
+            [ '2b7c51034242', 'nginx01' ],
+            [ '2b7c51034242', 'my_web_server' ],
+            [ '2b7c51034242', 'ubuntu02' ],
+            [ '2b7c51034242', 'ubuntu01' ],
         ]
 
         self.check_id_table = CTkTable( 
@@ -375,7 +375,7 @@ class DockerTSTab( ) :
             row = 1,
             column = 0,
             columnspan = 2,
-            padx= ( 20, 0 ),
+            padx= ( 50, 0 ),
             pady = ( 10, 0 ),
             sticky = "ew"            
         )
@@ -417,12 +417,12 @@ class DockerTSTab( ) :
         )
         
         test_network_list = [
-            [ 'idx',"Network ID", "Names" ],
-            [ '1','41ecd807f659', 'docker_network_123' ],
-            [ '2','22a4550ffe7a', 'bridge' ],
-            [ '3','10f57fa303b9', 'host' ],
-            [ '4','c683be21172b', 'my_docker_network' ],
-            [ '5','2b7ee5201314', 'nonw' ],
+            [ "Network ID", "Names" ],
+            [ '41ecd807f659', 'docker_network_123' ],
+            [ '22a4550ffe7a', 'bridge' ],
+            [ '10f57fa303b9', 'host' ],
+            [ 'c683be21172b', 'my_docker_network' ],
+            [ '2b7ee5201314', 'nonw' ],
         ]
 
         self.test_network_list = CTkTable( 
@@ -434,7 +434,7 @@ class DockerTSTab( ) :
             row = 4,
             column = 0,
             columnspan = 2,
-            padx= ( 20, 0 ),
+            padx= ( 50, 0 ),
             pady = ( 10, 0 ),
             sticky = "ew"            
         )

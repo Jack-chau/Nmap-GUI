@@ -84,20 +84,20 @@ class DockerInfoTab( ) :
 
         # For demo Only
         test_id_list = [
-            [ 'idx', "ID", "Names" ],
-            [ '1', '2b7c51034242', 'nginx02' ],
-            [ '2', '2b7c51034242', 'nginx01' ],
-            [ '3', '2b7c51034242', 'my_web_server' ],
-            [ '4', '2b7c51034242', 'ubuntu02' ],
-            [ '5', '2b7c51034242', 'ubuntu01' ],
-            [ '6', '2b7c51034242', 'nginx02' ],
-            [ '7', '2b7c51034242', 'nginx01' ],
-            [ '8', '2b7c51034242', 'my_web_server' ],
-            [ '9', '2b7c51034242', 'ubuntu02' ],
-            [ '10', '2b7c51034242', 'ubuntu01' ],
-            [ '11', '2b7c51034242', 'my_web_server' ],
-            [ '12', '2b7c51034242', 'ubuntu02' ],
-            [ '13', '2b7c51034242', 'ubuntu01' ],
+            [ 'Select', "Name", "Network" ],
+            [ '▢', 'nginx02', 'cus-net' ],
+            [ '▢', 'nginx01', 'netA' ],
+            [ '▢', 'A_web_server', 'netB' ],
+            [ '▢', 'ubuntu02', 'NetA' ],
+            [ '▢', 'ubuntu01', 'NetB' ],
+            [ '▢', 'nginx02', 'cus-net' ],
+            [ '▢', 'nginx01', 'cus-net' ],
+            [ '▢', 'web_server', 'cus-net' ],
+            [ '▢', 'ubuntu02', 'cus-net' ],
+            [ '▢', 'ubuntu01', 'cus-net' ],
+            [ '▢', 'B_web_server', 'cus-net' ],
+            [ '▢', 'ubuntu02', 'cus-net' ],
+            [ '▢', 'ubuntu01', 'cus-net' ],
         ]
 
         self.check_id_table = CTkTable( 
@@ -109,9 +109,9 @@ class DockerInfoTab( ) :
             row = 1,
             column = 0,
             columnspan = 2,
-            padx= ( 20, 0 ),
+            padx= ( 20, 20 ),
             pady = ( 10, 0 ),
-            sticky = "ew"            
+            sticky = "nsew"            
         )
         self.refrash_btn = ctk.CTkButton( 
             self.left_frame, 
@@ -136,7 +136,7 @@ class DockerInfoTab( ) :
 
         self.show_image_label = ctk.CTkLabel(
             self.right_frame,
-            text = "Docker image information",
+            text = "Docker Image",
             font = ctk.CTkFont(
                 family="Courier New",
                 size=18,
@@ -148,19 +148,19 @@ class DockerInfoTab( ) :
             column = 0,
             row = 0,
             columnspan = 2,
-            pady = ( 20, 0 ),
-            padx = ( 10, 10 ),
+            pady = ( 20, 10 ),
+            padx = ( 60, 10 ),
             sticky = 'ew',
         )
 
         # For demo Only
         test_image_list = [
-            [ 'idx',"ID", "Names" ,"Tag"],
-            [ '1','2b7c51034242', 'hello', 'latest' ],
-            [ '2','2b7c51034242', 'ubuntu', 'latest' ],
-            [ '3','2b7c51034242', 'nginx', 'alpine' ],
-            [ '4','2b7c51034242', 'nginx', 'latest' ],
-            [ '5','2b7c51034242', 'hello-world', 'latest' ],
+            [ 'Select', "Names" ,"Tag"],
+            [ '▢', 'hello', 'latest' ],
+            [ '▢', 'ubuntu', '23.5.3' ],
+            [ '▢', 'nginx', 'alpine' ],
+            [ '▢', 'nginx', '2.3.1' ],
+            [ '▢', 'hello-world', 'latest' ],
         ]
 
         self.show_image_table = CTkTable( 
@@ -173,9 +173,9 @@ class DockerInfoTab( ) :
             row = 1,
             column = 0,
             columnspan = 2,
-            padx= ( 40, 0 ),
-            pady = ( 10, 0 ),
-            sticky = "nsew"            
+            padx= ( 70, 0 ),
+            pady = ( 0, 50 ),
+            sticky = "ew"            
         )
 
         self.network_label = ctk.CTkLabel(
@@ -183,7 +183,7 @@ class DockerInfoTab( ) :
             text = "Docker Network",
             font = ctk.CTkFont(
                 family="Courier New",
-                size=16,
+                size=18,
                 weight="bold",
                 overstrike=False
             )
@@ -193,18 +193,18 @@ class DockerInfoTab( ) :
             row = 3,
             column = 0,
             columnspan = 2,
+            padx = ( 60, 10 ),
             pady = ( 30, 0 ),
-            padx = ( 10, 10 ),
             sticky = 'ew',
         )
         
         test_network_list = [
-            [ 'idx',"Network ID", "Names" ],
-            [ '1','41ecd807f659', 'docker_network_123' ],
-            [ '2','22a4550ffe7a', 'bridge' ],
-            [ '3','10f57fa303b9', 'host' ],
-            [ '4','c683be21172b', 'my_docker_network' ],
-            [ '5','2b7ee5201314', 'nonw' ],
+            [ 'Select', "Names" ],
+            [ '▢', 'network_123' ],
+            [ '▢', 'bridge' ],
+            [ '▢', 'host' ],
+            [ '▢', 'my_network' ],
+            [ '▢', 'none' ],
         ]
 
         self.test_network_list = CTkTable( 
@@ -216,7 +216,7 @@ class DockerInfoTab( ) :
             row = 4,
             column = 0,
             columnspan = 2,
-            padx= ( 20, 0 ),
+            padx= ( 70, 0 ),
             pady = ( 10, 0 ),
             sticky = "ew"            
         )
